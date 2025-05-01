@@ -1,0 +1,98 @@
+﻿<header class="usa-header usa-header--extended">
+    <div class="usa-navbar">
+        <div class="usa-logo" id="-logo">
+            <em class="usa-logo__text">
+                <a href="/" title="<Project title>">
+                    USDA Taxonomy Portal
+                </a>
+            </em>
+        </div>
+        <button type="button" class="usa-menu-btn">Menu</button>
+    </div>
+    <nav aria-label="Primary navigation" class="usa-nav">
+        <div class="usa-nav__inner">
+            <button type="button" class="usa-nav__close">
+                <img src="https://www.ars-grin.gov/assets/img/usa-icons/close.svg" role="img" alt="Close" />
+            </button>
+            <ul class="usa-nav__primary usa-accordion">
+                <li class="usa-nav__primary-item">
+                    <a href="@Url.Action("Index","Home")" class="usa-nav-link"><span>Home</span></a>
+                </li>
+                <li class="usa-nav__primary-item">
+                    <button type="button" class="usa-accordion__button usa-nav__link usa-current" aria-expanded="false" aria-controls="basic-nav-section-collections">
+                        <span>Browse</span>
+                    </button>
+                    <ul id="basic-nav-section-collections" class="usa-nav__submenu" hidden="">
+                        <li class="usa-nav__submenu-item">
+                            <a href="@Url.Action("Species","Home")" class="usa-nav-link">
+                                <span>Taxa</span>
+                            </a>
+                        </li>
+                        <li class="usa-nav__submenu-item">
+                            <a href="@Url.Action("Authors","Home")" target="_blank" rel="noreferrer">
+                                <span>Authors ↗</span>
+                            </a>
+                        </li>
+                        <li class="usa-nav__submenu-item">
+                            <a href="@Url.Action("Publications","Home")">
+                                <span>Publications</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+               
+                <li class="usa-nav__primary-item">
+                    <button type="button" class="usa-accordion__button usa-nav__link usa-current" aria-expanded="false" aria-controls="basic-nav-section-two">
+                                           
+                        <span>API</span>
+                    </button>
+                    <ul id="basic-nav-section-two" class="usa-nav__submenu" hidden="">
+                        <li class="usa-nav__submenu-item">
+                            <a href="@Url.Action("Index","NPGS", new { @context="technical-resources"})" class="usa-nav-link" ">
+                                <span>Overview</span>
+                            </a>
+                        </li>
+                        <li class="usa-nav__submenu-item">
+                            <a href="@Url.Action("Index","CGC")">
+                                <span>Specifications</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="usa-nav__primary-item">
+                    <a href="@Url.Action("Index","Contact")" target="_blank" rel="noopener noreferrer" class="usa-nav-link"><span>Contact</span></a>
+                </li>
+            </ul>
+            <div class="usa-nav__secondary usa-header--extended">
+                <ul class="usa-nav__secondary-links">
+                    <li></li>
+                    <li>
+                        <table>
+                            <tr>
+                                <td><img src="~/assets/img/USDA-Logo.png" style="padding:.1rem;" /></td>
+                                @*<td><strong>Agricultural Research Service</strong>
+                                        <br />
+                                        <span style="font-size:1.3rem;"><a class="usa-link" href="https://www.usda.gov/">Department of Agriculture</a></span>
+                                    </td>*@
+                            </tr>
+                        </table>
+                    </li>
+                </ul>
+                <section aria-label="Search component">
+                    @*<form class="usa-search usa-search--small" role="search">
+                            <label class="usa-sr-only" for="search-field">Search</label>
+                            <input class="usa-input"
+                                   id="search-field"
+                                   type="search"
+                                   name="search" />
+                            <button class="usa-button" type="submit">
+                                <img src="https://www.ars-grin.gov/assets/img/usa-icons-bg/search--white.svg"
+                                     class="usa-search__submit-icon"
+                                     alt="Search" />
+                            </button>
+                        </form>*@
+                </section>
+            </div>
+        </div>
+    </nav>
+</header>

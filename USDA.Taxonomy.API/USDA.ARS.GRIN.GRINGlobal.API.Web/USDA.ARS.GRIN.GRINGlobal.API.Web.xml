@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>USDA.Taxonomy.API.Web</name>
+    </assembly>
+    <members>
+        <member name="M:USDA.ARS.GRIN.GRINGlobal.API.Web.Controllers.SpeciesController.GetSpecies(System.Int32,System.Boolean)">
+            <summary>
+            Returns a single species (taxa) record.
+            </summary>
+            <param name="id">The GRIN-Global unique ID of the species.</param>
+            <param name="includeCommonNames">(Boolean) Indicates whether or not to include all common names associated with the species.</param>
+            <returns></returns>
+        </member>
+        <member name="M:USDA.ARS.GRIN.GRINGlobal.API.Web.Controllers.SpeciesController.SearchSpecies(System.Nullable{System.Int32},System.String,System.String,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Int32,System.Int32)">
+            <summary>
+            Searches for species taxa using one or more criteria.
+            </summary>
+            <param name="speciesId">The GRIN-defined unique ID of the taxon.</param>
+            <param name="genusName">All or part of the genus name.</param>
+            <param name="speciesName">All or part of the species epithet.</param>
+            <param name="includeAcceptedNamesOnly">Indicates whether or not to search only accepted names.</param>
+            <param name="includeCommonNames">(true/false) Indicates whether or not to retrieve common names associated with this taxon.</param>
+            <param name="includeDistributions">(true/false) Indicates whether or not to include geographic distributions associated with this taxon.</param>
+            <param name="includeSynonyms">(true/false) Indicates whether or not to include synonyms associated with this taxon.</param>
+            <param name="includeCitations">(true/false) Indicates whether or not to include ciations associated with this taxon.</param>
+            <param name="pageNumber">The page number at which to begin (default 1).</param>
+            <param name="pageSize">The desired size of each page of search results (maximum 25).</param>
+            <returns></returns>
+        </member>
+        <member name="M:USDA.ARS.GRIN.GRINGlobal.API.Web.Services.SpeciesRepository.GetSpeciesByIdAsync(System.Int32,System.Boolean)">
+            <summary>
+            Returns a single species record.
+            </summary>
+            <param name="id">The GRIN-Global-defined unique ID of the species.</param>
+            <param name="includeCommonNames">(Boolean) Indicates whether or not to include all common names associated with the species.</param>
+            <returns></returns>
+        </member>
+        <member name="M:USDA.ARS.GRIN.GRINGlobal.API.Web.Services.SpeciesRepository.SearchSpeciesAsync(System.Nullable{System.Int32},System.String,System.String,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Int32,System.Int32)">
+            <summary>
+            Search for taxa by one or more criteria
+            </summary>
+            <param name="speciesId"></param>
+            <param name="genusName">The name of the genus.</param>
+            <param name="speciesName">The species epithet.</param>
+            <param name="includeAcceptedNamesOnly"></param>
+            <param name="includeCommonNames"></param>
+            <param name="includeDistributions"></param>
+            <param name="includeSynonyms"></param>
+            <param name="includeCitations"></param>
+            <param name="pageNumber"></param>
+            <param name="pageSize"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

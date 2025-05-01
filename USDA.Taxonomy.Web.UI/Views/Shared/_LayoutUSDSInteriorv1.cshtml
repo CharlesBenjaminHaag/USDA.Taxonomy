@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USDA Taxonomy Portal</title>
+    <script src="https://npgstest.ars-grin.gov/NPGS/assets/uswds/dist/js/uswds-init.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://npgstest.ars-grin.gov/NPGS/assets/uswds/dist/css/uswds.css" />
+    
+    <!-- Leaflet-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin="" />
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    <script type="text/javascript" src="https://npgstest.ars-grin.gov/ggtools/plugins/jquery/jquery.min.js"></script>
+
+    <!-- Datatables -->
+    <link href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css" />
+
+    <script src="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.js" integrity="sha384-2Ul6oqy3mEjM7dBJzKOck1Qb/mzlO+k/0BQv3D3C7u+Ri9+7OBINGa24AeOv5rgu" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+</head>
+    <body>
+    <script src="https://npgstest.ars-grin.gov/NPGS/assets/uswds/dist/js/uswds.min.js"></script>
+        <a class="usa-skipnav" href="#main-content">Skip to main content</a>
+        @Html.Partial("~/Views/Shared/Partials/_USABanner.cshtml")
+        <div class="usa-overlay"></div>
+        @Html.Partial("~/Views/Shared/Partials/_USANavExtendedHeaderWithMegamenu.cshtml")
+    <main id="main-content">
+        @* @Html.Partial("~/Views/Shared/Partials/_USAHero.cshtml") *@
+        <section class="grid-container usa-section">
+            @RenderBody()
+        </section>
+    </main>
+        @Html.Partial("~/Views/Shared/Partials/_USAFooter.cshtml")
+    </body>
+</html>
+
+
+<script type="text/javascript">
+    var map = L.map('map').setView([51.505, -0.09], 13);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    $(function () {
+       $('#btnSearchGRINGlobal').on('click', function () {
+           var searchstring = $('#search');
+
+           alert("DEBUG " + searchstring.val());
+
+            
+           if (searchString.length > 0) {
+               window.location.href = "https://npgsweb.ars-grin.gov/gringlobal/search?q=" + searchString;
+           }
+       });
+    });
+</script>

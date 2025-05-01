@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USDA Taxonomy Portal</title>
+    <script src="https://npgstest.ars-grin.gov/NPGS/assets/uswds/dist/js/uswds-init.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://npgstest.ars-grin.gov/NPGS/assets/uswds/dist/css/uswds.css" />
+   
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    <script type="text/javascript" src="https://npgstest.ars-grin.gov/ggtools/plugins/jquery/jquery.min.js"></script>
+
+    <!-- Datatables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css" />
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+</head>
+    <body>
+    <script src="https://npgstest.ars-grin.gov/NPGS/assets/uswds/dist/js/uswds.min.js"></script>
+        <a class="usa-skipnav" href="#main-content">Skip to main content</a>
+        @Html.Partial("~/Views/Shared/Partials/_USABanner.cshtml")
+        <div class="usa-overlay"></div>
+        @Html.Partial("~/Views/Shared/Partials/_USANavExtendedHeaderWithMegamenu.cshtml")
+    <main id="main-content">
+        @Html.Partial("~/Views/Shared/Partials/_USAHero.cshtml")
+        <section class="grid-container usa-section">
+            @RenderBody()
+        </section>
+
+        <section class="grid-container usa-section">
+            <div class="grid-container">
+                <div class="grid-row">
+                    <div class="tablet:grid-col">tablet:grid-col</div>
+                    <div class="tablet:grid-col"><div id="map"></div></div>
+                    <div class="tablet:grid-col">tablet:grid-col</div>
+                </div>
+            </div>
+
+
+            
+        </section>
+       
+        <!-- blue graphically-headed section -->
+        <section class="usa-graphic-list usa-section usa-section--dark">
+            
+            
+            @* <div class="grid-container">
+                <div class="usa-graphic-list__row grid-row grid-gap">
+                    <div class="usa-media-block tablet:grid-col">
+                        <img class="usa-media-block__img" src="~/assets/uswds-2.10.0/img/npgs_plants_corn.jpg" alt="Alt text" style="height: 90px; width: 110px;">
+                        <div class="usa-media-block__body">
+                            <h2 class="usa-graphic-list__heading">
+                                @{
+                                    var link_plants = @Url.Action("Index", "NPGS");
+                                }
+                                <a href="@link_plants" 
+                                   rel="noreferrer" 
+                                   target="_blank" 
+                                   style="color: #02acca;">Plants (NPGS)</a>
+                            </h2>
+                            <p>
+                                The USDA-ARS National Plant Germplasm System (NPGS) is among the largest, most diverse collections of plant genetic resources in the world. The NPGS safeguards irreplaceable plant genetic resources in genebank units across 20 geographical locations, often in partnership with land-grant universities.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="usa-media-block tablet:grid-col">
+                        <img class="usa-media-block__img" src="~/assets/uswds-2.10.0/img/animals.jpg" alt="Alt text" style="height: 90px; width: 110px;">
+                        <div class="usa-media-block__body">
+                            <h2 class="usa-graphic-list__heading">
+                                @{
+                                    var link_animals = "https://agrin.ars.usda.gov/main_webpage_dev/ars?language=EN&record_source=US";
+                                }
+                                <a href="@link_animals" 
+                                   rel="noreferrer" 
+                                   target="_blank" 
+                                   style="color: #02acca;">
+                                    Animals (NAGP)
+                                </a>
+                            </h2>
+                            <p>
+                                The Agricultural Research Service’s National Animal Germplasm Program operates a genebank for livestock, aquatic, poultry and insect genetic resources. Exploring these pages you will find information concerning the genetic resources collection and other issues related to genetic resources and how the program operates.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="usa-graphic-list__row grid-row grid-gap">
+                    <div class="usa-media-block tablet:grid-col">
+                        <img class="usa-media-block__img" src="~/assets/uswds-2.10.0/img/NPGSMicrobial Penicillium spore head.jpg" alt="Alt text" style="height: 90px; width: 110px;">
+                        <div class="usa-media-block__body">
+                            <h2 class="usa-graphic-list__heading">
+                                <a href="@Url.Action("Index", "NPGS", new { @context = "microbial-collections"})" 
+                                   rel="noreferrer" 
+                                   target="_blank"
+                                   style="color: #02acca;">
+                                    Microbes
+                                </a>
+                            </h2>
+                            <p>
+                                The goal of this program is to ensure that the genetic diversity of agriculturally 
+                                important microorganisms is maintained to enhance and increase agricultural efficiency 
+                                and profitability.The program will collect, authenticate and characterize potentially 
+                                useful microbial germplasm; preserve microbial genetic diversity; and facilitate 
+                                distribution and utilization of microbial germplasm for research and industry.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="usa-media-block tablet:grid-col">
+                        <img class="usa-media-block__img" src="https://www.seeds.iastate.edu/files/resize/news/images/NGRACcmyksized%20copy-500x323.jpg" alt="Alt text" style="height: 90px; width: 110px;">
+                        <div class="usa-media-block__body">
+                            <h2 class="usa-graphic-list__heading">
+                                @{
+                                    var link_grin = Url.Action("Index", "Collections") + "#grin-collections";
+                                }
+                                <a href="https://nareeeab.ree.usda.gov/committees/national-genetic-resources-advisory-council" 
+                                   target="_blank" 
+                                   rel="noreferrer"
+                                   style="color: #02acca;">
+                                    NGRAC
+                                </a>
+                            </h2>
+                            <p>
+                                The National Genetic Resources Advisory Council (NGRAC) was established in 2012 as a permanent subcommittee of the NAREEE Advisory Board.
+
+                                NGRAC advises and makes recommendations to the Secretary of Agriculture and Director of ARS’ National Genetic Resources Program (NGRP). NGRP acquires, characterizes, conserves, documents, and distributes to scientists germplasm of all life forms important for food and agricultural production.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div> *@
+        </section>
+    </main>
+        @Html.Partial("~/Views/Shared/Partials/_USAFooter.cshtml")
+    </body>
+</html>
+
+
+<script type="text/javascript">
+    
+
+    $(function () {
+       $('#btnSearchGRINGlobal').on('click', function () {
+           var searchstring = $('#search');
+
+           alert("DEBUG " + searchstring.val());
+
+            
+           if (searchString.length > 0) {
+               window.location.href = "https://npgsweb.ars-grin.gov/gringlobal/search?q=" + searchString;
+           }
+       });
+    });
+</script>

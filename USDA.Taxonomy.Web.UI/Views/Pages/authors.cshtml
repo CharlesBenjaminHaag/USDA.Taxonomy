@@ -1,0 +1,242 @@
+﻿<style type="text/css">
+    /* Style the search input */
+    .dataTables_filter input {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 6px 10px;
+        font-size: 14px;
+        width: 250px;
+    }
+
+    /* Optional: align or space the search box */
+    .dataTables_filter {
+        float: right;
+        margin-bottom: 10px;
+    }
+
+    /* Style the entire pager container */
+    .dataTables_paginate {
+        margin-top: 10px;
+        text-align: right;
+    }
+
+        /* Style individual page links */
+        .dataTables_paginate a {
+            padding: 6px 12px;
+            margin: 0 2px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        /* Style current/active page link */
+        .dataTables_paginate .current {
+            background-color: #007bff;
+            color: white !important;
+            border: 1px solid #007bff;
+        }
+</style>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutUSDSInteriorv1.cshtml";
+}
+
+<section>
+    <aside _ngcontent-ng-c4243205887="" class="tablet:grid-col-2 sidebar">
+        <sidebar-menu _ngcontent-ng-c4243205887="" _nghost-ng-c3664415237="">
+            <div _ngcontent-ng-c3664415237="" class="usa-accordion sidebar-mobile">
+                <h3 _ngcontent-ng-c3664415237="" class="usa-accordion__heading">
+                    <button _ngcontent-ng-c3664415237="" type="button" aria-expanded="false" aria-controls="basic-search" class="usa-accordion__button">
+                        <span _ngcontent-ng-c3664415237="">Basic Search</span>
+                    </button>
+                </h3>
+                <div _ngcontent-ng-c3664415237="" id="basic-search" class="usa-accordion__content" hidden="">
+                    <global-search _ngcontent-ng-c3664415237="" _nghost-ng-c1436777933="">
+                        <div _ngcontent-ng-c1436777933="" class="usa-form">
+                            <div _ngcontent-ng-c1436777933="" class="select-wrapper">
+                                <label _ngcontent-ng-c1436777933="" class="usa-sr-only" for="search-options-7">Search By</label>
+                                <select _ngcontent-ng-c1436777933="" name="searchOptions" class="usa-select ng-untouched ng-pristine ng-valid" id="search-options-7">
+
+                                    <option _ngcontent-ng-c1436777933="" value="0: Scientific Name">
+                                        First Name
+                                    </option>
+
+                                    <option _ngcontent-ng-c1436777933="" value="1: Common Name">
+                                        Last Name
+                                    </option>
+
+                                    <option _ngcontent-ng-c1436777933="" value="2: Symbol">
+                                        Short Name
+                                    </option>
+
+                                    <option _ngcontent-ng-c1436777933="" value="3: Family">
+                                        Any
+                                    </option>
+                                    <!---->
+                                </select>
+                            </div>
+                            <div _ngcontent-ng-c1436777933="" class="select-input">
+                                <label _ngcontent-ng-c1436777933="" class="usa-sr-only" for="basic-search-input-7">Basic Search</label>
+                                <input _ngcontent-ng-c1436777933="" type="text" class="usa-input ng-untouched ng-pristine ng-valid" id="basic-search-input-7">
+                            </div>
+                            <div _ngcontent-ng-c1436777933="" class="button-wrapper">
+                                <button _ngcontent-ng-c1436777933="" class="usa-button">Search</button>
+                            </div>
+                        </div>
+                        <!---->
+                    </global-search>
+                    <ul _ngcontent-ng-c3664415237="" class="usa-list usa-list--unstyled margin-top-2">
+                        <li _ngcontent-ng-c3664415237="">
+                            <a _ngcontent-ng-c3664415237="" class="usa-link" href="/characteristics-search"><span _ngcontent-ng-c3664415237="">Characteristic Search</span></a>
+                        </li>
+                        <li _ngcontent-ng-c3664415237="">
+                            <a _ngcontent-ng-c3664415237="" class="usa-link" href="/duration-search"><span _ngcontent-ng-c3664415237="">Duration Search</span></a>
+                        </li>
+                        <li _ngcontent-ng-c3664415237="">
+                            <factsheet-plantguide-search _ngcontent-ng-c3664415237=""><a href="javascript:void(0)" tabindex="0" class="usa-link"><span>Fact Sheets/Plant Guides</span></a></factsheet-plantguide-search>
+                        </li>
+                        <li _ngcontent-ng-c3664415237="">
+                            <a _ngcontent-ng-c3664415237="" class="usa-link" href="/group-search"><span _ngcontent-ng-c3664415237="">Group Search</span></a>
+                        </li>
+                        <li _ngcontent-ng-c3664415237="">
+                            <a _ngcontent-ng-c3664415237="" class="usa-link" href="/growth-habit-search"><span _ngcontent-ng-c3664415237="">Growth Habit Search</span></a>
+                        </li>
+                        <li _ngcontent-ng-c3664415237="">
+                            <a _ngcontent-ng-c3664415237="" class="usa-link" href="/image-search"><span _ngcontent-ng-c3664415237="">Image Search</span></a>
+                        </li>
+                        <li _ngcontent-ng-c3664415237="">
+                            <a _ngcontent-ng-c3664415237="" class="usa-link" href="/noxious-invasive-search"><span _ngcontent-ng-c3664415237="">Invasive/Noxious Search</span></a>
+                        </li>
+                        <li _ngcontent-ng-c3664415237="">
+                            <a _ngcontent-ng-c3664415237="" class="usa-link" href="/rarity-search"><span _ngcontent-ng-c3664415237="">Rarity Search</span></a>
+                        </li>
+                        <li _ngcontent-ng-c3664415237="">
+                            <a _ngcontent-ng-c3664415237="" class="usa-link" href="/state-search"><span _ngcontent-ng-c3664415237="">State Search</span></a>
+                        </li>
+                        <li _ngcontent-ng-c3664415237="">
+                            <a _ngcontent-ng-c3664415237="" class="usa-link" href="/wetland-search"><span _ngcontent-ng-c3664415237="">Wetland Search</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!----><div _ngcontent-ng-c3664415237="" class="sidebar-desktop">
+                <global-search _ngcontent-ng-c3664415237="" _nghost-ng-c1436777933="">
+                    <div _ngcontent-ng-c1436777933="" class="usa-form">
+                        <div _ngcontent-ng-c1436777933="" class="select-wrapper">
+                            <label _ngcontent-ng-c1436777933="" class="usa-sr-only" for="search-options-9">Search By</label>
+                            <select _ngcontent-ng-c1436777933="" name="searchOptions" class="usa-select ng-untouched ng-pristine ng-valid" id="search-options-9">
+
+                                <option _ngcontent-ng-c1436777933="" value="0: Scientific Name">
+                                    Scientific Name
+                                </option>
+
+                                <option _ngcontent-ng-c1436777933="" value="1: Common Name">
+                                    Common Name
+                                </option>
+
+                                <option _ngcontent-ng-c1436777933="" value="2: Symbol">
+                                    Symbol
+                                </option>
+
+                                <option _ngcontent-ng-c1436777933="" value="3: Family">
+                                    Family
+                                </option>
+                                <!---->
+                            </select>
+                        </div>
+                        <div _ngcontent-ng-c1436777933="" class="select-input">
+                            <label _ngcontent-ng-c1436777933="" class="usa-sr-only" for="basic-search-input-9">Basic Search</label>
+                            <input _ngcontent-ng-c1436777933="" type="text" class="usa-input ng-untouched ng-pristine ng-valid" id="basic-search-input-9">
+                        </div>
+                        <div _ngcontent-ng-c1436777933="" class="button-wrapper">
+                            <button _ngcontent-ng-c1436777933="" class="usa-button">Search</button>
+                        </div>
+                    </div>
+                    <!---->
+                </global-search>
+                <ul _ngcontent-ng-c3664415237="" class="usa-list usa-list--unstyled margin-top-2">
+                    <li _ngcontent-ng-c3664415237="">
+                        <a _ngcontent-ng-c3664415237="" class="usa-link" href="/characteristics-search"><span _ngcontent-ng-c3664415237="">Characteristic Search</span></a>
+                    </li>
+                    <li _ngcontent-ng-c3664415237="">
+                        <a _ngcontent-ng-c3664415237="" class="usa-link" href="/duration-search"><span _ngcontent-ng-c3664415237="">Duration Search</span></a>
+                    </li>
+                    <li _ngcontent-ng-c3664415237="">
+                        <factsheet-plantguide-search _ngcontent-ng-c3664415237=""><a href="javascript:void(0)" tabindex="0" class="usa-link"><span>Fact Sheets/Plant Guides</span></a></factsheet-plantguide-search>
+                    </li>
+                    <li _ngcontent-ng-c3664415237="">
+                        <a _ngcontent-ng-c3664415237="" class="usa-link" href="/group-search"><span _ngcontent-ng-c3664415237="">Group Search</span></a>
+                    </li>
+                    <li _ngcontent-ng-c3664415237="">
+                        <a _ngcontent-ng-c3664415237="" class="usa-link" href="/growth-habit-search"><span _ngcontent-ng-c3664415237="">Growth Habit Search</span></a>
+                    </li>
+                    <li _ngcontent-ng-c3664415237="">
+                        <a _ngcontent-ng-c3664415237="" class="usa-link" href="/image-search"><span _ngcontent-ng-c3664415237="">Image Search</span></a>
+                    </li>
+                    <li _ngcontent-ng-c3664415237="">
+                        <a _ngcontent-ng-c3664415237="" class="usa-link" href="/noxious-invasive-search"><span _ngcontent-ng-c3664415237="">Invasive/Noxious Search</span></a>
+                    </li>
+                    <li _ngcontent-ng-c3664415237="">
+                        <a _ngcontent-ng-c3664415237="" class="usa-link" href="/rarity-search"><span _ngcontent-ng-c3664415237="">Rarity Search</span></a>
+                    </li>
+                    <li _ngcontent-ng-c3664415237="">
+                        <a _ngcontent-ng-c3664415237="" class="usa-link" href="/state-search"><span _ngcontent-ng-c3664415237="">State Search</span></a>
+                    </li>
+                    <li _ngcontent-ng-c3664415237="">
+                        <a _ngcontent-ng-c3664415237="" class="usa-link" href="/wetland-search"><span _ngcontent-ng-c3664415237="">Wetland Search</span></a>
+                    </li>
+                </ul>
+                <!----><!---->
+            </div>
+        </sidebar-menu>
+    </aside>
+</section>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const genusName = urlParams.get('genusName'); // or whatever param you’re looking for
+        const speciesName = urlParams.get('speciesName'); // or whatever param you’re looking for
+        loadTable(genusName, speciesName);
+    });
+
+    function loadTable(genusName, speciesName) {
+        $('#speciesListTable').DataTable({
+            destroy: true,
+            ajax: {
+                url: 'https://npgstest.ars-grin.gov/taxonomy.api/api/species',
+                data: { 
+                    genusName: genusName,
+                    speciesName: speciesName
+                },
+                dataSrc: ''
+            },
+            columns: [
+                { data: 'taxonomy_species_id' },
+                { data: 'name' },
+                { data: 'protologue' },
+                { data: 'species_authority' },
+                { data: 'name_verified_date' }
+            ],
+            dom: 'Bfrtip', // Buttons, filter, table, pagination
+            buttons: [
+                'copyHtml5',
+                    {
+                      extend: 'excelHtml5',
+                      title: 'User_Report_' + new Date().toISOString().split('T')[0]
+                    },
+                'csvHtml5',
+                'print'
+            ],
+            responsive: true,
+            paging: true,
+            searching: true,
+            ordering: true,
+            language: {
+                emptyTable: "There are no taxa that match your search criteria."
+            }
+        });
+    }
+</script>

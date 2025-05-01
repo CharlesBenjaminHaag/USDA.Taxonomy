@@ -1,0 +1,278 @@
+﻿<style type="text/css">
+    /* Style the search input */
+    .dataTables_filter input {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 6px 10px;
+        font-size: 14px;
+        width: 250px;
+    }
+
+    /* Optional: align or space the search box */
+    .dataTables_filter {
+        float: right;
+        margin-bottom: 10px;
+    }
+
+    /* Style the entire pager container */
+    .dataTables_paginate {
+        margin-top: 10px;
+        text-align: right;
+    }
+
+    /* Style individual page links */
+    .dataTables_paginate a {
+        padding: 6px 12px;
+        margin: 0 2px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        text-decoration: none;
+        color: #007bff;
+    }
+
+    /* Style current/active page link */
+    .dataTables_paginate .current {
+        background-color: #007bff;
+        color: white !important;
+        border: 1px solid #007bff;
+    }
+</style>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutUSDSInteriorv1.cshtml";
+}
+
+<div class="usa-section">
+    <div class="grid-container">
+        <div class="grid-row grid-gap">
+            <div class="usa-layout-docs__sidenav display-none desktop:display-block desktop:grid-col-3">
+
+
+                <nav aria-label="Secondary navigation">
+
+
+
+                    <ul class="usa-sidenav">
+                        <li class="usa-sidenav__item">
+                            <a href="javascript:void(0);">Parent link</a>
+                        </li>
+                        <li class="usa-sidenav__item">
+                            <a href="javascript:void(0);" class="usa-current">Current page</a>
+
+
+
+                            <ul class="usa-sidenav__sublist">
+                                <li class="usa-sidenav__item">
+                                    <a href="javascript:void(0);">Child link</a>
+                                </li>
+                                <li class="usa-sidenav__item">
+                                    <a href="javascript:void(0);" class="usa-current">Child link</a>
+
+
+
+                                    <ul class="usa-sidenav__sublist">
+                                        <li class="usa-sidenav__item">
+                                            <a href="javascript:void(0);">Grandchild link</a>
+                                        </li>
+                                        <li class="usa-sidenav__item">
+                                            <a href="javascript:void(0);" class="usa-current">Grandchild link</a>
+                                        </li>
+                                        <li class="usa-sidenav__item">
+                                            <a href="javascript:void(0);">Grandchild link</a>
+                                        </li>
+                                    </ul>
+
+                                </li>
+                                <li class="usa-sidenav__item">
+                                    <a href="javascript:void(0);">Child link</a>
+                                </li>
+                            </ul>
+
+                        </li>
+                        <li class="usa-sidenav__item">
+                            <a href="javascript:void(0);">Parent link</a>
+                        </li>
+                    </ul>
+
+                </nav>
+            </div>
+
+            <main class="desktop:grid-col-9 usa-prose" id="main-content">
+
+                <h1>Page heading (h1)</h1>
+                <p class="usa-intro">The page heading communicates the main focus of the page. Make your page heading descriptive and keep it succinct.</p>
+                <h2 id="section-heading-h2">Section heading (h2)</h2>
+                <p>These headings introduce, respectively, sections and subsections within your body copy. As you create these headings, follow the same guidelines that you use when writing section headings: Be succinct, descriptive, and precise.</p>
+                <h3 id="section-heading-h3">Subsection heading (h3)</h3>
+                <p>The particulars of your body copy will be determined by the topic of your page. Regardless of topic, it’s a good practice to follow the inverted pyramid structure when writing copy: Begin with the information that’s most important to your users and then present information of less importance.</p>
+                <p>Keep each section and subsection focused — a good approach is to include one theme (topic) per section.</p>
+                <h4 id="section-heading-h4">Subsection heading (h4)</h4>
+                <p>Use the side navigation menu to help your users quickly skip to different sections of your page. The menu is best suited to displaying a hierarchy with one to three levels and, as we mentioned, to display the sub-navigation of a given page.</p>
+                <p>Read the full documentation on our side navigation on the component page.</p>
+            </main>
+        </div>
+
+
+        <div class="usa-layout-docs__sidenav desktop:display-none">
+
+
+            <nav aria-label="Secondary navigation">
+
+
+
+                <ul class="usa-sidenav">
+                    <li class="usa-sidenav__item">
+                        <a href="javascript:void(0);">Parent link</a>
+                    </li>
+                    <li class="usa-sidenav__item">
+                        <a href="javascript:void(0);" class="usa-current">Current page</a>
+
+
+
+                        <ul class="usa-sidenav__sublist">
+                            <li class="usa-sidenav__item">
+                                <a href="javascript:void(0);">Child link</a>
+                            </li>
+                            <li class="usa-sidenav__item">
+                                <a href="javascript:void(0);" class="usa-current">Child link</a>
+
+
+
+                                <ul class="usa-sidenav__sublist">
+                                    <li class="usa-sidenav__item">
+                                        <a href="javascript:void(0);">Grandchild link</a>
+                                    </li>
+                                    <li class="usa-sidenav__item">
+                                        <a href="javascript:void(0);" class="usa-current">Grandchild link</a>
+                                    </li>
+                                    <li class="usa-sidenav__item">
+                                        <a href="javascript:void(0);">Grandchild link</a>
+                                    </li>
+                                </ul>
+
+                            </li>
+                            <li class="usa-sidenav__item">
+                                <a href="javascript:void(0);">Child link</a>
+                            </li>
+                        </ul>
+
+                    </li>
+                    <li class="usa-sidenav__item">
+                        <a href="javascript:void(0);">Parent link</a>
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+@* 
+<form class="usa-form usa-form--large">
+  <fieldset class="usa-fieldset">
+    <legend class="usa-legend usa-legend--large">Mailing address</legend>
+    <p>
+      Required fields are marked with an asterisk (<abbr
+        title="required"
+        class="usa-hint usa-hint--required"
+        >*</abbr
+      >).
+    </p>
+    <label class="usa-label" for="mailing-address-1">Street address</label>
+    <input class="usa-input" id="mailing-address-1" name="mailing-address-1" />
+    <label class="usa-label" for="mailing-address-2"
+      >Street address line 2</label
+    >
+    <input class="usa-input" id="mailing-address-2" name="mailing-address-2" />
+    <label class="usa-label" for="city"
+      >City
+      <abbr title="required" class="usa-hint usa-hint--required">*</abbr></label
+    >
+    <input class="usa-input" id="city" name="city" required />
+    <label class="usa-label" for="state"
+      >State, territory, or military post
+      <abbr title="required" class="usa-hint usa-hint--required">*</abbr></label>
+   
+    <label class="usa-label" for="zip">ZIP code</label>
+    <input
+      class="usa-input usa-input--medium"
+      id="zip"
+      name="zip"
+      pattern="[\d]{5}(-[\d]{4})?"
+    />
+    <label class="usa-label" for="urbanization"
+      >Urbanization (Puerto Rico only)</label>
+    <input class="usa-input" id="urbanization" name="urbanization" />
+  </fieldset>
+</form> *@
+@* <section>
+    <table class="usa-table usa-table--striped" width="100%" id="speciesListTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name (Epithet)</th>
+                <th>Protologue</th>
+                <th>Authority</th>
+                <th>Name Verified Date</th>
+            </tr>
+        </thead>
+    </table>
+</section> *@
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const genusName = urlParams.get('genus_name'); // or whatever param you’re looking for
+        const speciesName = urlParams.get('species_name'); // or whatever param you’re looking for
+        loadTable(genusName, speciesName);
+    });
+
+    function loadTable(genusName, speciesName) {
+        var table = $('#speciesListTable').DataTable({
+            destroy: true,
+            ajax: {
+                url: 'https://npgstest.ars-grin.gov/taxonomy.api/api/species',
+                data: { 
+                    genusName: genusName,
+                    speciesName: speciesName
+                },
+                dataSrc: ''
+            },
+            columns: [
+                { data: 'taxonomy_species_id' },
+                { data: 'name' },
+                { data: 'protologue' },
+                { data: 'species_authority' },
+                { data: 'name_verified_date' }
+            ],
+            dom: 'Bfrtip', // Buttons, filter, table, pagination
+            buttons: [
+                'copyHtml5',
+                    {
+                      extend: 'excelHtml5',
+                      title: 'User_Report_' + new Date().toISOString().split('T')[0]
+                    },
+                'csvHtml5',
+                'print'
+            ],
+            responsive: true,
+            paging: true,
+            searching: true,
+            ordering: true,
+            language: {
+                emptyTable: "There are no taxa that match your search criteria."
+            }
+        });
+
+            // Show the overlay when request starts
+        table.on('preXhr.dt', function () {
+          $('#loadingOverlay').show();
+        });
+
+    // Hide the overlay when request finishes
+    table.on('xhr.dt', function () {
+      $('#loadingOverlay').hide();
+    });
+    }
+</script>

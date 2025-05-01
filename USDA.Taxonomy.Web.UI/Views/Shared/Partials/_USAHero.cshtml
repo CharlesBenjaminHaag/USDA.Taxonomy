@@ -1,0 +1,71 @@
+﻿
+<section 
+         class="usa-hero" 
+         aria-label="Introduction" 
+         style="background-image: url('https://www.usda.gov/sites/default/files/styles/basic_page_hero_1366x560/public/hero-blog-topic-plants.jpg?h=39f0bb55&itok=QtA5v3Sa'); ">
+
+
+   
+
+
+    <div class="grid-container">
+
+        <div class="usa-hero__callout" style="background-color:green;">
+            <h1 class="usa-hero__heading">
+                <span class="usa-hero__heading--alt">Taxonomy Search</span>
+                <span style="color:#cee902;">Search over 300,000 taxa, subtaxa, and related data</span>
+            </h1>
+            @* <p>
+                Search over <strong>600,000</strong> active accessions 
+            </p> *@
+            <section aria-label="Default search component">
+                <form id="globalSearchForm" class="usa-search " role="search" action="/Home/Search">
+                    <label class="usa-sr-only" for="search-field">Search</label>
+                    <input class="usa-input" id="search-field" type="search" name="search">
+                    <button id="btnSearchGlobal" class="usa-button" type="submit">
+                        <span class="usa-search__submit-text">Search</span>
+                    </button>
+                </form>
+            </section>
+        </div>
+
+
+
+        @* <div class="usa-hero__callout">
+            <h1 class="usa-hero__heading">
+                <span class="usa-hero__heading--alt">Search Taxa</span>
+            </h1>
+            <div class="grid-row grid-gap">
+                <div class="tablet:grid-col-auto">
+                    <img class="usa-media-block__img" src="~/assets/uswds-2.10.0/img/npgs_plants_corn.jpg" alt="Alt text" style="height: 120px; width: 140px;">
+                    <p style="font-weight:bold; margin-top:0px; margin-bottom:0px; text-align:center;"><a href="@Url.Action("Index","NPGS")" style="color: white;">Plants (NPGS)</a></p>
+                </div>
+                <div class="tablet:grid-col-auto">
+                    <img class="usa-media-block__img" src="~/assets/uswds-2.10.0/img/animals.jpg" alt="Alt text" style="height: 120px; width: 140px;">
+                    <p style="font-weight: bold; margin-top: 0px; margin-bottom: 0px; text-align: center;">
+                        <a href="https://npgstest.ars-grin.gov/NPGS/main_webpage_dev/ars?language=EN&record_source=US" target="_blank" rel="noopener noreferrer" class="usa-nav-link npgs-link-external" style="color: white;">Animals (NAGP) ↗</a>
+                    </p>
+                </div>
+                <div class="tablet:grid-col-auto">
+                    <img class="usa-media-block__img" src="~/assets/uswds-2.10.0/img/NPGSMicrobial Penicillium spore head.jpg" alt="Alt text" style="height: 120px; width: 140px;">
+                    <p style="font-weight: bold; margin-top: 0px; margin-bottom: 0px; text-align: center;">
+                        <a href="@Url.Action("Index","NPGS", new { @context = "microbial-collections"})" style="color: white;">Microbes</a>
+                    </p>
+                </div>
+            </div>
+        </div> *@
+    </div>
+</section>
+<script type="text/javascript">
+    $(function () {
+        $('#btnSearchGlobal').on('click', function (e) {
+            e.preventDefault();
+            var searchString = globalSearchForm.search.value;
+            //Need?
+            //window.location.href = `/Users/Details?id=${id}&param2=${param2}`;
+            if (searchString.length > 0) {
+                  window.location.href = "/Home/Species?species_name=" + searchString;
+            }
+        });
+    });
+</script>

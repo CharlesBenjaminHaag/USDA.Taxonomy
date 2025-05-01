@@ -1,0 +1,105 @@
+﻿<style type="text/css">
+    /* Style the search input */
+    .dataTables_filter input {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 6px 10px;
+        font-size: 14px;
+        width: 250px;
+    }
+
+    /* Optional: align or space the search box */
+    .dataTables_filter {
+        float: right;
+        margin-bottom: 10px;
+    }
+
+    /* Style the entire pager container */
+    .dataTables_paginate {
+        margin-top: 10px;
+        text-align: right;
+    }
+
+        /* Style individual page links */
+        .dataTables_paginate a {
+            padding: 6px 12px;
+            margin: 0 2px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        /* Style current/active page link */
+        .dataTables_paginate .current {
+            background-color: #007bff;
+            color: white !important;
+            border: 1px solid #007bff;
+        }
+</style>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutUSDSInteriorv1.cshtml";
+}
+
+<section>
+    <table class="usa-table usa-table--striped" width="100%" id="speciesListTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name (Epithet)</th>
+                <th>Protologue</th>
+                <th>Authority</th>
+                <th>Name Verified Date</th>
+            </tr>
+        </thead>
+    </table>
+</section>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const genusName = urlParams.get('genusName'); // or whatever param you’re looking for
+        const speciesName = urlParams.get('speciesName'); // or whatever param you’re looking for
+        loadTable(genusName, speciesName);
+    });
+
+    function loadTable(genusName, speciesName) {
+        $('#speciesListTable').DataTable({
+            destroy: true,
+            ajax: {
+                url: 'https://npgstest.ars-grin.gov/taxonomy.api/api/species',
+                data: { 
+                    genusName: genusName,
+                    speciesName: speciesName
+                },
+                dataSrc: ''
+            },
+            columns: [
+                { data: 'taxonomy_species_id' },
+                { data: 'name' },
+                { data: 'protologue' },
+                { data: 'species_authority' },
+                { data: 'name_verified_date' }
+            ],
+            dom: 'Bfrtip', // Buttons, filter, table, pagination
+            buttons: [
+                'copyHtml5',
+                    {
+                      extend: 'excelHtml5',
+                      title: 'User_Report_' + new Date().toISOString().split('T')[0]
+                    },
+                'csvHtml5',
+                'print'
+            ],
+            responsive: true,
+            paging: true,
+            searching: true,
+            ordering: true,
+            language: {
+                emptyTable: "There are no taxa that match your search criteria."
+            }
+        });
+    }
+</script>
