@@ -36,8 +36,22 @@
         <div class="usa-overlay"></div>
         @Html.Partial("~/Views/Shared/Partials/_USANavExtendedHeaderWithMegamenu.cshtml")
     <main id="main-content">
-        @* @Html.Partial("~/Views/Shared/Partials/_USAHero.cshtml") *@
-        <section class="grid-container usa-section">
+        <section
+            class="usa-hero" 
+            aria-label="Introduction" 
+@*             style="background-image: url('https://www.ars-grin.gov/assets/img/usa-hero/Field-RoundBales-Sunset_AdobeStock_238038228.jpeg');">
+ *@         style="background-color:green;">   
+            <div class="grid-container" style="max-width:84rem;">
+                <div id="hero-callout" class="usa-hero__callout" style="background-color:green;">
+                    <h1 class="usa-hero__heading">
+                        <span class="usa-hero__heading--alt">
+                            <span id="hero-title">@ViewBag.PageTitle</span>
+                        </span>
+                    </h1>
+                </div>
+            </div>
+        </section>
+        <section class="grid-container usa-section" style="padding-top:0px;">
             @RenderBody()
         </section>
     </main>

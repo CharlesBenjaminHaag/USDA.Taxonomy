@@ -52,8 +52,12 @@ namespace USDA.ARS.GRIN.GRINGlobal.API.Web.Models
  
         public string genus_name { get; set; }
 
-        public ICollection<CommonNameDTO> taxonomy_common_name { get; set; } = new List<CommonNameDTO>();
+        public ICollection<CommonNameDTO> common_names { get; set; } = new List<CommonNameDTO>();
 
-        public ICollection<CitationDTO> citation { get; set; } = new List<CitationDTO>();
+        public ICollection<CitationDTO> citations { get; set; } = new List<CitationDTO>();
+        
+        public ICollection<DistributionDTO> distributions { get; set; } = new List<DistributionDTO>();
+
+        public ICollection<SpeciesSynonymDTO> synonyms { get; set; } = new List<SpeciesSynonymDTO>();
     }
 }

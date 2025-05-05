@@ -97,24 +97,31 @@ namespace USDA.ARS.GRIN.GRINGlobal.API.Web.Controllers
                         accepted_name = (species.Inversecurrent_taxonomy_species.Count > 0) ? species.Inversecurrent_taxonomy_species.First().name : null,
                         protologue = species.protologue,
                         species_authority = species.species_authority,
-                        taxonomy_common_name = (from cn in species.taxonomy_common_name
-                                                select new CommonNameDTO
-                                                {
-                                                    taxonomy_common_name_id = cn.taxonomy_common_name_id,
-                                                    name = cn.name,
-                                                    language_description = cn.language_description,
-                                                }).ToList(),
-                        citation = (from ct in species.citation
-                                    select new CitationDTO
-                                    {
-                                        citation_id = ct.citation_id,
-                                        title = ct.title,
-                                        description = ct.description,
-                                        citation_year = ct.citation_year,
-                                        literature_abbreviation = ct.literature.abbreviation,
-                                        literature_standard_abbreviation = ct.literature.standard_abbreviation,
-                                        literature_title = ct.literature.reference_title
-                                    }).ToList()
+                        common_names = (from cn in species.taxonomy_common_name
+                                        select new CommonNameDTO
+                                        {
+                                            taxonomy_common_name_id = cn.taxonomy_common_name_id,
+                                            name = cn.name,
+                                            language_description = cn.language_description,
+                                        }).ToList(),
+                        citations = (from ct in species.citation
+                                     select new CitationDTO
+                                     {
+                                         citation_id = ct.citation_id,
+                                         title = ct.title,
+                                         description = ct.description,
+                                         citation_year = ct.citation_year,
+                                         literature_abbreviation = ct.literature != null ? ct.literature.abbreviation : null,
+                                         literature_standard_abbreviation = ct.literature != null ? ct.literature.standard_abbreviation : null,
+                                         literature_title = ct.literature != null ? ct.literature.reference_title : null,
+                                     }).ToList(),
+                        distributions = (from d in species.taxonomy_geography_map
+                                         select new DistributionDTO
+                                         {
+                                             country_code = d.geography?.country_code,
+                                             admin_1 = (d.geography != null) ? d.geography.adm1 : null,
+                                             citation_text = (d.citation != null && d.citation.literature != null) ? d.citation.literature.reference_title + d.citation.literature.editor_author_name : null
+                                        }).ToList()
                     };
                 }).ToList();
 
