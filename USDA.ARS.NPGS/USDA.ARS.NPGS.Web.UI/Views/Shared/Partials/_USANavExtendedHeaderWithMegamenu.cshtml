@@ -1,0 +1,162 @@
+﻿<header class="usa-header usa-header--extended">
+    <div class="usa-navbar">
+        <div class="usa-logo" id="-logo">
+            <em class="usa-logo__text">
+                <a href="/" title="<Project title>">
+                    USDA-ARS Genetic Resources Collections
+                </a>
+            </em>
+        </div>
+        <button type="button" class="usa-menu-btn">Menu</button>
+    </div>
+    <nav aria-label="Primary navigation" class="usa-nav">
+        <div class="usa-nav__inner">
+            <button type="button" class="usa-nav__close">
+                <img src="https://www.ars-grin.gov/assets/img/usa-icons/close.svg" role="img" alt="Close" />
+            </button>
+            <ul class="usa-nav__primary usa-accordion">
+                <li class="usa-nav__primary-item">
+                    <a href="@Url.Action("Index","Home")" class="usa-nav-link"><span>Home</span></a>
+                </li>
+                <li class="usa-nav__primary-item">
+                    <button type="button" class="usa-accordion__button usa-nav__link usa-current" aria-expanded="false" aria-controls="basic-nav-section-collections">
+                        <span>Collections</span>
+                    </button>
+                    <ul id="basic-nav-section-collections" class="usa-nav__submenu" hidden="">
+                        <li class="usa-nav__submenu-item">
+                            <a href="@Url.Action("NPGS","Pages")" class="usa-nav-link">
+                                <span>Plants (NPGS)</span>
+                            </a>
+                        </li>
+                        <li class="usa-nav__submenu-item">
+                            <a href="https://agrin.ars.usda.gov/main_webpage_dev/ars?language=EN&record_source=US" target="_blank" rel="noreferrer">
+                                <span>Animals (NAGP) ↗</span>
+                            </a>
+                        </li>
+                        <li class="usa-nav__submenu-item">
+                            <a href="@Url.Action("Microbes","Pages")">
+                                <span>Microbes</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                @*<li class="usa-nav__primary-item">
+                    <button type="button" class="usa-accordion__button usa-nav__link usa-current" aria-expanded="false" aria-controls="basic-nav-section-npgs">
+                        <span>NPGS</span>
+                    </button>
+                    <ul id="basic-nav-section-npgs" class="usa-nav__submenu" hidden="">
+                        <li class="usa-nav__submenu-item">
+                            <a href="@Url.Action("Index","NPGS")" class="usa-nav-link">
+                                <span>Overview</span>
+                            </a>
+                        </li>
+                        <li class="usa-nav__submenu-item">
+                            <a href="https://www.ars.usda.gov/crop-production-and-protection/plant-genetic-resources-genomics-and-genetic-improvement/docs/npgs-plan/" target="_blank" rel="noreferrer">
+                                <span>Strategic Plan ↗</span>
+                            </a>
+                        </li>
+                        <li class="usa-nav__submenu-item">
+                            <a href="@Url.Action("Index","NPGS", new { @context="directory"})">
+                                <span>NPGS Directory</span>
+                            </a>
+                        </li>
+                        <li class="usa-nav__submenu-item">
+                            <a href="@Url.Action("Index","NPGS", new { @context="citing-the-npgs"})">
+                                <span>Citing the NPGS</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>*@
+                <li class="usa-nav__primary-item">
+                    <button type="button" class="usa-accordion__button usa-nav__link usa-current" aria-expanded="false" aria-controls="basic-nav-section-two">
+                                           
+                        <span>Technical Resources</span>
+                    </button>
+                    <ul id="basic-nav-section-two" class="usa-nav__submenu" hidden="">
+                        <li class="usa-nav__submenu-item">
+                            <a href="@Url.Action("TechnicalResources","Pages")" class="usa-nav-link" ">
+                                <span>Overview</span>
+                            </a>
+                        </li>
+                        <li class="usa-nav__submenu-item">
+                            <a href="@Url.Action("CGC","Pages")">
+                                <span>Crop Germplasm Commmittees</span>
+                            </a>
+                        </li>
+                        <li class="usa-nav__submenu-item">
+                            <a href="@Url.Action("PVP","Pages")">
+                                <span>Plant Variety Protection</span>
+                            </a>
+                        </li>
+                        <li class="usa-nav__submenu-item npgs-external">
+                            <a href="https://www.ars.usda.gov/northeast-area/beltsville-md-barc/beltsville-agricultural-research-center/national-germplasm-resources-laboratory/docs/plant-inventory-books/" target="_blank" rel="noreferrer">
+                                <span>Plant Inventory Books ↗</span>
+                            </a>
+                        </li>
+                        <li class="usa-nav__submenu-item">
+                            <a href="https://biocollections.ars.usda.gov/" target="_blank">ARS Biocollections Portal ↗</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="usa-nav__primary-item">
+                    <a href="https://nareeeab.ree.usda.gov/committees/national-genetic-resources-advisory-council" target="_blank" rel="noopener noreferrer" class="usa-nav-link"><span>NGRAC ↗</span></a>
+                </li>
+                @*<li class="usa-nav__primary-item">
+                    <button type="button" class="usa-accordion__button usa-nav__link usa-current" aria-expanded="false" aria-controls="basic-nav-section-three">
+                        <span>Educational Resources</span>
+                    </button>
+                    <ul id="basic-nav-section-three" class="usa-nav__submenu" hidden="">
+                        <li class="usa-nav__submenu-item">
+                            <a href="https://grin-u.org/" target="_blank" rel="noopener noreferrer" class="usa-nav-link"><span>GRIN-U ↗</span> </a>
+                        </li>
+                    </ul>
+                </li>*@
+                @*<li class="usa-nav__primary-item">
+                    <a href="@Url.Action("Index","NPGS")" class="usa-nav-link" "><span>Plants (NPGS)</span> </a>
+                </li>
+                <li class="usa-nav__primary-item">
+                    <a href="https://agrin.ars.usda.gov/main_webpage_dev/ars?language=EN&record_source=US" target="_blank" rel="noopener noreferrer" class="usa-nav-link"><span>Animals (NAGP)</span> </a>
+                </li>
+                <li class="usa-nav__primary-item">
+                    <a href="@Url.Action("Index","NPGS", new { @context = "microbial-collections"})" class="usa-nav-link"><span>Microbes</span> </a>
+                </li>*@
+                        @*<li class="usa-nav__primary-item">
+                    <a href="https://grin-u.org/" target="_blank" rel="noopener noreferrer" class="usa-nav-link"><span>GRIN-U</span> </a>
+                </li>*@
+                <li class="usa-nav__primary-item">
+                    <a href="@Url.Action("Index","Contact")" target="_blank" rel="noopener noreferrer" class="usa-nav-link"><span>Contact</span></a>
+                </li>
+            </ul>
+            <div class="usa-nav__secondary usa-header--extended">
+                <ul class="usa-nav__secondary-links">
+                    <li></li>
+                    <li>
+                        <table>
+                            <tr>
+                                <td><img src="/img/USDA-Logo.png" style="padding:.1rem;" /></td>
+                                @*<td><strong>Agricultural Research Service</strong>
+                                        <br />
+                                        <span style="font-size:1.3rem;"><a class="usa-link" href="https://www.usda.gov/">Department of Agriculture</a></span>
+                                    </td>*@
+                            </tr>
+                        </table>
+                    </li>
+                </ul>
+                <section aria-label="Search component">
+                    @*<form class="usa-search usa-search--small" role="search">
+                            <label class="usa-sr-only" for="search-field">Search</label>
+                            <input class="usa-input"
+                                   id="search-field"
+                                   type="search"
+                                   name="search" />
+                            <button class="usa-button" type="submit">
+                                <img src="https://www.ars-grin.gov/assets/img/usa-icons-bg/search--white.svg"
+                                     class="usa-search__submit-icon"
+                                     alt="Search" />
+                            </button>
+                        </form>*@
+                </section>
+            </div>
+        </div>
+    </nav>
+</header>

@@ -1,0 +1,144 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUSWDSInterior.cshtml";
+}
+<div class="usa-section">
+    <div class="grid-container">
+        <div class="grid-row grid-gap">
+            <div class="usa-layout-docs__sidenav desktop:grid-col-2">
+                @Html.Partial("~/Views/Shared/Partials/_SideNav.cshtml")
+            </div>
+            <main class="usa-layout-docs__main desktop:grid-col-10 usa-prose usa-layout-docs" id="main-content">
+                <h1>USDA-ARS National Plant Germplasm System (NPGS) </h1>
+                <div class="video-wrapper">
+                    <div class="video-container">
+                        <iframe width="560"
+                                height="315"
+                                src="https://www.youtube.com/embed/uHOclGNELuw?si=4Emk1ROjopGzG6BE"
+                                title="YouTube video player"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin"
+                                allowfullscreen></iframe>
+                    </div>
+                </div>
+
+                <h3>The U.S. National Plant Germplasm System - An Overview</h3>
+                <p>
+                    The USDA-ARS National Plant Germplasm System (NPGS) is among the largest, most diverse collections of plant genetic resources in the world. The NPGS safeguards irreplaceable plant genetic resources in genebank units across 20 geographical locations, often in partnership with land-grant universities.
+                </p>
+                <p>
+                    <img src="https://www.ars-grin.gov/assets/img/NPGS_Hardiness_Map.png" alt="NPGS Hardiness Map" border="0" usemap="#hardinessMap" />
+                    NPGS maintains collections of more than 200 crops at sites best suited to the biological
+                    and environmental needs of each. This map shows the NPGS genebank units overlayed onto the
+                    2023 USDA Plant Hardiness Zone Map.
+
+                    NPGS collections include crops with agricultural importance for food, fiber, animal
+                    feed, industrial, medicinal, and ornamental purposes.
+
+                    The NPGS currently maintains over 620,000 accessions, representing more than 16,000 species.
+                </p>
+
+                <div class="grid-container">
+                    <div class="grid-row">
+                        <div class="grid-col-3"></div>
+                        <div class="grid-col-5">
+                        </div>
+
+                    </div>
+                </div>
+                @* @{
+                    Html.RenderAction("Component_NPGSHoldingsSummary", "Reports");
+                } *@
+                <p>
+                    As part of its mission, the NPGS maintains, characterizes, evaluates, documents,
+                    enhances, and distributes plant genetic resources and associated information.
+                    Materials from the NPGS are identified by PI (Plant Identification) numbers,
+                    which are up to six digits in length. Local site identifiers might also be used.
+                    NPGS collection information is available through GRIN-Global, an
+                    information management system accessed online.
+
+                    The types of information available for NPGS accessions include passport, taxonomy,
+                    trait and genetic data, images, and many more.
+                </p>
+                <p>
+                    As one the largest distributors of plant genetic resources in the world, an average
+                    of over 200,000 NPGS samples are distributed annually for research, breeding,
+                    and educational purposes. The NPGS also conducts applied research to identify
+                    more efficient and effective management procedures for plant genetic resources,
+                    to add value to collections by performing trait evaluations and generating or
+                    collecting genetic/genomic data.
+                </p>
+                <p>
+                    Collections include <a href="https://www.sciencedirect.com/topics/agricultural-and-biological-sciences/landrace" target="_blank">landraces</a>
+                    of crops that have emerged over millennia of improvement by farmers; wild plants
+                    related to cultivated crops; older and current crop varieties; parental breeding
+                    lines; specialized plant materials used to develop new varieties and hybrids;
+                    or mutant genetic stocks maintained for research. Germplasm can be preserved as
+                    plants growing in greenhouse, screenhouse, field plantings, or as <i>in vitro</i>
+                    cultures.
+                    Dried seeds of many species can be stored at low temperatures in sealed containers
+                    for many years (orthodox seeds). Plants that produce desiccation-intolerant seeds
+                    (recalcitrant seeds), or those that can only be propagated clonally, might be maintained
+                    <i>in vitro</i>, as cultures of tissues, or as buds, pollen or other plant parts
+                    preserved at ultra-low temperatures.
+                </p>
+                <p>
+                    Plant breeders rely on plant genetic resources to develop new crop varieties
+                    that are more nutritious, have higher yields, resilience to extreme weather,
+                    and resistance to pests and diseases. In many cases, the NPGS provides the
+                    initial sources of plant genes that ultimately benefit consumers and ensure
+                    food security for the U.S. The process of crop development from wild species
+                    to food and improved products for the consumer is a continuous challenge.
+
+                    The development of high-performing varieties for the market involves surmounting
+                    the challenges of pests, diseases, changing and highly variable climatic conditions,
+                    and economic hardships. Breeders and product developers continually and frequently
+                    access germplasm from the NPGS for their innovations and inventions.
+                    Consumers greatly benefit from the foundation of plant genetic material
+                    available from the NPGS.
+                </p>
+                <p>
+                    For example, the NPGS peanut accession
+                    <a href="https://npgsweb.ars-grin.gov/gringlobal/accessiondetail?id=1170633" target="_blank">PI 203396</a>,
+                    originally from Brazil has resistance to
+                    <a href="https://www.clemson.edu/public/regulatory/plant-problem/fact-sheets/tswv.html" target="_blank">Tomato Spotted Wilt Virus (TSWV)</a>.
+                    It was used in breeding programs to produce commercially viable lines with TSWV resistance.
+                    The economic value of the TSWV resistance conferred from PI 203396 is estimated to be more than
+                    $200M per year.
+
+                    Other examples of the many impacts of the NPGS can be found in our
+                    eBook, “<a href="https://colostate.pressbooks.pub/pgrsuccessstories/" target="_blank">Plant Genetic Resources: Success Stories</a>”.
+                </p>
+                <p>
+                    Globally, the diversity of plant genetic resources has diminished. Native habitats are
+                    destroyed by human activities and by environmental change. Wild species of plants become
+                    extinct, and traditional landraces disappear along with traditional peoples and their
+                    knowledge. Heritage cultivars are lost. Genetic and corresponding cultural information
+                    must be preserved. Genebank collections that are threatened by political or institutional
+                    instability must be safeguarded. The ability to acquire and exchange resources,
+                    increasingly restricted by numerous factors, can be facilitated by international agreements.
+                </p>
+                <p>
+                    The NPGS is primarily federally funded through the U.S. Department of Agriculture,
+                    but also receives key financial and in-kind support from Land-Grant Universities, <a href="https://www.nifa.usda.gov/grants/programs/capacity-grants/state-agricultural-experiment-stations" target="_blank">State Agricultural Experiment Stations</a>
+                    and agricultural industries.
+                </p>
+                <p>
+                    <a href="https://grin-u.org/wp-content/uploads/2024/09/NPGS-Infographic-Poster-9.14.24-English.pdf">
+                        <svg class="usa-icon" aria-hidden="true" focusable="false" role="img">
+                            <use href="/assets/img/sprite.svg#arrow_downward"></use>
+                        </svg>Click here to download an informational poster on the role of the NPGS
+                    </a>
+                </p>
+                <p>
+                    <a href="https://grin-u.org/wp-content/uploads/2021/06/PGRInfographicGenebanks_English-Colorado-State-University-CropsTesting.pdf" , target="_blank">
+                        <svg class="usa-icon" aria-hidden="true" focusable="false" role="img">
+                            <use href="/assets/img/sprite.svg#arrow_downward"></use>
+                        </svg>
+                        Click here to download an informational poster on the role of plant genebanks
+                    </a>
+                </p>
+            </main>
+        </div>
+    </div>
+</div>

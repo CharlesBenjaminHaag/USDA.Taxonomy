@@ -58,9 +58,9 @@ namespace USDA.ARS.GRIN.GRINGlobal.API.Web.Services
             var speciesCollection = _context.taxonomy_species as IQueryable<taxonomy_species>;
 
             if (speciesId > 0) 
-            { 
-                speciesCollection = speciesCollection.Where(s => s.taxonomy_species_id == speciesId)
-                    .Include(c=>c.citation).ThenInclude(l=>l.literature);
+            {
+                speciesCollection = speciesCollection.Where(s => s.taxonomy_species_id == speciesId);
+                    //.Include(c=>c.citation).ThenInclude(l=>l.literature);
             }
 
             if (!string.IsNullOrEmpty(genusName))
@@ -84,9 +84,16 @@ namespace USDA.ARS.GRIN.GRINGlobal.API.Web.Services
 
             if (includeDistributions)
             {
-                speciesCollection = speciesCollection.Include(x => x.taxonomy_geography_map)
-                    .ThenInclude(g=>g.geography)
-                    .Include(c => c.citation).ThenInclude(l => l.literature);
+                speciesCollection = speciesCollection
+                    .Include(x => x.taxonomy_geography_map)
+                        .ThenInclude(c => c.citation).ThenInclude(l => l.literature)
+                    .Include(x => x.taxonomy_geography_map)
+                        .ThenInclude(g => g.geography);
+            }
+
+            if (includeSynonyms)
+            {
+                speciesCollection = speciesCollection.Include(s => s.taxonomy_species_synonym_maptaxonb_taxonomy_species);
             }
 
             if (includeCitations)

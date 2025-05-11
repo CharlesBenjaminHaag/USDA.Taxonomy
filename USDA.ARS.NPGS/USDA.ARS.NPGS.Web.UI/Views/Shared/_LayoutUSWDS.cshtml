@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USDA-ARS Germplasm Resources Information Network (GRIN)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://npgstest.ars-grin.gov/NPGS/assets/uswds/dist/css/uswds.css" />
+    <title>View</title>
+    @await RenderSectionAsync("Scripts", required: false)
+</head>
+    <body>
+    <script type="text/javascript" src="https://npgstest.ars-grin.gov/NPGS/assets/uswds/dist/js/uswds.min.js"></script>
+
+        <a class="usa-skipnav" href="#main-content">Skip to main content</a>
+        @Html.Partial("~/Views/Shared/Partials/_USABanner.cshtml")
+        <div class="usa-overlay"></div>
+        @Html.Partial("~/Views/Shared/Partials/_USANavExtendedHeaderWithMegamenu.cshtml")
+    <main id="main-content">
+        @Html.Partial("~/Views/Shared/Partials/_USAHero.cshtml")
+        <section class="grid-container usa-section">
+            @RenderBody()
+        </section>
+        @Html.Partial("~/Views/Shared/Partials/_USAGraphicList.cshtml"))
+        <!-- GRIN in the News -->
+        @* <section id="test-section-id" class="usa-section">
+            <div class="grid-container">
+                <h2 class="font-heading-xl margin-top-0 tablet:margin-bottom-5">NPGS in the News</h2>
+                <div class="grid-row grid-gap">
+                    <div class="tablet:grid-col-6">
+                        <ul class="usa-collection">
+                            <li class="usa-collection__item">
+                                <div class="usa-collection__body">
+                                    <h4 class="usa-collection__heading">
+                                        <a href="https://www.seedworld.com/us/2025/01/08/seed-diversity-in-the-consolidation-age/?utm_campaign=Seed%20World%20U.S.%20Daily&utm_medium=email&_hsenc=p2ANqtz-9VeUcXkZBaITxO5Xe24fB4Qzry9UICsOdK3VcSqmyE0M3UiWTyVfQ6O29ZYRC5sQWO2ggUYBj07mu7hj8Z6o4S3XlUu-DzqSc1oC7qnZLWuGrUVKY&_hsmi=348720739&utm_content=348720739&utm_source=hs_email" class="usa-link--external" target="_blank" rel="noreferrer">Seed Diversity in the Consolidation Age</a>
+                                    </h4>
+                                    <ul class="usa-collection__meta" aria-label="More information">
+                                        <li class="usa-collection__meta-item position-relative">
+                                            <svg class="usa-icon position-relative bottom-neg-2px"
+                                                 aria-hidden="true"
+                                                 role="img">
+                                                <use href="/assets/img/sprite.svg#public"></use>
+                                            </svg>
+                                            Seedworld.com
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="usa-collection__item">
+                                <div class="usa-collection__body">
+                                    <h4 class="usa-collection__heading">
+                                        <a href="https://www.science.org/content/article/u-s-gene-banks-key-new-crops-hobbled-trump-job-cuts"  class="usa-link--external" target="_blank" rel="noreferrer">U.S. genebanks, key to new crops, hobbled by Trump job cuts</a>
+                                    </h4>
+                                    <ul class="usa-collection__meta" aria-label="More information">
+                                        <li class="usa-collection__meta-item position-relative">
+                                            <svg class="usa-icon position-relative bottom-neg-2px"
+                                                 aria-hidden="true"
+                                                 role="img">
+                                                <use href="/assets/img/sprite.svg#public"></use>
+                                            </svg>
+                                            Science.org
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="usa-collection__item">
+                                <div class="usa-collection__body">
+                                    <h4 class="usa-collection__heading">
+                                        <a href="https://www.kcur.org/news/2024-11-01/seed-banks-world-food-prize" class="usa-link--external" target="_blank" rel="noreferrer">This year's World Food Prize underscores the value of seed banks and their stewards</a>
+                                    </h4>
+                                    <ul class="usa-collection__meta" aria-label="More information">
+                                        <li class="usa-collection__meta-item position-relative">
+                                            <svg class="usa-icon position-relative bottom-neg-2px"
+                                                 aria-hidden="true"
+                                                 role="img">
+                                                <use href="/assets/img/sprite.svg#public"></use>
+                                            </svg>
+                                            Kcur.org
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                <div class="tablet:grid-col-6">
+                    <ul class="usa-collection">
+
+                        <li class="usa-collection__item">
+                            <div class="usa-collection__body">
+                                <h4 class="usa-collection__heading">
+                                    <a href="https://www.kunc.org/news/2025-02-16/usda-gene-bank-safeguards-vital-genetic-materials-for-our-food-supply" class="usa-link--external" target="_blank" rel="noreferrer">USDA genebank safeguards vital genetic materials for our food supply</a>
+                                </h4>
+                                <ul class="usa-collection__meta" aria-label="More information">
+                                    <li class="usa-collection__meta-item position-relative">
+                                        <svg class="usa-icon position-relative bottom-neg-2px"
+                                             aria-hidden="true"
+                                             role="img">
+                                            <use href="/assets/img/sprite.svg#public"></use>
+                                        </svg>
+                                        Kunc.org
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="usa-collection__item">
+                            <div class="usa-collection__body">
+                                <h4 class="usa-collection__heading">
+                                    <a href="https://www.ers.usda.gov/data-products/charts-of-note/chart-detail?chartId=78289" class="usa-link--external" target="_blank" rel="noreferrer">U.S. public sector plays a key role in collecting, conserving, and distributing crop genetic resources</a>
+                                </h4>
+                                <ul class="usa-collection__meta" aria-label="More information">
+                                    <li class="usa-collection__meta-item position-relative">
+                                        <svg class="usa-icon position-relative bottom-neg-2px"
+                                             aria-hidden="true"
+                                             role="img">
+                                            <use href="/assets/img/sprite.svg#public"></use>
+                                        </svg>
+                                        USDA-ERS
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section> *@
+    </main>
+        @Html.Partial("~/Views/Shared/Partials/_USAFooter.cshtml")
+    </body>
+</html>
+<script type="text/javascript">
+    //$(function () {
+    //    $('#btnSearchGRINGlobal').on('click', function () {
+    //        var searchstring = $('#search');
+
+    //        alert("DEBUG " + searchstring.val());
+
+            
+    //        if (searchString.length > 0) {
+    //            window.location.href = "https://npgsweb.ars-grin.gov/gringlobal/search?q=" + searchString;
+    //        }
+    //    });
+    //});
+</script>

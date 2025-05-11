@@ -1,0 +1,6 @@
+@USDA.ARS.GRINGlobal.API.Web_HostAddress = http://localhost:5190
+
+GET {{USDA.ARS.GRINGlobal.API.Web_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

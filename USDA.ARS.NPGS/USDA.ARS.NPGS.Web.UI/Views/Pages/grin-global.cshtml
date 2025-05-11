@@ -1,0 +1,34 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUSWDSInterior.cshtml";
+}
+<div class="usa-section">
+    <div class="grid-container">
+        <div class="grid-row grid-gap">
+            <div class="usa-layout-docs__sidenav desktop:grid-col-2">
+                @Html.Partial("~/Views/Shared/Partials/_SideNav.cshtml")
+            </div>
+            <main class="usa-layout-docs__main desktop:grid-col-10 usa-prose usa-layout-docs" id="main-content">
+                <h1>GRIN-Global</h1>
+                <p>
+                    Detailed NPGS collection information is accessible from GRIN-Global, an online information
+                    management system. The types of information available for NPGS accessions include passport,
+                    taxonomy, trait and genetic data, images, and much more.
+                    <a href="https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomysearch" class="usa-link--external" target="_blank" rel="noreferrer">
+                        Visit the GRIN-Global
+                        public website
+                    </a> to start searching accessions or use the convenient tool below.
+                <p>
+                    <span style="background-color:yellow;">[TO DO: Include a search tool similar to the one currently on the ars-grin.gov homepage] </span>
+                </p>
+                </p>
+                <p>
+                    <a href="https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomysearch" class="usa-link--external" target="_blank" rel="noreferrer">GRIN Taxonomy</a>, another frequently consulted resource provided by the NPGS,
+                    which includes up-to-date taxonomic information about crops and their wild relatives,
+                    serves as a global resource for plant nomenclature. Additional information
+                    about the GRIN-Global Project is available <a href="https://www.grin-global.org/" class="usa-link--external" target="_blank" rel="noreferrer">here</a>.
+                </p>
+            </main>
+        </div>
+    </div>
+</div>
+

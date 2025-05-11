@@ -1,0 +1,565 @@
+﻿{
+   "CodeGenerationMode": 5,
+   "ContextClassName": "gringlobalContext",
+   "ContextNamespace": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "USDA.ARS.GRINGlobal.Data",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 2,
+   "SelectedToBeGenerated": 0,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "[dbo].[accession]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[accession_action]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[accession_inv_annotation]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[accession_inv_attach]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[accession_inv_attach_validation]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[accession_inv_group]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[accession_inv_group_attach]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[accession_inv_group_map]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[accession_inv_name]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[accession_inv_voucher]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[accession_ipr]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[accession_pedigree]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[accession_quarantine]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[accession_source]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[accession_source_map]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[app_resource]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[app_setting]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[app_user_gui_setting]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[app_user_item_folder]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[app_user_item_list]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[citation]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[code_value]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[code_value_lang]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[cooperator]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[cooperator_attach]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[cooperator_group]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[cooperator_map]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[crop]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[crop_attach]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[crop_germplasm_committee]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[crop_germplasm_committee_crop_descriptor]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[crop_germplasm_committee_document]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[crop_germplasm_committee_meeting]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[crop_trait]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[crop_trait_attach]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[crop_trait_code]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[crop_trait_code_attach]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[crop_trait_code_lang]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[crop_trait_lang]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[crop_trait_observation]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[crop_trait_observation_data]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[exploration]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[exploration_map]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[genetic_annotation]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[genetic_marker]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[genetic_observation]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[genetic_observation_data]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[geneva_site_inventory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[geography]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[geography_region_map]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[gspi_site_inventory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[improvement_level_mcpd_code_map]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[inventory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[inventory_action]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[inventory_maint_policy]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[inventory_maint_policy_season]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[inventory_quality_status]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[inventory_viability]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[inventory_viability_data]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[inventory_viability_rule]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[inventory_viability_rule_map]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[literature]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[method]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[method_attach]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[method_map]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[name_group]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[nc7_inventory_location_data]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[nc7_site_inventory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ne9_site_inventory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[nssl_site_inventory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[opgc_site_inventory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[order_request]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[order_request_action]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[order_request_attach]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[order_request_item]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[order_request_item_action]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[order_request_phyto_log]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[parl_site_inventory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[plant_immigrant_index]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[plant_inventory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[plant_inventory_index]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[pvp_applicant]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[region]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[rhizobium]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[rhizobium_import]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[rhy]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[s9_site_inventory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[site]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[source_desc_observation]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[source_descriptor]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[source_descriptor_code]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[source_descriptor_code_lang]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[source_descriptor_lang]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[sys_app_error_log]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[sys_file]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[sys_file_group]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[sys_file_group_map]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[sys_file_lang]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[sys_group]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[sys_group_lang]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[sys_group_permission_map]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[sys_group_user_map]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[sys_lang]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[sys_permission]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[sys_permission_field]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[sys_permission_lang]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[sys_search_autofield]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[sys_search_operator]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[sys_search_resolver]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[sys_table]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[sys_table_field]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[sys_table_field_lang]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[sys_table_lang]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[sys_table_relationship]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[sys_user]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[sys_user_password_reset_token]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[sys_user_permission_map]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[w6_site_inventory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[web_cooperator]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[web_help]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[web_order_request]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[web_order_request_action]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[web_order_request_address]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[web_order_request_attach]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[web_order_request_item]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[web_user]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[web_user_cart]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[web_user_cart_item]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[web_user_preference]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[web_user_shipping_address]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": null,
+   "UncountableWords": null,
+   "UseAsyncStoredProcedureCalls": true,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDatabaseNamesForRoutines": true,
+   "UseDateOnlyTimeOnly": false,
+   "UseDbContextSplitting": false,
+   "UseDecimalDataAnnotationForSprocResult": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseInternalAccessModifiersForSprocsAndFunctions": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UsePrefixNavigationNaming": false,
+   "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false,
+   "UseT4Split": false
+}

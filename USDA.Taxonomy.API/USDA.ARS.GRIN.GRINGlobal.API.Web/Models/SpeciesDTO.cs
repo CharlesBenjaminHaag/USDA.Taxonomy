@@ -58,6 +58,6 @@ namespace USDA.ARS.GRIN.GRINGlobal.API.Web.Models
         
         public ICollection<DistributionDTO> distributions { get; set; } = new List<DistributionDTO>();
 
-        public ICollection<SpeciesSynonymDTO> synonyms { get; set; } = new List<SpeciesSynonymDTO>();
+        public ICollection<SpeciesSynonymMapDTO> synonyms { get; set; } = new List<SpeciesSynonymMapDTO>();
     }
 }
