@@ -33,8 +33,6 @@ public partial class SysLang
 
     public bool? IsWebVisible { get; set; }
 
-    public virtual ICollection<AppResource> AppResources { get; set; } = new List<AppResource>();
-
     public virtual ICollection<CodeValueLang> CodeValueLangs { get; set; } = new List<CodeValueLang>();
 
     public virtual ICollection<Cooperator> Cooperators { get; set; } = new List<Cooperator>();

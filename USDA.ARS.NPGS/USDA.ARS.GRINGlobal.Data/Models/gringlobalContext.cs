@@ -21,8 +21,6 @@ public partial class gringlobalContext : DbContext
 
     public virtual DbSet<AccessionInvAttach> AccessionInvAttaches { get; set; }
 
-    public virtual DbSet<AccessionInvAttachValidation> AccessionInvAttachValidations { get; set; }
-
     public virtual DbSet<AccessionInvGroup> AccessionInvGroups { get; set; }
 
     public virtual DbSet<AccessionInvGroupAttach> AccessionInvGroupAttaches { get; set; }
@@ -42,14 +40,6 @@ public partial class gringlobalContext : DbContext
     public virtual DbSet<AccessionSource> AccessionSources { get; set; }
 
     public virtual DbSet<AccessionSourceMap> AccessionSourceMaps { get; set; }
-
-    public virtual DbSet<AppResource> AppResources { get; set; }
-
-    public virtual DbSet<AppSetting> AppSettings { get; set; }
-
-    public virtual DbSet<AppUserGuiSetting> AppUserGuiSettings { get; set; }
-
-    public virtual DbSet<AppUserItemFolder> AppUserItemFolders { get; set; }
 
     public virtual DbSet<AppUserItemList> AppUserItemLists { get; set; }
 
@@ -95,9 +85,41 @@ public partial class gringlobalContext : DbContext
 
     public virtual DbSet<CropTraitObservationDatum> CropTraitObservationData { get; set; }
 
+    public virtual DbSet<Email> Emails { get; set; }
+
+    public virtual DbSet<EmailAttach> EmailAttaches { get; set; }
+
+    public virtual DbSet<EmailTemplate> EmailTemplates { get; set; }
+
     public virtual DbSet<Exploration> Explorations { get; set; }
 
     public virtual DbSet<ExplorationMap> ExplorationMaps { get; set; }
+
+    public virtual DbSet<Feedback> Feedbacks { get; set; }
+
+    public virtual DbSet<FeedbackAttach> FeedbackAttaches { get; set; }
+
+    public virtual DbSet<FeedbackForm> FeedbackForms { get; set; }
+
+    public virtual DbSet<FeedbackFormField> FeedbackFormFields { get; set; }
+
+    public virtual DbSet<FeedbackFormTrait> FeedbackFormTraits { get; set; }
+
+    public virtual DbSet<FeedbackInventory> FeedbackInventories { get; set; }
+
+    public virtual DbSet<FeedbackReport> FeedbackReports { get; set; }
+
+    public virtual DbSet<FeedbackReportAttach> FeedbackReportAttaches { get; set; }
+
+    public virtual DbSet<FeedbackResult> FeedbackResults { get; set; }
+
+    public virtual DbSet<FeedbackResultAttach> FeedbackResultAttaches { get; set; }
+
+    public virtual DbSet<FeedbackResultField> FeedbackResultFields { get; set; }
+
+    public virtual DbSet<FeedbackResultGroup> FeedbackResultGroups { get; set; }
+
+    public virtual DbSet<FeedbackResultTraitOb> FeedbackResultTraitObs { get; set; }
 
     public virtual DbSet<GeneticAnnotation> GeneticAnnotations { get; set; }
 
@@ -175,15 +197,9 @@ public partial class gringlobalContext : DbContext
 
     public virtual DbSet<PlantInventoryIndex> PlantInventoryIndices { get; set; }
 
-    public virtual DbSet<PvpApplicant> PvpApplicants { get; set; }
-
     public virtual DbSet<Region> Regions { get; set; }
 
     public virtual DbSet<Rhizobium> Rhizobia { get; set; }
-
-    public virtual DbSet<RhizobiumImport> RhizobiumImports { get; set; }
-
-    public virtual DbSet<Rhy> Rhies { get; set; }
 
     public virtual DbSet<S9SiteInventory> S9SiteInventories { get; set; }
 
@@ -216,6 +232,10 @@ public partial class gringlobalContext : DbContext
     public virtual DbSet<SysGroupPermissionMap> SysGroupPermissionMaps { get; set; }
 
     public virtual DbSet<SysGroupUserMap> SysGroupUserMaps { get; set; }
+
+    public virtual DbSet<SysIndex> SysIndices { get; set; }
+
+    public virtual DbSet<SysIndexField> SysIndexFields { get; set; }
 
     public virtual DbSet<SysLang> SysLangs { get; set; }
 
@@ -279,6 +299,8 @@ public partial class gringlobalContext : DbContext
         {
             entity.ToTable("accession");
 
+            entity.HasIndex(e => e.AccessionLookup, "ndx_a_accession_lookup");
+
             entity.HasIndex(e => e.AccessionNumberPart1, "ndx_a_part1");
 
             entity.HasIndex(e => e.AccessionNumberPart2, "ndx_a_part2");
@@ -300,6 +322,10 @@ public partial class gringlobalContext : DbContext
                 .HasFilter("([doi] IS NOT NULL)");
 
             entity.Property(e => e.AccessionId).HasColumnName("accession_id");
+            entity.Property(e => e.AccessionLookup)
+                .HasMaxLength(132)
+                .HasComputedColumnSql("(ltrim(rtrim((ltrim(coalesce([accession_number_part1],'')+' ')+ltrim(coalesce(CONVERT([varchar],[accession_number_part2]),'')+' '))+coalesce([accession_number_part3],''))))", true)
+                .HasColumnName("accession_lookup");
             entity.Property(e => e.AccessionNumberPart1)
                 .IsRequired()
                 .HasMaxLength(50)
@@ -625,25 +651,6 @@ public partial class gringlobalContext : DbContext
                 .HasForeignKey(d => d.OwnedBy)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_aiat_owned");
-        });
-
-        modelBuilder.Entity<AccessionInvAttachValidation>(entity =>
-        {
-            entity.ToTable("accession_inv_attach_validation");
-
-            entity.Property(e => e.AccessionInvAttachValidationId).HasColumnName("accession_inv_attach_validation_id");
-            entity.Property(e => e.AccessionInvAttachId).HasColumnName("accession_inv_attach_id");
-            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
-            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
-            entity.Property(e => e.IsThumbnailVirtualPathValid)
-                .HasMaxLength(1)
-                .HasColumnName("is_thumbnail_virtual_path_valid");
-            entity.Property(e => e.IsVirtualPathValid)
-                .HasMaxLength(1)
-                .HasColumnName("is_virtual_path_valid");
-            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
-            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
-            entity.Property(e => e.Note).HasColumnName("note");
         });
 
         modelBuilder.Entity<AccessionInvGroup>(entity =>
@@ -1314,214 +1321,6 @@ public partial class gringlobalContext : DbContext
                 .HasForeignKey(d => d.OwnedBy)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_asm_owned");
-        });
-
-        modelBuilder.Entity<AppResource>(entity =>
-        {
-            entity.ToTable("app_resource");
-
-            entity.HasIndex(e => e.CreatedBy, "ndx_fk_are_created");
-
-            entity.HasIndex(e => e.ModifiedBy, "ndx_fk_are_modified");
-
-            entity.HasIndex(e => e.OwnedBy, "ndx_fk_are_owned");
-
-            entity.HasIndex(e => e.SysLangId, "ndx_fk_are_sl");
-
-            entity.HasIndex(e => new { e.SysLangId, e.AppName, e.FormName, e.AppResourceName, e.SortOrder }, "ndx_uniq_ar").IsUnique();
-
-            entity.Property(e => e.AppResourceId).HasColumnName("app_resource_id");
-            entity.Property(e => e.AppName)
-                .IsRequired()
-                .HasMaxLength(100)
-                .HasColumnName("app_name");
-            entity.Property(e => e.AppResourceName)
-                .IsRequired()
-                .HasMaxLength(100)
-                .HasColumnName("app_resource_name");
-            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
-            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
-            entity.Property(e => e.Description)
-                .HasMaxLength(2000)
-                .HasColumnName("description");
-            entity.Property(e => e.DisplayMember)
-                .IsRequired()
-                .HasMaxLength(2000)
-                .HasColumnName("display_member");
-            entity.Property(e => e.FormName)
-                .IsRequired()
-                .HasMaxLength(100)
-                .HasColumnName("form_name");
-            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
-            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
-            entity.Property(e => e.OwnedBy).HasColumnName("owned_by");
-            entity.Property(e => e.OwnedDate).HasColumnName("owned_date");
-            entity.Property(e => e.Properties)
-                .HasMaxLength(2000)
-                .HasColumnName("properties");
-            entity.Property(e => e.SortOrder).HasColumnName("sort_order");
-            entity.Property(e => e.SysLangId).HasColumnName("sys_lang_id");
-            entity.Property(e => e.ValueMember)
-                .HasMaxLength(2000)
-                .HasColumnName("value_member");
-
-            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.AppResourceCreatedByNavigations)
-                .HasForeignKey(d => d.CreatedBy)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_are_created");
-
-            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.AppResourceModifiedByNavigations)
-                .HasForeignKey(d => d.ModifiedBy)
-                .HasConstraintName("fk_are_modified");
-
-            entity.HasOne(d => d.OwnedByNavigation).WithMany(p => p.AppResourceOwnedByNavigations)
-                .HasForeignKey(d => d.OwnedBy)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_are_owned");
-
-            entity.HasOne(d => d.SysLang).WithMany(p => p.AppResources)
-                .HasForeignKey(d => d.SysLangId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_are_sl");
-        });
-
-        modelBuilder.Entity<AppSetting>(entity =>
-        {
-            entity.ToTable("app_setting");
-
-            entity.HasIndex(e => new { e.CategoryTag, e.SortOrder, e.Name }, "ndx_uniq_as").IsUnique();
-
-            entity.Property(e => e.AppSettingId).HasColumnName("app_setting_id");
-            entity.Property(e => e.CategoryTag)
-                .HasMaxLength(200)
-                .HasColumnName("category_tag");
-            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
-            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
-            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
-            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(200)
-                .HasColumnName("name");
-            entity.Property(e => e.OwnedBy).HasColumnName("owned_by");
-            entity.Property(e => e.OwnedDate).HasColumnName("owned_date");
-            entity.Property(e => e.SortOrder).HasColumnName("sort_order");
-            entity.Property(e => e.Value).HasColumnName("value");
-
-            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.AppSettingCreatedByNavigations)
-                .HasForeignKey(d => d.CreatedBy)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("ndx_fk_aset_created");
-
-            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.AppSettingModifiedByNavigations)
-                .HasForeignKey(d => d.ModifiedBy)
-                .HasConstraintName("ndx_fk_aset_modified");
-
-            entity.HasOne(d => d.OwnedByNavigation).WithMany(p => p.AppSettingOwnedByNavigations)
-                .HasForeignKey(d => d.OwnedBy)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("ndx_fk_aset_owned");
-        });
-
-        modelBuilder.Entity<AppUserGuiSetting>(entity =>
-        {
-            entity.ToTable("app_user_gui_setting");
-
-            entity.HasIndex(e => e.CooperatorId, "ndx_fk_sugs_co");
-
-            entity.HasIndex(e => e.CreatedBy, "ndx_fk_sugs_created");
-
-            entity.HasIndex(e => e.ModifiedBy, "ndx_fk_sugs_modified");
-
-            entity.HasIndex(e => e.OwnedBy, "ndx_fk_sugs_owned");
-
-            entity.HasIndex(e => new { e.CooperatorId, e.AppName, e.FormName, e.ResourceName, e.ResourceKey }, "ndx_uniq_sugs").IsUnique();
-
-            entity.Property(e => e.AppUserGuiSettingId).HasColumnName("app_user_gui_setting_id");
-            entity.Property(e => e.AppName)
-                .HasMaxLength(50)
-                .HasColumnName("app_name");
-            entity.Property(e => e.CooperatorId).HasColumnName("cooperator_id");
-            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
-            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
-            entity.Property(e => e.FormName)
-                .HasMaxLength(100)
-                .HasColumnName("form_name");
-            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
-            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
-            entity.Property(e => e.OwnedBy).HasColumnName("owned_by");
-            entity.Property(e => e.OwnedDate).HasColumnName("owned_date");
-            entity.Property(e => e.ResourceKey)
-                .IsRequired()
-                .HasMaxLength(100)
-                .HasColumnName("resource_key");
-            entity.Property(e => e.ResourceName)
-                .IsRequired()
-                .HasMaxLength(100)
-                .HasColumnName("resource_name");
-            entity.Property(e => e.ResourceValue)
-                .HasMaxLength(2000)
-                .HasColumnName("resource_value");
-
-            entity.HasOne(d => d.Cooperator).WithMany(p => p.AppUserGuiSettingCooperators)
-                .HasForeignKey(d => d.CooperatorId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_sugs_co");
-
-            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.AppUserGuiSettingCreatedByNavigations)
-                .HasForeignKey(d => d.CreatedBy)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_sugs_created");
-
-            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.AppUserGuiSettingModifiedByNavigations)
-                .HasForeignKey(d => d.ModifiedBy)
-                .HasConstraintName("fk_sugs_modified");
-
-            entity.HasOne(d => d.OwnedByNavigation).WithMany(p => p.AppUserGuiSettingOwnedByNavigations)
-                .HasForeignKey(d => d.OwnedBy)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_sugs_owned");
-        });
-
-        modelBuilder.Entity<AppUserItemFolder>(entity =>
-        {
-            entity.ToTable("app_user_item_folder");
-
-            entity.Property(e => e.AppUserItemFolderId).HasColumnName("app_user_item_folder_id");
-            entity.Property(e => e.Category)
-                .HasMaxLength(120)
-                .HasColumnName("category");
-            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
-            entity.Property(e => e.CreatedDate)
-                .HasColumnType("datetime")
-                .HasColumnName("created_date");
-            entity.Property(e => e.DataType)
-                .HasMaxLength(50)
-                .HasColumnName("data_type");
-            entity.Property(e => e.Description).HasColumnName("description");
-            entity.Property(e => e.FolderName)
-                .IsRequired()
-                .HasMaxLength(250)
-                .HasColumnName("folder_name");
-            entity.Property(e => e.FolderType)
-                .HasMaxLength(50)
-                .HasColumnName("folder_type");
-            entity.Property(e => e.IsFavorite)
-                .HasMaxLength(1)
-                .HasColumnName("is_favorite");
-            entity.Property(e => e.IsShared).HasColumnName("is_shared");
-            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
-            entity.Property(e => e.ModifiedDate)
-                .HasColumnType("datetime")
-                .HasColumnName("modified_date");
-            entity.Property(e => e.Note)
-                .HasMaxLength(2000)
-                .HasColumnName("note");
-            entity.Property(e => e.Properties).HasColumnName("properties");
-
-            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.AppUserItemFolders)
-                .HasForeignKey(d => d.CreatedBy)
-                .HasConstraintName("FK_app_user_item_folder_cooperator");
         });
 
         modelBuilder.Entity<AppUserItemList>(entity =>
@@ -2333,6 +2132,10 @@ public partial class gringlobalContext : DbContext
                 .IsRequired()
                 .HasMaxLength(120)
                 .HasColumnName("url");
+
+            entity.HasOne(d => d.CropGermplasmCommittee).WithMany(p => p.CropGermplasmCommitteeDocuments)
+                .HasForeignKey(d => d.CropGermplasmCommitteeId)
+                .HasConstraintName("FK_crop_germplasm_committee_document_crop_germplasm_committee");
         });
 
         modelBuilder.Entity<CropGermplasmCommitteeMeeting>(entity =>
@@ -2942,6 +2745,198 @@ public partial class gringlobalContext : DbContext
                 .HasConstraintName("fk_ctod_owned");
         });
 
+        modelBuilder.Entity<Email>(entity =>
+        {
+            entity.ToTable("email");
+
+            entity.HasIndex(e => e.CreatedBy, "ndx_fk_e_created");
+
+            entity.HasIndex(e => e.ModifiedBy, "ndx_fk_e_modified");
+
+            entity.HasIndex(e => e.OwnedBy, "ndx_fk_e_owned");
+
+            entity.Property(e => e.EmailId).HasColumnName("email_id");
+            entity.Property(e => e.Body).HasColumnName("body");
+            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
+            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
+            entity.Property(e => e.EmailBcc)
+                .HasMaxLength(1000)
+                .HasColumnName("email_bcc");
+            entity.Property(e => e.EmailCc)
+                .HasMaxLength(1000)
+                .HasColumnName("email_cc");
+            entity.Property(e => e.EmailFrom)
+                .HasMaxLength(200)
+                .HasColumnName("email_from");
+            entity.Property(e => e.EmailReplyTo)
+                .HasMaxLength(200)
+                .HasColumnName("email_reply_to");
+            entity.Property(e => e.EmailTo)
+                .HasMaxLength(1000)
+                .HasColumnName("email_to");
+            entity.Property(e => e.IdNumber).HasColumnName("id_number");
+            entity.Property(e => e.IdType)
+                .HasMaxLength(100)
+                .HasColumnName("id_type");
+            entity.Property(e => e.IsHtml)
+                .IsRequired()
+                .HasMaxLength(1)
+                .HasColumnName("is_html");
+            entity.Property(e => e.LastRetryDate).HasColumnName("last_retry_date");
+            entity.Property(e => e.LastRetryErrorMessage).HasColumnName("last_retry_error_message");
+            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
+            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
+            entity.Property(e => e.OwnedBy).HasColumnName("owned_by");
+            entity.Property(e => e.OwnedDate).HasColumnName("owned_date");
+            entity.Property(e => e.RetryCount).HasColumnName("retry_count");
+            entity.Property(e => e.SentDate).HasColumnName("sent_date");
+            entity.Property(e => e.Subject)
+                .HasMaxLength(500)
+                .HasColumnName("subject");
+            entity.Property(e => e.ToBeSentDate).HasColumnName("to_be_sent_date");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.EmailCreatedByNavigations)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_e_created");
+
+            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.EmailModifiedByNavigations)
+                .HasForeignKey(d => d.ModifiedBy)
+                .HasConstraintName("fk_e_modified");
+
+            entity.HasOne(d => d.OwnedByNavigation).WithMany(p => p.EmailOwnedByNavigations)
+                .HasForeignKey(d => d.OwnedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_e_owned");
+        });
+
+        modelBuilder.Entity<EmailAttach>(entity =>
+        {
+            entity.ToTable("email_attach");
+
+            entity.HasIndex(e => e.CreatedBy, "ndx_fk_ea_created");
+
+            entity.HasIndex(e => e.EmailId, "ndx_fk_ea_e");
+
+            entity.HasIndex(e => e.ModifiedBy, "ndx_fk_ea_modified");
+
+            entity.HasIndex(e => e.OwnedBy, "ndx_fk_ea_owned");
+
+            entity.HasIndex(e => new { e.EmailId, e.VirtualPath }, "ndx_uniq_ea").IsUnique();
+
+            entity.Property(e => e.EmailAttachId).HasColumnName("email_attach_id");
+            entity.Property(e => e.CategoryCode)
+                .HasMaxLength(20)
+                .HasColumnName("category_code");
+            entity.Property(e => e.ContentType)
+                .HasMaxLength(100)
+                .HasColumnName("content_type");
+            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
+            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
+            entity.Property(e => e.Description)
+                .HasMaxLength(500)
+                .HasColumnName("description");
+            entity.Property(e => e.EmailId).HasColumnName("email_id");
+            entity.Property(e => e.IsWebVisible)
+                .IsRequired()
+                .HasMaxLength(1)
+                .HasColumnName("is_web_visible");
+            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
+            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
+            entity.Property(e => e.Note).HasColumnName("note");
+            entity.Property(e => e.OwnedBy).HasColumnName("owned_by");
+            entity.Property(e => e.OwnedDate).HasColumnName("owned_date");
+            entity.Property(e => e.SortOrder).HasColumnName("sort_order");
+            entity.Property(e => e.ThumbnailVirtualPath)
+                .HasMaxLength(255)
+                .HasColumnName("thumbnail_virtual_path");
+            entity.Property(e => e.Title)
+                .HasMaxLength(500)
+                .HasColumnName("title");
+            entity.Property(e => e.VirtualPath)
+                .IsRequired()
+                .HasMaxLength(255)
+                .HasColumnName("virtual_path");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.EmailAttachCreatedByNavigations)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_ea_created");
+
+            entity.HasOne(d => d.Email).WithMany(p => p.EmailAttaches)
+                .HasForeignKey(d => d.EmailId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_ea_e");
+
+            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.EmailAttachModifiedByNavigations)
+                .HasForeignKey(d => d.ModifiedBy)
+                .HasConstraintName("fk_ea_modified");
+
+            entity.HasOne(d => d.OwnedByNavigation).WithMany(p => p.EmailAttachOwnedByNavigations)
+                .HasForeignKey(d => d.OwnedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_ea_owned");
+        });
+
+        modelBuilder.Entity<EmailTemplate>(entity =>
+        {
+            entity.ToTable("email_template");
+
+            entity.Property(e => e.EmailTemplateId).HasColumnName("email_template_id");
+            entity.Property(e => e.ActionCode)
+                .HasMaxLength(20)
+                .HasColumnName("action_code");
+            entity.Property(e => e.Body).HasColumnName("body");
+            entity.Property(e => e.CategoryCode)
+                .HasMaxLength(3)
+                .HasColumnName("category_code");
+            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
+            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
+            entity.Property(e => e.EmailBcc)
+                .HasMaxLength(1000)
+                .HasColumnName("email_bcc");
+            entity.Property(e => e.EmailCc)
+                .HasMaxLength(1000)
+                .HasColumnName("email_cc");
+            entity.Property(e => e.EmailFrom)
+                .HasMaxLength(200)
+                .HasColumnName("email_from");
+            entity.Property(e => e.EmailReplyTo)
+                .HasMaxLength(200)
+                .HasColumnName("email_reply_to");
+            entity.Property(e => e.EmailTo)
+                .HasMaxLength(1000)
+                .HasColumnName("email_to");
+            entity.Property(e => e.IsHtml)
+                .IsRequired()
+                .HasMaxLength(1)
+                .HasColumnName("is_html");
+            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
+            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
+            entity.Property(e => e.OwnedBy).HasColumnName("owned_by");
+            entity.Property(e => e.OwnedDate).HasColumnName("owned_date");
+            entity.Property(e => e.Subject)
+                .HasMaxLength(500)
+                .HasColumnName("subject");
+            entity.Property(e => e.Title)
+                .HasMaxLength(120)
+                .HasColumnName("title");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.EmailTemplateCreatedByNavigations)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_et_created");
+
+            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.EmailTemplateModifiedByNavigations)
+                .HasForeignKey(d => d.ModifiedBy)
+                .HasConstraintName("fk_et_modified");
+
+            entity.HasOne(d => d.OwnedByNavigation).WithMany(p => p.EmailTemplateOwnedByNavigations)
+                .HasForeignKey(d => d.OwnedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_et_owned");
+        });
+
         modelBuilder.Entity<Exploration>(entity =>
         {
             entity.ToTable("exploration");
@@ -3059,6 +3054,808 @@ public partial class gringlobalContext : DbContext
                 .HasForeignKey(d => d.OwnedBy)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_exm_owned");
+        });
+
+        modelBuilder.Entity<Feedback>(entity =>
+        {
+            entity.ToTable("feedback");
+
+            entity.HasIndex(e => e.CreatedBy, "ndx_fk_f_created");
+
+            entity.HasIndex(e => e.ModifiedBy, "ndx_fk_f_modified");
+
+            entity.HasIndex(e => e.OwnedBy, "ndx_fk_f_owned");
+
+            entity.HasIndex(e => e.Title, "ndx_uniq_f").IsUnique();
+
+            entity.Property(e => e.FeedbackId).HasColumnName("feedback_id");
+            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
+            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
+            entity.Property(e => e.EndDate).HasColumnName("end_date");
+            entity.Property(e => e.IsRestrictedByInventory)
+                .IsRequired()
+                .HasMaxLength(1)
+                .HasColumnName("is_restricted_by_inventory");
+            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
+            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
+            entity.Property(e => e.OwnedBy).HasColumnName("owned_by");
+            entity.Property(e => e.OwnedDate).HasColumnName("owned_date");
+            entity.Property(e => e.StartDate).HasColumnName("start_date");
+            entity.Property(e => e.Title)
+                .IsRequired()
+                .HasMaxLength(100)
+                .HasColumnName("title");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.FeedbackCreatedByNavigations)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_f_created");
+
+            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.FeedbackModifiedByNavigations)
+                .HasForeignKey(d => d.ModifiedBy)
+                .HasConstraintName("fk_f_modified");
+
+            entity.HasOne(d => d.OwnedByNavigation).WithMany(p => p.FeedbackOwnedByNavigations)
+                .HasForeignKey(d => d.OwnedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_f_owned");
+        });
+
+        modelBuilder.Entity<FeedbackAttach>(entity =>
+        {
+            entity.ToTable("feedback_attach");
+
+            entity.Property(e => e.FeedbackAttachId).HasColumnName("feedback_attach_id");
+            entity.Property(e => e.CategoryCode)
+                .HasMaxLength(20)
+                .HasColumnName("category_code");
+            entity.Property(e => e.ContentType)
+                .HasMaxLength(100)
+                .HasColumnName("content_type");
+            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
+            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
+            entity.Property(e => e.Description)
+                .HasMaxLength(500)
+                .HasColumnName("description");
+            entity.Property(e => e.FeedbackId).HasColumnName("feedback_id");
+            entity.Property(e => e.IsWebVisible)
+                .IsRequired()
+                .HasMaxLength(1)
+                .HasColumnName("is_web_visible");
+            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
+            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
+            entity.Property(e => e.Note).HasColumnName("note");
+            entity.Property(e => e.OwnedBy).HasColumnName("owned_by");
+            entity.Property(e => e.OwnedDate).HasColumnName("owned_date");
+            entity.Property(e => e.SortOrder).HasColumnName("sort_order");
+            entity.Property(e => e.ThumbnailVirtualPath)
+                .HasMaxLength(255)
+                .HasColumnName("thumbnail_virtual_path");
+            entity.Property(e => e.Title)
+                .HasMaxLength(500)
+                .HasColumnName("title");
+            entity.Property(e => e.VirtualPath)
+                .IsRequired()
+                .HasMaxLength(255)
+                .HasColumnName("virtual_path");
+
+            entity.HasOne(d => d.Feedback).WithMany(p => p.FeedbackAttaches)
+                .HasForeignKey(d => d.FeedbackId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fa_f");
+        });
+
+        modelBuilder.Entity<FeedbackForm>(entity =>
+        {
+            entity.ToTable("feedback_form");
+
+            entity.HasIndex(e => e.CreatedBy, "ndx_fk_ff_created");
+
+            entity.HasIndex(e => e.ModifiedBy, "ndx_fk_ff_modified");
+
+            entity.HasIndex(e => e.OwnedBy, "ndx_fk_ff_owned");
+
+            entity.HasIndex(e => e.Title, "ndx_uniq_ff").IsUnique();
+
+            entity.Property(e => e.FeedbackFormId).HasColumnName("feedback_form_id");
+            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
+            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
+            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
+            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
+            entity.Property(e => e.OwnedBy).HasColumnName("owned_by");
+            entity.Property(e => e.OwnedDate).HasColumnName("owned_date");
+            entity.Property(e => e.Title)
+                .IsRequired()
+                .HasMaxLength(100)
+                .HasColumnName("title");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.FeedbackFormCreatedByNavigations)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_ff_created");
+
+            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.FeedbackFormModifiedByNavigations)
+                .HasForeignKey(d => d.ModifiedBy)
+                .HasConstraintName("fk_ff_modified");
+
+            entity.HasOne(d => d.OwnedByNavigation).WithMany(p => p.FeedbackFormOwnedByNavigations)
+                .HasForeignKey(d => d.OwnedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_ff_owned");
+        });
+
+        modelBuilder.Entity<FeedbackFormField>(entity =>
+        {
+            entity.ToTable("feedback_form_field");
+
+            entity.HasIndex(e => e.CreatedBy, "ndx_fk_fff_created");
+
+            entity.HasIndex(e => e.ModifiedBy, "ndx_fk_fff_modified");
+
+            entity.HasIndex(e => e.OwnedBy, "ndx_fk_fff_owned");
+
+            entity.HasIndex(e => new { e.FeedbackFormId, e.Title }, "ndx_uniq_fff").IsUnique();
+
+            entity.Property(e => e.FeedbackFormFieldId).HasColumnName("feedback_form_field_id");
+            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
+            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
+            entity.Property(e => e.DefaultValue)
+                .HasMaxLength(100)
+                .HasColumnName("default_value");
+            entity.Property(e => e.Description).HasColumnName("description");
+            entity.Property(e => e.FeedbackFormId).HasColumnName("feedback_form_id");
+            entity.Property(e => e.FieldTypeCode)
+                .IsRequired()
+                .HasMaxLength(20)
+                .HasColumnName("field_type_code");
+            entity.Property(e => e.ForeignKeyDataviewName)
+                .HasMaxLength(50)
+                .HasColumnName("foreign_key_dataview_name");
+            entity.Property(e => e.GroupName)
+                .HasMaxLength(100)
+                .HasColumnName("group_name");
+            entity.Property(e => e.GuiHint)
+                .HasMaxLength(100)
+                .HasColumnName("gui_hint");
+            entity.Property(e => e.IsReadonly)
+                .IsRequired()
+                .HasMaxLength(1)
+                .HasColumnName("is_readonly");
+            entity.Property(e => e.IsRequired)
+                .IsRequired()
+                .HasMaxLength(1)
+                .HasColumnName("is_required");
+            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
+            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
+            entity.Property(e => e.OwnedBy).HasColumnName("owned_by");
+            entity.Property(e => e.OwnedDate).HasColumnName("owned_date");
+            entity.Property(e => e.ReferencesTag)
+                .HasMaxLength(50)
+                .HasColumnName("references_tag");
+            entity.Property(e => e.SortOrder).HasColumnName("sort_order");
+            entity.Property(e => e.Title)
+                .HasMaxLength(100)
+                .HasColumnName("title");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.FeedbackFormFieldCreatedByNavigations)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fff_created");
+
+            entity.HasOne(d => d.FeedbackForm).WithMany(p => p.FeedbackFormFields)
+                .HasForeignKey(d => d.FeedbackFormId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fff_ff");
+
+            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.FeedbackFormFieldModifiedByNavigations)
+                .HasForeignKey(d => d.ModifiedBy)
+                .HasConstraintName("fk_fff_modified");
+
+            entity.HasOne(d => d.OwnedByNavigation).WithMany(p => p.FeedbackFormFieldOwnedByNavigations)
+                .HasForeignKey(d => d.OwnedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fff_owned");
+        });
+
+        modelBuilder.Entity<FeedbackFormTrait>(entity =>
+        {
+            entity.ToTable("feedback_form_trait");
+
+            entity.HasIndex(e => e.CreatedBy, "ndx_fk_fft_created");
+
+            entity.HasIndex(e => e.CropTraitId, "ndx_fk_fft_ct");
+
+            entity.HasIndex(e => e.ModifiedBy, "ndx_fk_fft_modified");
+
+            entity.HasIndex(e => e.OwnedBy, "ndx_fk_fft_owned");
+
+            entity.HasIndex(e => new { e.FeedbackFormId, e.CropTraitId }, "ndx_uniq_fft").IsUnique();
+
+            entity.Property(e => e.FeedbackFormTraitId).HasColumnName("feedback_form_trait_id");
+            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
+            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
+            entity.Property(e => e.CropTraitId).HasColumnName("crop_trait_id");
+            entity.Property(e => e.Description)
+                .IsRequired()
+                .HasColumnName("description");
+            entity.Property(e => e.FeedbackFormId).HasColumnName("feedback_form_id");
+            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
+            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
+            entity.Property(e => e.OwnedBy).HasColumnName("owned_by");
+            entity.Property(e => e.OwnedDate).HasColumnName("owned_date");
+            entity.Property(e => e.ReferencesTag)
+                .HasMaxLength(50)
+                .HasColumnName("references_tag");
+            entity.Property(e => e.SortOrder).HasColumnName("sort_order");
+            entity.Property(e => e.Title)
+                .HasMaxLength(500)
+                .HasColumnName("title");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.FeedbackFormTraitCreatedByNavigations)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fft_created");
+
+            entity.HasOne(d => d.CropTrait).WithMany(p => p.FeedbackFormTraits)
+                .HasForeignKey(d => d.CropTraitId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fft_ct");
+
+            entity.HasOne(d => d.FeedbackForm).WithMany(p => p.FeedbackFormTraits)
+                .HasForeignKey(d => d.FeedbackFormId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fft_ff");
+
+            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.FeedbackFormTraitModifiedByNavigations)
+                .HasForeignKey(d => d.ModifiedBy)
+                .HasConstraintName("fk_fft_modified");
+
+            entity.HasOne(d => d.OwnedByNavigation).WithMany(p => p.FeedbackFormTraitOwnedByNavigations)
+                .HasForeignKey(d => d.OwnedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fft_owned");
+        });
+
+        modelBuilder.Entity<FeedbackInventory>(entity =>
+        {
+            entity.ToTable("feedback_inventory");
+
+            entity.HasIndex(e => e.CreatedBy, "ndx_fk_fi_created");
+
+            entity.HasIndex(e => e.ModifiedBy, "ndx_fk_fi_modified");
+
+            entity.HasIndex(e => e.OwnedBy, "ndx_fk_fi_owned");
+
+            entity.HasIndex(e => new { e.FeedbackId, e.InventoryId }, "ndx_uniq_fi").IsUnique();
+
+            entity.Property(e => e.FeedbackInventoryId).HasColumnName("feedback_inventory_id");
+            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
+            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
+            entity.Property(e => e.FeedbackId).HasColumnName("feedback_id");
+            entity.Property(e => e.InventoryId).HasColumnName("inventory_id");
+            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
+            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
+            entity.Property(e => e.OwnedBy).HasColumnName("owned_by");
+            entity.Property(e => e.OwnedDate).HasColumnName("owned_date");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.FeedbackInventoryCreatedByNavigations)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fi_created");
+
+            entity.HasOne(d => d.Feedback).WithMany(p => p.FeedbackInventories)
+                .HasForeignKey(d => d.FeedbackId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fi_f");
+
+            entity.HasOne(d => d.Inventory).WithMany(p => p.FeedbackInventories)
+                .HasForeignKey(d => d.InventoryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fi_i");
+
+            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.FeedbackInventoryModifiedByNavigations)
+                .HasForeignKey(d => d.ModifiedBy)
+                .HasConstraintName("fk_fi_modified");
+
+            entity.HasOne(d => d.OwnedByNavigation).WithMany(p => p.FeedbackInventoryOwnedByNavigations)
+                .HasForeignKey(d => d.OwnedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fi_owned");
+        });
+
+        modelBuilder.Entity<FeedbackReport>(entity =>
+        {
+            entity.ToTable("feedback_report");
+
+            entity.HasIndex(e => e.CreatedBy, "ndx_fk_fr_created");
+
+            entity.HasIndex(e => e.ModifiedBy, "ndx_fk_fr_modified");
+
+            entity.HasIndex(e => e.OwnedBy, "ndx_fk_fr_owned");
+
+            entity.HasIndex(e => e.Title, "ndx_uniq_fr").IsUnique();
+
+            entity.Property(e => e.FeedbackReportId).HasColumnName("feedback_report_id");
+            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
+            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
+            entity.Property(e => e.CustomDueDate).HasColumnName("custom_due_date");
+            entity.Property(e => e.DueInterval).HasColumnName("due_interval");
+            entity.Property(e => e.FeedbackFormId).HasColumnName("feedback_form_id");
+            entity.Property(e => e.FeedbackId).HasColumnName("feedback_id");
+            entity.Property(e => e.InitialEmailSubject)
+                .HasMaxLength(500)
+                .HasColumnName("initial_email_subject");
+            entity.Property(e => e.InitialEmailText).HasColumnName("initial_email_text");
+            entity.Property(e => e.IntervalLengthCode)
+                .IsRequired()
+                .HasMaxLength(20)
+                .HasColumnName("interval_length_code");
+            entity.Property(e => e.IntervalTypeCode)
+                .IsRequired()
+                .HasMaxLength(20)
+                .HasColumnName("interval_type_code");
+            entity.Property(e => e.IsNotified15daysPrior)
+                .IsRequired()
+                .HasMaxLength(1)
+                .HasColumnName("is_notified_15days_prior");
+            entity.Property(e => e.IsNotified30daysPrior)
+                .IsRequired()
+                .HasMaxLength(1)
+                .HasColumnName("is_notified_30days_prior");
+            entity.Property(e => e.IsNotifiedInitially)
+                .IsRequired()
+                .HasMaxLength(1)
+                .HasColumnName("is_notified_initially");
+            entity.Property(e => e.IsObservationData)
+                .IsRequired()
+                .HasMaxLength(1)
+                .HasColumnName("is_observation_data");
+            entity.Property(e => e.IsWebVisible)
+                .IsRequired()
+                .HasMaxLength(1)
+                .HasColumnName("is_web_visible");
+            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
+            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
+            entity.Property(e => e.OwnedBy).HasColumnName("owned_by");
+            entity.Property(e => e.OwnedDate).HasColumnName("owned_date");
+            entity.Property(e => e.Prior15EmailSubject)
+                .HasMaxLength(500)
+                .HasColumnName("prior15_email_subject");
+            entity.Property(e => e.Prior15EmailText).HasColumnName("prior15_email_text");
+            entity.Property(e => e.Prior30EmailSubject)
+                .HasMaxLength(500)
+                .HasColumnName("prior30_email_subject");
+            entity.Property(e => e.Prior30EmailText).HasColumnName("prior30_email_text");
+            entity.Property(e => e.SortOrder).HasColumnName("sort_order");
+            entity.Property(e => e.Title)
+                .IsRequired()
+                .HasMaxLength(100)
+                .HasColumnName("title");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.FeedbackReportCreatedByNavigations)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fr_created");
+
+            entity.HasOne(d => d.FeedbackForm).WithMany(p => p.FeedbackReports)
+                .HasForeignKey(d => d.FeedbackFormId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fr_ff");
+
+            entity.HasOne(d => d.Feedback).WithMany(p => p.FeedbackReports)
+                .HasForeignKey(d => d.FeedbackId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fr_f");
+
+            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.FeedbackReportModifiedByNavigations)
+                .HasForeignKey(d => d.ModifiedBy)
+                .HasConstraintName("fk_fr_modified");
+
+            entity.HasOne(d => d.OwnedByNavigation).WithMany(p => p.FeedbackReportOwnedByNavigations)
+                .HasForeignKey(d => d.OwnedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fr_owned");
+        });
+
+        modelBuilder.Entity<FeedbackReportAttach>(entity =>
+        {
+            entity.ToTable("feedback_report_attach");
+
+            entity.HasIndex(e => e.CreatedBy, "ndx_fk_fa_created");
+
+            entity.HasIndex(e => e.ModifiedBy, "ndx_fk_fa_modified");
+
+            entity.HasIndex(e => e.OwnedBy, "ndx_fk_fa_owned");
+
+            entity.HasIndex(e => e.FeedbackReportId, "ndx_fk_frepa");
+
+            entity.HasIndex(e => new { e.FeedbackReportId, e.VirtualPath }, "ndx_uniq_fa").IsUnique();
+
+            entity.Property(e => e.FeedbackReportAttachId).HasColumnName("feedback_report_attach_id");
+            entity.Property(e => e.CategoryCode)
+                .HasMaxLength(20)
+                .HasColumnName("category_code");
+            entity.Property(e => e.ContentType)
+                .HasMaxLength(100)
+                .HasColumnName("content_type");
+            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
+            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
+            entity.Property(e => e.Description)
+                .HasMaxLength(500)
+                .HasColumnName("description");
+            entity.Property(e => e.FeedbackReportId).HasColumnName("feedback_report_id");
+            entity.Property(e => e.IsWebVisible)
+                .IsRequired()
+                .HasMaxLength(1)
+                .HasColumnName("is_web_visible");
+            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
+            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
+            entity.Property(e => e.Note).HasColumnName("note");
+            entity.Property(e => e.OwnedBy).HasColumnName("owned_by");
+            entity.Property(e => e.OwnedDate).HasColumnName("owned_date");
+            entity.Property(e => e.SortOrder).HasColumnName("sort_order");
+            entity.Property(e => e.ThumbnailVirtualPath)
+                .HasMaxLength(255)
+                .HasColumnName("thumbnail_virtual_path");
+            entity.Property(e => e.Title)
+                .HasMaxLength(500)
+                .HasColumnName("title");
+            entity.Property(e => e.VirtualPath)
+                .IsRequired()
+                .HasMaxLength(255)
+                .HasColumnName("virtual_path");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.FeedbackReportAttachCreatedByNavigations)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fa_created");
+
+            entity.HasOne(d => d.FeedbackReport).WithMany(p => p.FeedbackReportAttaches)
+                .HasForeignKey(d => d.FeedbackReportId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_frepa_frep");
+
+            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.FeedbackReportAttachModifiedByNavigations)
+                .HasForeignKey(d => d.ModifiedBy)
+                .HasConstraintName("fk_fa_modified");
+
+            entity.HasOne(d => d.OwnedByNavigation).WithMany(p => p.FeedbackReportAttachOwnedByNavigations)
+                .HasForeignKey(d => d.OwnedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fa_owned");
+        });
+
+        modelBuilder.Entity<FeedbackResult>(entity =>
+        {
+            entity.ToTable("feedback_result");
+
+            entity.HasIndex(e => e.FeedbackResultGroupId, "ndf_fk_fres_fresg");
+
+            entity.HasIndex(e => e.CreatedBy, "ndx_fk_fres_created");
+
+            entity.HasIndex(e => e.InventoryId, "ndx_fk_fres_i");
+
+            entity.HasIndex(e => e.ModifiedBy, "ndx_fk_fres_modified");
+
+            entity.HasIndex(e => e.OwnedBy, "ndx_fk_fres_owned");
+
+            entity.Property(e => e.FeedbackResultId).HasColumnName("feedback_result_id");
+            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
+            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
+            entity.Property(e => e.FeedbackResultGroupId).HasColumnName("feedback_result_group_id");
+            entity.Property(e => e.InventoryId).HasColumnName("inventory_id");
+            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
+            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
+            entity.Property(e => e.OwnedBy).HasColumnName("owned_by");
+            entity.Property(e => e.OwnedDate).HasColumnName("owned_date");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.FeedbackResultCreatedByNavigations)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fres_created");
+
+            entity.HasOne(d => d.FeedbackResultGroup).WithMany(p => p.FeedbackResults)
+                .HasForeignKey(d => d.FeedbackResultGroupId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fres_fresg");
+
+            entity.HasOne(d => d.Inventory).WithMany(p => p.FeedbackResults)
+                .HasForeignKey(d => d.InventoryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fres_i");
+
+            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.FeedbackResultModifiedByNavigations)
+                .HasForeignKey(d => d.ModifiedBy)
+                .HasConstraintName("fk_fres_modified");
+
+            entity.HasOne(d => d.OwnedByNavigation).WithMany(p => p.FeedbackResultOwnedByNavigations)
+                .HasForeignKey(d => d.OwnedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fres_owned");
+        });
+
+        modelBuilder.Entity<FeedbackResultAttach>(entity =>
+        {
+            entity.ToTable("feedback_result_attach");
+
+            entity.HasIndex(e => e.FeedbackResultId, "ndx_fk_fresa");
+
+            entity.HasIndex(e => e.CreatedBy, "ndx_fk_fresa_created");
+
+            entity.HasIndex(e => e.ModifiedBy, "ndx_fk_fresa_modified");
+
+            entity.HasIndex(e => e.OwnedBy, "ndx_fk_fresa_owned");
+
+            entity.HasIndex(e => new { e.FeedbackResultId, e.VirtualPath }, "ndx_uniq_fresa").IsUnique();
+
+            entity.Property(e => e.FeedbackResultAttachId).HasColumnName("feedback_result_attach_id");
+            entity.Property(e => e.CategoryCode)
+                .HasMaxLength(20)
+                .HasColumnName("category_code");
+            entity.Property(e => e.ContentType)
+                .HasMaxLength(100)
+                .HasColumnName("content_type");
+            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
+            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
+            entity.Property(e => e.Description)
+                .HasMaxLength(500)
+                .HasColumnName("description");
+            entity.Property(e => e.FeedbackResultId).HasColumnName("feedback_result_id");
+            entity.Property(e => e.IsWebVisible)
+                .IsRequired()
+                .HasMaxLength(1)
+                .HasColumnName("is_web_visible");
+            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
+            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
+            entity.Property(e => e.Note).HasColumnName("note");
+            entity.Property(e => e.OwnedBy).HasColumnName("owned_by");
+            entity.Property(e => e.OwnedDate).HasColumnName("owned_date");
+            entity.Property(e => e.SortOrder).HasColumnName("sort_order");
+            entity.Property(e => e.ThumbnailVirtualPath)
+                .HasMaxLength(255)
+                .HasColumnName("thumbnail_virtual_path");
+            entity.Property(e => e.Title)
+                .HasMaxLength(500)
+                .HasColumnName("title");
+            entity.Property(e => e.VirtualPath)
+                .IsRequired()
+                .HasMaxLength(255)
+                .HasColumnName("virtual_path");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.FeedbackResultAttachCreatedByNavigations)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fresa_created");
+
+            entity.HasOne(d => d.FeedbackResult).WithMany(p => p.FeedbackResultAttaches)
+                .HasForeignKey(d => d.FeedbackResultId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fresa_fres");
+
+            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.FeedbackResultAttachModifiedByNavigations)
+                .HasForeignKey(d => d.ModifiedBy)
+                .HasConstraintName("fk_fresa_modified");
+
+            entity.HasOne(d => d.OwnedByNavigation).WithMany(p => p.FeedbackResultAttachOwnedByNavigations)
+                .HasForeignKey(d => d.OwnedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fresa_owned");
+        });
+
+        modelBuilder.Entity<FeedbackResultField>(entity =>
+        {
+            entity.ToTable("feedback_result_field");
+
+            entity.HasIndex(e => e.FeedbackFormFieldId, "fk_fresf_fff");
+
+            entity.HasIndex(e => e.CreatedBy, "ndx_fk_fresf_created");
+
+            entity.HasIndex(e => e.ModifiedBy, "ndx_fk_fresf_modified");
+
+            entity.HasIndex(e => e.OwnedBy, "ndx_fk_fresf_owned");
+
+            entity.HasIndex(e => new { e.FeedbackResultId, e.FeedbackFormFieldId }, "ndx_uniq_fresf").IsUnique();
+
+            entity.Property(e => e.FeedbackResultFieldId).HasColumnName("feedback_result_field_id");
+            entity.Property(e => e.AdminValue)
+                .HasMaxLength(500)
+                .HasColumnName("admin_value");
+            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
+            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
+            entity.Property(e => e.FeedbackFormFieldId).HasColumnName("feedback_form_field_id");
+            entity.Property(e => e.FeedbackResultId).HasColumnName("feedback_result_id");
+            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
+            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
+            entity.Property(e => e.OwnedBy).HasColumnName("owned_by");
+            entity.Property(e => e.OwnedDate).HasColumnName("owned_date");
+            entity.Property(e => e.StringValue)
+                .HasMaxLength(500)
+                .HasColumnName("string_value");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.FeedbackResultFieldCreatedByNavigations)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fresf_created");
+
+            entity.HasOne(d => d.FeedbackFormField).WithMany(p => p.FeedbackResultFields)
+                .HasForeignKey(d => d.FeedbackFormFieldId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fresf_fff");
+
+            entity.HasOne(d => d.FeedbackResult).WithMany(p => p.FeedbackResultFields)
+                .HasForeignKey(d => d.FeedbackResultId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fresf_fres");
+
+            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.FeedbackResultFieldModifiedByNavigations)
+                .HasForeignKey(d => d.ModifiedBy)
+                .HasConstraintName("fk_fresf_modified");
+
+            entity.HasOne(d => d.OwnedByNavigation).WithMany(p => p.FeedbackResultFieldOwnedByNavigations)
+                .HasForeignKey(d => d.OwnedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fresf_owned");
+        });
+
+        modelBuilder.Entity<FeedbackResultGroup>(entity =>
+        {
+            entity.ToTable("feedback_result_group");
+
+            entity.HasIndex(e => e.CreatedBy, "ndx_fk_frg_created");
+
+            entity.HasIndex(e => e.ModifiedBy, "ndx_fk_frg_modified");
+
+            entity.HasIndex(e => e.OwnedBy, "ndx_fk_frg_owned");
+
+            entity.HasIndex(e => e.ParticipantCooperatorId, "ndx_frg_c");
+
+            entity.HasIndex(e => new { e.FeedbackReportId, e.ParticipantCooperatorId, e.OrderRequestId }, "ndx_uniq_fres").IsUnique();
+
+            entity.Property(e => e.FeedbackResultGroupId).HasColumnName("feedback_result_group_id");
+            entity.Property(e => e.AcceptedDate).HasColumnName("accepted_date");
+            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
+            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
+            entity.Property(e => e.DueDate).HasColumnName("due_date");
+            entity.Property(e => e.FeedbackReportId).HasColumnName("feedback_report_id");
+            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
+            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
+            entity.Property(e => e.OrderRequestId).HasColumnName("order_request_id");
+            entity.Property(e => e.OwnedBy).HasColumnName("owned_by");
+            entity.Property(e => e.OwnedDate).HasColumnName("owned_date");
+            entity.Property(e => e.ParticipantCooperatorId).HasColumnName("participant_cooperator_id");
+            entity.Property(e => e.RejectedDate).HasColumnName("rejected_date");
+            entity.Property(e => e.StartedDate).HasColumnName("started_date");
+            entity.Property(e => e.SubmittedDate).HasColumnName("submitted_date");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.FeedbackResultGroupCreatedByNavigations)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_frg_created");
+
+            entity.HasOne(d => d.FeedbackReport).WithMany(p => p.FeedbackResultGroups)
+                .HasForeignKey(d => d.FeedbackReportId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_frg_fr");
+
+            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.FeedbackResultGroupModifiedByNavigations)
+                .HasForeignKey(d => d.ModifiedBy)
+                .HasConstraintName("fk_frg_modified");
+
+            entity.HasOne(d => d.OwnedByNavigation).WithMany(p => p.FeedbackResultGroupOwnedByNavigations)
+                .HasForeignKey(d => d.OwnedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_frg_owned");
+        });
+
+        modelBuilder.Entity<FeedbackResultTraitOb>(entity =>
+        {
+            entity.HasKey(e => e.FeedbackResultTraitObsId);
+
+            entity.ToTable("feedback_result_trait_obs");
+
+            entity.HasIndex(e => e.CreatedBy, "ndx_fk_fresto_created");
+
+            entity.HasIndex(e => e.CropTraitId, "ndx_fk_fresto_ct");
+
+            entity.HasIndex(e => e.CropTraitCodeId, "ndx_fk_fresto_ctc");
+
+            entity.HasIndex(e => e.InventoryId, "ndx_fk_fresto_i");
+
+            entity.HasIndex(e => e.MethodId, "ndx_fk_fresto_m");
+
+            entity.HasIndex(e => e.ModifiedBy, "ndx_fk_fresto_modified");
+
+            entity.HasIndex(e => e.OwnedBy, "ndx_fk_fresto_owned");
+
+            entity.HasIndex(e => new { e.FeedbackResultId, e.InventoryId, e.CropTraitId, e.CropTraitCodeId, e.NumericValue, e.StringValue, e.MethodId }, "ndx_uniq_fresto").IsUnique();
+
+            entity.Property(e => e.FeedbackResultTraitObsId).HasColumnName("feedback_result_trait_obs_id");
+            entity.Property(e => e.AdminValue)
+                .HasMaxLength(255)
+                .HasColumnName("admin_value");
+            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
+            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
+            entity.Property(e => e.CropTraitCodeId).HasColumnName("crop_trait_code_id");
+            entity.Property(e => e.CropTraitId).HasColumnName("crop_trait_id");
+            entity.Property(e => e.DataQualityCode)
+                .HasMaxLength(20)
+                .HasColumnName("data_quality_code");
+            entity.Property(e => e.FeedbackFormTraitId).HasColumnName("feedback_form_trait_id");
+            entity.Property(e => e.FeedbackResultId).HasColumnName("feedback_result_id");
+            entity.Property(e => e.Frequency)
+                .HasColumnType("decimal(18, 5)")
+                .HasColumnName("frequency");
+            entity.Property(e => e.InventoryId).HasColumnName("inventory_id");
+            entity.Property(e => e.IsArchived)
+                .IsRequired()
+                .HasMaxLength(1)
+                .HasColumnName("is_archived");
+            entity.Property(e => e.MaximumValue)
+                .HasColumnType("decimal(18, 5)")
+                .HasColumnName("maximum_value");
+            entity.Property(e => e.MeanValue)
+                .HasColumnType("decimal(18, 5)")
+                .HasColumnName("mean_value");
+            entity.Property(e => e.MethodId).HasColumnName("method_id");
+            entity.Property(e => e.MinimumValue)
+                .HasColumnType("decimal(18, 5)")
+                .HasColumnName("minimum_value");
+            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
+            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
+            entity.Property(e => e.Note).HasColumnName("note");
+            entity.Property(e => e.NumericValue)
+                .HasColumnType("decimal(18, 5)")
+                .HasColumnName("numeric_value");
+            entity.Property(e => e.OriginalValue)
+                .HasMaxLength(30)
+                .HasColumnName("original_value");
+            entity.Property(e => e.OwnedBy).HasColumnName("owned_by");
+            entity.Property(e => e.OwnedDate).HasColumnName("owned_date");
+            entity.Property(e => e.Rank).HasColumnName("rank");
+            entity.Property(e => e.SampleSize).HasColumnName("sample_size");
+            entity.Property(e => e.StandardDeviation)
+                .HasColumnType("decimal(18, 5)")
+                .HasColumnName("standard_deviation");
+            entity.Property(e => e.StringValue)
+                .HasMaxLength(255)
+                .HasColumnName("string_value");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.FeedbackResultTraitObCreatedByNavigations)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fresto_created");
+
+            entity.HasOne(d => d.CropTraitCode).WithMany(p => p.FeedbackResultTraitObs)
+                .HasForeignKey(d => d.CropTraitCodeId)
+                .HasConstraintName("fk_fresto_ctc");
+
+            entity.HasOne(d => d.CropTrait).WithMany(p => p.FeedbackResultTraitObs)
+                .HasForeignKey(d => d.CropTraitId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fresto_ct");
+
+            entity.HasOne(d => d.FeedbackResult).WithMany(p => p.FeedbackResultTraitObs)
+                .HasForeignKey(d => d.FeedbackResultId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fresto_fr");
+
+            entity.HasOne(d => d.Inventory).WithMany(p => p.FeedbackResultTraitObs)
+                .HasForeignKey(d => d.InventoryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fresto_i");
+
+            entity.HasOne(d => d.Method).WithMany(p => p.FeedbackResultTraitObs)
+                .HasForeignKey(d => d.MethodId)
+                .HasConstraintName("fk_fresto_m");
+
+            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.FeedbackResultTraitObModifiedByNavigations)
+                .HasForeignKey(d => d.ModifiedBy)
+                .HasConstraintName("fk_fresto_modified");
+
+            entity.HasOne(d => d.OwnedByNavigation).WithMany(p => p.FeedbackResultTraitObOwnedByNavigations)
+                .HasForeignKey(d => d.OwnedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_fresto_owned");
         });
 
         modelBuilder.Entity<GeneticAnnotation>(entity =>
@@ -5185,6 +5982,10 @@ public partial class gringlobalContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_or_created");
 
+            entity.HasOne(d => d.Feedback).WithMany(p => p.OrderRequests)
+                .HasForeignKey(d => d.FeedbackId)
+                .HasConstraintName("fk_oreq_f");
+
             entity.HasOne(d => d.FinalRecipientCooperator).WithMany(p => p.OrderRequestFinalRecipientCooperators)
                 .HasForeignKey(d => d.FinalRecipientCooperatorId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -5724,20 +6525,6 @@ public partial class gringlobalContext : DbContext
                 .HasColumnName("volumn_suffix");
         });
 
-        modelBuilder.Entity<PvpApplicant>(entity =>
-        {
-            entity.ToTable("pvp_applicant");
-
-            entity.Property(e => e.PvpApplicantId).HasColumnName("pvp_applicant_id");
-            entity.Property(e => e.ApplicantName)
-                .HasMaxLength(200)
-                .HasColumnName("applicant_name");
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(4000)
-                .HasColumnName("name");
-        });
-
         modelBuilder.Entity<Region>(entity =>
         {
             entity.ToTable("region");
@@ -5826,83 +6613,6 @@ public partial class gringlobalContext : DbContext
             entity.Property(e => e.UsdaAccessionCode)
                 .HasMaxLength(250)
                 .HasColumnName("usda_accession_code");
-        });
-
-        modelBuilder.Entity<RhizobiumImport>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToTable("rhizobium_import");
-
-            entity.Property(e => e.CommonName)
-                .HasMaxLength(250)
-                .HasColumnName("common_name");
-            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
-            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
-            entity.Property(e => e.GenusSpp)
-                .HasMaxLength(250)
-                .HasColumnName("genus_spp");
-            entity.Property(e => e.GeoSource)
-                .HasMaxLength(250)
-                .HasColumnName("geo_source");
-            entity.Property(e => e.HostPlant)
-                .HasMaxLength(250)
-                .HasColumnName("host_plant");
-            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
-            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
-            entity.Property(e => e.Note)
-                .HasMaxLength(250)
-                .HasColumnName("note");
-            entity.Property(e => e.Source)
-                .HasMaxLength(250)
-                .HasColumnName("source");
-            entity.Property(e => e.UsdaAccessionCode)
-                .HasMaxLength(250)
-                .HasColumnName("usda_accession_code");
-        });
-
-        modelBuilder.Entity<Rhy>(entity =>
-        {
-            entity.ToTable("rhy");
-
-            entity.Property(e => e.RhyId).HasColumnName("rhy_id");
-            entity.Property(e => e.Comments)
-                .HasMaxLength(71)
-                .HasColumnName("comments");
-            entity.Property(e => e.CommonNam)
-                .HasMaxLength(29)
-                .HasColumnName("common_nam");
-            entity.Property(e => e.GenusSpp)
-                .HasMaxLength(100)
-                .HasColumnName("genus_spp");
-            entity.Property(e => e.GeoSource)
-                .HasMaxLength(47)
-                .HasColumnName("geo_source");
-            entity.Property(e => e.HostPlant)
-                .HasMaxLength(254)
-                .HasColumnName("host_plant");
-            entity.Property(e => e.HostsNodu)
-                .HasMaxLength(25)
-                .HasColumnName("hosts_nodu");
-            entity.Property(e => e.Serogroup)
-                .HasMaxLength(9)
-                .HasColumnName("serogroup");
-            entity.Property(e => e.Source)
-                .HasMaxLength(39)
-                .HasColumnName("source");
-            entity.Property(e => e.Synonym1)
-                .HasMaxLength(26)
-                .HasColumnName("synonym_1");
-            entity.Property(e => e.Synonym2)
-                .HasMaxLength(243)
-                .HasColumnName("synonym_2");
-            entity.Property(e => e.Synonym3)
-                .HasMaxLength(11)
-                .HasColumnName("synonym_3");
-            entity.Property(e => e.Synonym4)
-                .HasMaxLength(10)
-                .HasColumnName("synonym_4");
-            entity.Property(e => e.UsdaAcces).HasColumnName("usda_acces");
         });
 
         modelBuilder.Entity<S9SiteInventory>(entity =>
@@ -6675,6 +7385,109 @@ public partial class gringlobalContext : DbContext
             entity.HasOne(d => d.SysUser).WithMany(p => p.SysGroupUserMaps)
                 .HasForeignKey(d => d.SysUserId)
                 .HasConstraintName("fk_sgum_su");
+        });
+
+        modelBuilder.Entity<SysIndex>(entity =>
+        {
+            entity.ToTable("sys_index");
+
+            entity.HasIndex(e => e.CreatedBy, "ndx_fk_si_created");
+
+            entity.HasIndex(e => e.ModifiedBy, "ndx_fk_si_modified");
+
+            entity.HasIndex(e => e.OwnedBy, "ndx_fk_si_owned");
+
+            entity.HasIndex(e => e.SysTableId, "ndx_fk_si_st");
+
+            entity.HasIndex(e => new { e.IndexName, e.SysTableId }, "ndx_uniq_si").IsUnique();
+
+            entity.Property(e => e.SysIndexId).HasColumnName("sys_index_id");
+            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
+            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
+            entity.Property(e => e.IndexName)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("index_name");
+            entity.Property(e => e.IsUnique)
+                .IsRequired()
+                .HasMaxLength(1)
+                .HasColumnName("is_unique");
+            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
+            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
+            entity.Property(e => e.OwnedBy).HasColumnName("owned_by");
+            entity.Property(e => e.OwnedDate).HasColumnName("owned_date");
+            entity.Property(e => e.SysTableId).HasColumnName("sys_table_id");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.SysIndexCreatedByNavigations)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_si_created");
+
+            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.SysIndexModifiedByNavigations)
+                .HasForeignKey(d => d.ModifiedBy)
+                .HasConstraintName("fk_si_modified");
+
+            entity.HasOne(d => d.OwnedByNavigation).WithMany(p => p.SysIndexOwnedByNavigations)
+                .HasForeignKey(d => d.OwnedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_si_owned");
+
+            entity.HasOne(d => d.SysTable).WithMany(p => p.SysIndices)
+                .HasForeignKey(d => d.SysTableId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_si_st");
+        });
+
+        modelBuilder.Entity<SysIndexField>(entity =>
+        {
+            entity.ToTable("sys_index_field");
+
+            entity.HasIndex(e => e.CreatedBy, "ndx_fk_sif_created");
+
+            entity.HasIndex(e => e.ModifiedBy, "ndx_fk_sif_modified");
+
+            entity.HasIndex(e => e.OwnedBy, "ndx_fk_sif_owned");
+
+            entity.HasIndex(e => e.SysIndexId, "ndx_fk_sif_si");
+
+            entity.HasIndex(e => e.SysTableFieldId, "ndx_fk_sif_stf");
+
+            entity.HasIndex(e => new { e.SysIndexId, e.SysIndexFieldId }, "ndx_uniq_sif").IsUnique();
+
+            entity.Property(e => e.SysIndexFieldId).HasColumnName("sys_index_field_id");
+            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
+            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
+            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
+            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
+            entity.Property(e => e.OwnedBy).HasColumnName("owned_by");
+            entity.Property(e => e.OwnedDate).HasColumnName("owned_date");
+            entity.Property(e => e.SortOrder).HasColumnName("sort_order");
+            entity.Property(e => e.SysIndexId).HasColumnName("sys_index_id");
+            entity.Property(e => e.SysTableFieldId).HasColumnName("sys_table_field_id");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.SysIndexFieldCreatedByNavigations)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_sif_created");
+
+            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.SysIndexFieldModifiedByNavigations)
+                .HasForeignKey(d => d.ModifiedBy)
+                .HasConstraintName("fk_sif_modified");
+
+            entity.HasOne(d => d.OwnedByNavigation).WithMany(p => p.SysIndexFieldOwnedByNavigations)
+                .HasForeignKey(d => d.OwnedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_sif_owned");
+
+            entity.HasOne(d => d.SysIndex).WithMany(p => p.SysIndexFields)
+                .HasForeignKey(d => d.SysIndexId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_sif_si");
+
+            entity.HasOne(d => d.SysTableField).WithMany(p => p.SysIndexFields)
+                .HasForeignKey(d => d.SysTableFieldId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_sif_stf");
         });
 
         modelBuilder.Entity<SysLang>(entity =>

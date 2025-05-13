@@ -5,19 +5,19 @@ using System.Collections.Generic;
 
 namespace USDA.ARS.GRINGlobal.Data.Models;
 
-public partial class AppSetting
+public partial class FeedbackResultField
 {
-    public int AppSettingId { get; set; }
+    public int FeedbackResultFieldId { get; set; }
 
-    public string CategoryTag { get; set; }
+    public int FeedbackResultId { get; set; }
 
-    public int? SortOrder { get; set; }
+    public int FeedbackFormFieldId { get; set; }
 
-    public string Name { get; set; }
+    public string StringValue { get; set; }
 
-    public string Value { get; set; }
+    public string AdminValue { get; set; }
 
-    public DateTime CreatedDate { get; set; }
+    public DateTime? CreatedDate { get; set; }
 
     public int CreatedBy { get; set; }
 
@@ -30,6 +30,10 @@ public partial class AppSetting
     public int OwnedBy { get; set; }
 
     public virtual Cooperator CreatedByNavigation { get; set; }
+
+    public virtual FeedbackFormField FeedbackFormField { get; set; }
+
+    public virtual FeedbackResult FeedbackResult { get; set; }
 
     public virtual Cooperator ModifiedByNavigation { get; set; }
 

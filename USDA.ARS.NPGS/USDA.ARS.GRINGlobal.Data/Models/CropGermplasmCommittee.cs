@@ -20,4 +20,6 @@ public partial class CropGermplasmCommittee
     public DateTime? ModifiedDate { get; set; }
 
     public int? ModifiedBy { get; set; }
+
+    public virtual ICollection<CropGermplasmCommitteeDocument> CropGermplasmCommitteeDocuments { get; set; } = new List<CropGermplasmCommitteeDocument>();
 }

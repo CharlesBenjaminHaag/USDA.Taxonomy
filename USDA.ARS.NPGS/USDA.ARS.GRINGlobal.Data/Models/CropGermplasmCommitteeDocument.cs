@@ -28,4 +28,6 @@ public partial class CropGermplasmCommitteeDocument
     public string DocumentTitle { get; set; }
 
     public int? DocumentYear { get; set; }
+
+    public virtual CropGermplasmCommittee CropGermplasmCommittee { get; set; }
 }

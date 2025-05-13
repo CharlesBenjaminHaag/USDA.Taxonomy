@@ -5,27 +5,29 @@ using System.Collections.Generic;
 
 namespace USDA.ARS.GRINGlobal.Data.Models;
 
-public partial class AppResource
+public partial class FeedbackReportAttach
 {
-    public int AppResourceId { get; set; }
+    public int FeedbackReportAttachId { get; set; }
 
-    public int SysLangId { get; set; }
+    public int FeedbackReportId { get; set; }
 
-    public string AppName { get; set; }
+    public string VirtualPath { get; set; }
 
-    public string FormName { get; set; }
-
-    public string AppResourceName { get; set; }
-
-    public string Description { get; set; }
-
-    public string DisplayMember { get; set; }
-
-    public string ValueMember { get; set; }
+    public string ThumbnailVirtualPath { get; set; }
 
     public int? SortOrder { get; set; }
 
-    public string Properties { get; set; }
+    public string Title { get; set; }
+
+    public string Description { get; set; }
+
+    public string ContentType { get; set; }
+
+    public string CategoryCode { get; set; }
+
+    public string IsWebVisible { get; set; }
+
+    public string Note { get; set; }
 
     public DateTime CreatedDate { get; set; }
 
@@ -41,9 +43,9 @@ public partial class AppResource
 
     public virtual Cooperator CreatedByNavigation { get; set; }
 
+    public virtual FeedbackReport FeedbackReport { get; set; }
+
     public virtual Cooperator ModifiedByNavigation { get; set; }
 
     public virtual Cooperator OwnedByNavigation { get; set; }
-
-    public virtual SysLang SysLang { get; set; }
 }

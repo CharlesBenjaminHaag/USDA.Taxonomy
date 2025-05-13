@@ -1,5 +1,5 @@
 ﻿{
-   "CodeGenerationMode": 5,
+   "CodeGenerationMode": 4,
    "ContextClassName": "gringlobalContext",
    "ContextNamespace": null,
    "FilterSchemas": false,
@@ -28,10 +28,6 @@
       },
       {
          "Name": "[dbo].[accession_inv_attach]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[accession_inv_attach_validation]",
          "ObjectType": 0
       },
       {
@@ -72,22 +68,6 @@
       },
       {
          "Name": "[dbo].[accession_source_map]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[app_resource]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[app_setting]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[app_user_gui_setting]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[app_user_item_folder]",
          "ObjectType": 0
       },
       {
@@ -179,11 +159,75 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[email]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[email_attach]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[email_template]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[exploration]",
          "ObjectType": 0
       },
       {
          "Name": "[dbo].[exploration_map]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[feedback]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[feedback_attach]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[feedback_form]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[feedback_form_field]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[feedback_form_trait]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[feedback_inventory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[feedback_report]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[feedback_report_attach]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[feedback_result]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[feedback_result_attach]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[feedback_result_field]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[feedback_result_group]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[feedback_result_trait_obs]",
          "ObjectType": 0
       },
       {
@@ -339,23 +383,11 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[pvp_applicant]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[region]",
          "ObjectType": 0
       },
       {
          "Name": "[dbo].[rhizobium]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[rhizobium_import]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[rhy]",
          "ObjectType": 0
       },
       {
@@ -420,6 +452,14 @@
       },
       {
          "Name": "[dbo].[sys_group_user_map]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[sys_index]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[sys_index_field]",
          "ObjectType": 0
       },
       {

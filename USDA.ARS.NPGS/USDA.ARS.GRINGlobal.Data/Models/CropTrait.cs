@@ -65,6 +65,10 @@ public partial class CropTrait
 
     public virtual ICollection<CropTraitObservation> CropTraitObservations { get; set; } = new List<CropTraitObservation>();
 
+    public virtual ICollection<FeedbackFormTrait> FeedbackFormTraits { get; set; } = new List<FeedbackFormTrait>();
+
+    public virtual ICollection<FeedbackResultTraitOb> FeedbackResultTraitObs { get; set; } = new List<FeedbackResultTraitOb>();
+
     public virtual Cooperator ModifiedByNavigation { get; set; }
 
     public virtual Cooperator OwnedByNavigation { get; set; }

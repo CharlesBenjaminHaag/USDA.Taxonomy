@@ -197,28 +197,6 @@ public partial class Cooperator
 
     public virtual ICollection<AccessionSource> AccessionSourceOwnedByNavigations { get; set; } = new List<AccessionSource>();
 
-    public virtual ICollection<AppResource> AppResourceCreatedByNavigations { get; set; } = new List<AppResource>();
-
-    public virtual ICollection<AppResource> AppResourceModifiedByNavigations { get; set; } = new List<AppResource>();
-
-    public virtual ICollection<AppResource> AppResourceOwnedByNavigations { get; set; } = new List<AppResource>();
-
-    public virtual ICollection<AppSetting> AppSettingCreatedByNavigations { get; set; } = new List<AppSetting>();
-
-    public virtual ICollection<AppSetting> AppSettingModifiedByNavigations { get; set; } = new List<AppSetting>();
-
-    public virtual ICollection<AppSetting> AppSettingOwnedByNavigations { get; set; } = new List<AppSetting>();
-
-    public virtual ICollection<AppUserGuiSetting> AppUserGuiSettingCooperators { get; set; } = new List<AppUserGuiSetting>();
-
-    public virtual ICollection<AppUserGuiSetting> AppUserGuiSettingCreatedByNavigations { get; set; } = new List<AppUserGuiSetting>();
-
-    public virtual ICollection<AppUserGuiSetting> AppUserGuiSettingModifiedByNavigations { get; set; } = new List<AppUserGuiSetting>();
-
-    public virtual ICollection<AppUserGuiSetting> AppUserGuiSettingOwnedByNavigations { get; set; } = new List<AppUserGuiSetting>();
-
-    public virtual ICollection<AppUserItemFolder> AppUserItemFolders { get; set; } = new List<AppUserItemFolder>();
-
     public virtual ICollection<AppUserItemList> AppUserItemListCooperators { get; set; } = new List<AppUserItemList>();
 
     public virtual ICollection<AppUserItemList> AppUserItemListCreatedByNavigations { get; set; } = new List<AppUserItemList>();
@@ -337,6 +315,24 @@ public partial class Cooperator
 
     public virtual Cooperator CurrentCooperator { get; set; }
 
+    public virtual ICollection<EmailAttach> EmailAttachCreatedByNavigations { get; set; } = new List<EmailAttach>();
+
+    public virtual ICollection<EmailAttach> EmailAttachModifiedByNavigations { get; set; } = new List<EmailAttach>();
+
+    public virtual ICollection<EmailAttach> EmailAttachOwnedByNavigations { get; set; } = new List<EmailAttach>();
+
+    public virtual ICollection<Email> EmailCreatedByNavigations { get; set; } = new List<Email>();
+
+    public virtual ICollection<Email> EmailModifiedByNavigations { get; set; } = new List<Email>();
+
+    public virtual ICollection<Email> EmailOwnedByNavigations { get; set; } = new List<Email>();
+
+    public virtual ICollection<EmailTemplate> EmailTemplateCreatedByNavigations { get; set; } = new List<EmailTemplate>();
+
+    public virtual ICollection<EmailTemplate> EmailTemplateModifiedByNavigations { get; set; } = new List<EmailTemplate>();
+
+    public virtual ICollection<EmailTemplate> EmailTemplateOwnedByNavigations { get; set; } = new List<EmailTemplate>();
+
     public virtual ICollection<Exploration> ExplorationCreatedByNavigations { get; set; } = new List<Exploration>();
 
     public virtual ICollection<Exploration> ExplorationHostCooperators { get; set; } = new List<Exploration>();
@@ -352,6 +348,78 @@ public partial class Cooperator
     public virtual ICollection<Exploration> ExplorationModifiedByNavigations { get; set; } = new List<Exploration>();
 
     public virtual ICollection<Exploration> ExplorationOwnedByNavigations { get; set; } = new List<Exploration>();
+
+    public virtual ICollection<Feedback> FeedbackCreatedByNavigations { get; set; } = new List<Feedback>();
+
+    public virtual ICollection<FeedbackForm> FeedbackFormCreatedByNavigations { get; set; } = new List<FeedbackForm>();
+
+    public virtual ICollection<FeedbackFormField> FeedbackFormFieldCreatedByNavigations { get; set; } = new List<FeedbackFormField>();
+
+    public virtual ICollection<FeedbackFormField> FeedbackFormFieldModifiedByNavigations { get; set; } = new List<FeedbackFormField>();
+
+    public virtual ICollection<FeedbackFormField> FeedbackFormFieldOwnedByNavigations { get; set; } = new List<FeedbackFormField>();
+
+    public virtual ICollection<FeedbackForm> FeedbackFormModifiedByNavigations { get; set; } = new List<FeedbackForm>();
+
+    public virtual ICollection<FeedbackForm> FeedbackFormOwnedByNavigations { get; set; } = new List<FeedbackForm>();
+
+    public virtual ICollection<FeedbackFormTrait> FeedbackFormTraitCreatedByNavigations { get; set; } = new List<FeedbackFormTrait>();
+
+    public virtual ICollection<FeedbackFormTrait> FeedbackFormTraitModifiedByNavigations { get; set; } = new List<FeedbackFormTrait>();
+
+    public virtual ICollection<FeedbackFormTrait> FeedbackFormTraitOwnedByNavigations { get; set; } = new List<FeedbackFormTrait>();
+
+    public virtual ICollection<FeedbackInventory> FeedbackInventoryCreatedByNavigations { get; set; } = new List<FeedbackInventory>();
+
+    public virtual ICollection<FeedbackInventory> FeedbackInventoryModifiedByNavigations { get; set; } = new List<FeedbackInventory>();
+
+    public virtual ICollection<FeedbackInventory> FeedbackInventoryOwnedByNavigations { get; set; } = new List<FeedbackInventory>();
+
+    public virtual ICollection<Feedback> FeedbackModifiedByNavigations { get; set; } = new List<Feedback>();
+
+    public virtual ICollection<Feedback> FeedbackOwnedByNavigations { get; set; } = new List<Feedback>();
+
+    public virtual ICollection<FeedbackReportAttach> FeedbackReportAttachCreatedByNavigations { get; set; } = new List<FeedbackReportAttach>();
+
+    public virtual ICollection<FeedbackReportAttach> FeedbackReportAttachModifiedByNavigations { get; set; } = new List<FeedbackReportAttach>();
+
+    public virtual ICollection<FeedbackReportAttach> FeedbackReportAttachOwnedByNavigations { get; set; } = new List<FeedbackReportAttach>();
+
+    public virtual ICollection<FeedbackReport> FeedbackReportCreatedByNavigations { get; set; } = new List<FeedbackReport>();
+
+    public virtual ICollection<FeedbackReport> FeedbackReportModifiedByNavigations { get; set; } = new List<FeedbackReport>();
+
+    public virtual ICollection<FeedbackReport> FeedbackReportOwnedByNavigations { get; set; } = new List<FeedbackReport>();
+
+    public virtual ICollection<FeedbackResultAttach> FeedbackResultAttachCreatedByNavigations { get; set; } = new List<FeedbackResultAttach>();
+
+    public virtual ICollection<FeedbackResultAttach> FeedbackResultAttachModifiedByNavigations { get; set; } = new List<FeedbackResultAttach>();
+
+    public virtual ICollection<FeedbackResultAttach> FeedbackResultAttachOwnedByNavigations { get; set; } = new List<FeedbackResultAttach>();
+
+    public virtual ICollection<FeedbackResult> FeedbackResultCreatedByNavigations { get; set; } = new List<FeedbackResult>();
+
+    public virtual ICollection<FeedbackResultField> FeedbackResultFieldCreatedByNavigations { get; set; } = new List<FeedbackResultField>();
+
+    public virtual ICollection<FeedbackResultField> FeedbackResultFieldModifiedByNavigations { get; set; } = new List<FeedbackResultField>();
+
+    public virtual ICollection<FeedbackResultField> FeedbackResultFieldOwnedByNavigations { get; set; } = new List<FeedbackResultField>();
+
+    public virtual ICollection<FeedbackResultGroup> FeedbackResultGroupCreatedByNavigations { get; set; } = new List<FeedbackResultGroup>();
+
+    public virtual ICollection<FeedbackResultGroup> FeedbackResultGroupModifiedByNavigations { get; set; } = new List<FeedbackResultGroup>();
+
+    public virtual ICollection<FeedbackResultGroup> FeedbackResultGroupOwnedByNavigations { get; set; } = new List<FeedbackResultGroup>();
+
+    public virtual ICollection<FeedbackResult> FeedbackResultModifiedByNavigations { get; set; } = new List<FeedbackResult>();
+
+    public virtual ICollection<FeedbackResult> FeedbackResultOwnedByNavigations { get; set; } = new List<FeedbackResult>();
+
+    public virtual ICollection<FeedbackResultTraitOb> FeedbackResultTraitObCreatedByNavigations { get; set; } = new List<FeedbackResultTraitOb>();
+
+    public virtual ICollection<FeedbackResultTraitOb> FeedbackResultTraitObModifiedByNavigations { get; set; } = new List<FeedbackResultTraitOb>();
+
+    public virtual ICollection<FeedbackResultTraitOb> FeedbackResultTraitObOwnedByNavigations { get; set; } = new List<FeedbackResultTraitOb>();
 
     public virtual ICollection<GeneticAnnotation> GeneticAnnotationCreatedByNavigations { get; set; } = new List<GeneticAnnotation>();
 
@@ -700,6 +768,18 @@ public partial class Cooperator
     public virtual ICollection<SysGroupUserMap> SysGroupUserMapModifiedByNavigations { get; set; } = new List<SysGroupUserMap>();
 
     public virtual ICollection<SysGroupUserMap> SysGroupUserMapOwnedByNavigations { get; set; } = new List<SysGroupUserMap>();
+
+    public virtual ICollection<SysIndex> SysIndexCreatedByNavigations { get; set; } = new List<SysIndex>();
+
+    public virtual ICollection<SysIndexField> SysIndexFieldCreatedByNavigations { get; set; } = new List<SysIndexField>();
+
+    public virtual ICollection<SysIndexField> SysIndexFieldModifiedByNavigations { get; set; } = new List<SysIndexField>();
+
+    public virtual ICollection<SysIndexField> SysIndexFieldOwnedByNavigations { get; set; } = new List<SysIndexField>();
+
+    public virtual ICollection<SysIndex> SysIndexModifiedByNavigations { get; set; } = new List<SysIndex>();
+
+    public virtual ICollection<SysIndex> SysIndexOwnedByNavigations { get; set; } = new List<SysIndex>();
 
     public virtual SysLang SysLang { get; set; }
 

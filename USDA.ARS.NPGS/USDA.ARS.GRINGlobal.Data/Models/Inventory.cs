@@ -131,6 +131,12 @@ public partial class Inventory
 
     public virtual ICollection<CropTraitObservation> CropTraitObservations { get; set; } = new List<CropTraitObservation>();
 
+    public virtual ICollection<FeedbackInventory> FeedbackInventories { get; set; } = new List<FeedbackInventory>();
+
+    public virtual ICollection<FeedbackResultTraitOb> FeedbackResultTraitObs { get; set; } = new List<FeedbackResultTraitOb>();
+
+    public virtual ICollection<FeedbackResult> FeedbackResults { get; set; } = new List<FeedbackResult>();
+
     public virtual ICollection<GeneticObservationDatum> GeneticObservationData { get; set; } = new List<GeneticObservationDatum>();
 
     public virtual ICollection<GeneticObservation> GeneticObservations { get; set; } = new List<GeneticObservation>();

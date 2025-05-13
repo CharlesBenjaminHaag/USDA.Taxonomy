@@ -5,21 +5,21 @@ using System.Collections.Generic;
 
 namespace USDA.ARS.GRINGlobal.Data.Models;
 
-public partial class AppUserGuiSetting
+public partial class FeedbackFormTrait
 {
-    public int AppUserGuiSettingId { get; set; }
+    public int FeedbackFormTraitId { get; set; }
 
-    public int CooperatorId { get; set; }
+    public int FeedbackFormId { get; set; }
 
-    public string AppName { get; set; }
+    public int CropTraitId { get; set; }
 
-    public string FormName { get; set; }
+    public int SortOrder { get; set; }
 
-    public string ResourceName { get; set; }
+    public string ReferencesTag { get; set; }
 
-    public string ResourceKey { get; set; }
+    public string Title { get; set; }
 
-    public string ResourceValue { get; set; }
+    public string Description { get; set; }
 
     public DateTime CreatedDate { get; set; }
 
@@ -33,9 +33,11 @@ public partial class AppUserGuiSetting
 
     public int OwnedBy { get; set; }
 
-    public virtual Cooperator Cooperator { get; set; }
-
     public virtual Cooperator CreatedByNavigation { get; set; }
+
+    public virtual CropTrait CropTrait { get; set; }
+
+    public virtual FeedbackForm FeedbackForm { get; set; }
 
     public virtual Cooperator ModifiedByNavigation { get; set; }
 

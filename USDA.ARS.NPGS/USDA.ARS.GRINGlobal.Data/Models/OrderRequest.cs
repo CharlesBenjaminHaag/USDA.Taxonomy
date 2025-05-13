@@ -55,6 +55,8 @@ public partial class OrderRequest
 
     public virtual Cooperator CreatedByNavigation { get; set; }
 
+    public virtual Feedback Feedback { get; set; }
+
     public virtual Cooperator FinalRecipientCooperator { get; set; }
 
     public virtual ICollection<OrderRequest> InverseOriginalOrderRequest { get; set; } = new List<OrderRequest>();

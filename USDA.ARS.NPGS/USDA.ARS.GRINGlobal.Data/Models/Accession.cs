@@ -63,6 +63,8 @@ public partial class Accession
 
     public string LifeSexCode { get; set; }
 
+    public string AccessionLookup { get; set; }
+
     public virtual ICollection<AccessionAction> AccessionActions { get; set; } = new List<AccessionAction>();
 
     public virtual ICollection<AccessionIpr> AccessionIprs { get; set; } = new List<AccessionIpr>();

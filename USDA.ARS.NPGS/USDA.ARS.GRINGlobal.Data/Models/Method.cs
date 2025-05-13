@@ -57,6 +57,8 @@ public partial class Method
 
     public virtual ICollection<CropTraitObservation> CropTraitObservations { get; set; } = new List<CropTraitObservation>();
 
+    public virtual ICollection<FeedbackResultTraitOb> FeedbackResultTraitObs { get; set; } = new List<FeedbackResultTraitOb>();
+
     public virtual ICollection<GeneticAnnotation> GeneticAnnotations { get; set; } = new List<GeneticAnnotation>();
 
     public virtual Geography Geography { get; set; }

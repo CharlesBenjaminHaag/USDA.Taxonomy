@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 namespace USDA.ARS.GRINGlobal.Data.Models;
 
-public partial class CropTraitCode
+public partial class FeedbackResult
 {
-    public int CropTraitCodeId { get; set; }
+    public int FeedbackResultId { get; set; }
 
-    public int CropTraitId { get; set; }
+    public int FeedbackResultGroupId { get; set; }
 
-    public string Code { get; set; }
+    public int InventoryId { get; set; }
 
     public DateTime CreatedDate { get; set; }
 
@@ -27,17 +27,15 @@ public partial class CropTraitCode
 
     public virtual Cooperator CreatedByNavigation { get; set; }
 
-    public virtual CropTrait CropTrait { get; set; }
+    public virtual ICollection<FeedbackResultAttach> FeedbackResultAttaches { get; set; } = new List<FeedbackResultAttach>();
 
-    public virtual ICollection<CropTraitCodeAttach> CropTraitCodeAttaches { get; set; } = new List<CropTraitCodeAttach>();
+    public virtual ICollection<FeedbackResultField> FeedbackResultFields { get; set; } = new List<FeedbackResultField>();
 
-    public virtual ICollection<CropTraitCodeLang> CropTraitCodeLangs { get; set; } = new List<CropTraitCodeLang>();
-
-    public virtual ICollection<CropTraitObservationDatum> CropTraitObservationData { get; set; } = new List<CropTraitObservationDatum>();
-
-    public virtual ICollection<CropTraitObservation> CropTraitObservations { get; set; } = new List<CropTraitObservation>();
+    public virtual FeedbackResultGroup FeedbackResultGroup { get; set; }
 
     public virtual ICollection<FeedbackResultTraitOb> FeedbackResultTraitObs { get; set; } = new List<FeedbackResultTraitOb>();
+
+    public virtual Inventory Inventory { get; set; }
 
     public virtual Cooperator ModifiedByNavigation { get; set; }
 
