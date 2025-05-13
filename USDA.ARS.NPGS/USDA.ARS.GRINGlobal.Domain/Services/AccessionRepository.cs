@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using USDA.ARS.GRINGlobal.Data.Models;
 using USDA.ARS.GRINGlobal.Domain.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace USDA.ARS.GRINGlobal.Domain.Services
 {
@@ -28,33 +29,48 @@ namespace USDA.ARS.GRINGlobal.Domain.Services
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<AccessionDTO>> GetAccessionsByCriteriaAsync(string criteria)
+        public async Task<IEnumerable<AccessionDTO>> GetAccessionsByCriteriaAsync(AccessionCriteriaDTO criteria)
         {
-            return await Task.Run(() =>
-             {
-                 var accessions = _context.Accessions
-                     .Where(a => a.AccessionNumberPart1.Contains(criteria) || a.AccessionNumberPart2.ToString().Contains(criteria) || a.AccessionNumberPart3.Contains(criteria))
-                     .Select(a => new AccessionDTO
-                     {
-                         //AccessionId = a.AccessionId,
-                         //AccessionNumberPart1 = a.AccessionNumberPart1,
-                         //AccessionNumberPart2 = a.AccessionNumberPart2,
-                         //AccessionNumberPart3 = a.AccessionNumberPart3,
-                         //IsCore = a.IsCore,
-                         //IsBackedUp = a.IsBackedUp,
-                         //StatusCode = a.StatusCode,
-                         //LifeFormCode = a.LifeFormCode,
-                         //ImprovementStatusCode = a.ImprovementStatusCode,
-                         //ReproductiveUniformityCode = a.ReproductiveUniformityCode,
-                         //InitialReceivedFormCode = a.InitialReceivedFormCode,
-                         //InitialReceivedDate = a.InitialReceivedDate,
-                         //InitialReceivedDateCode = a.InitialReceivedDateCode,
-                         //TaxonomySpeciesId = a.TaxonomySpeciesId,
-                         //IsWebVisible = a.IsWebVisible,
-                         //Note = a.Note
-                     }).ToList();
-                 return accessions;
-             });
+            var accessions = _context.Accessions.AsQueryable();
+
+            if (!String.IsNullOrEmpty(criteria.accession_identifier))
+            {
+                accessions = accessions.Where(a => 
+                    a.AccessionLookup.Contains(criteria.accession_identifier));
+            }
+
+            if (!String.IsNullOrEmpty(criteria.scientific_name))
+            {
+                accessions = accessions.Where(a => 
+                    a.TaxonomySpecies.Name.Contains(criteria.scientific_name));
+            }
+
+            if (!String.IsNullOrEmpty(criteria.plant_name))
+            {
+                accessions = accessions.Where(a =>
+                    a.Inventories.Any(i => 
+                        i.AccessionInvNames.Any(n => 
+                            n.PlantName.Contains(criteria.plant_name))));
+            }
+
+            if (!String.IsNullOrEmpty(criteria.country_of_origin))
+            {
+                accessions = accessions.Where(a => 
+                    a.AccessionSources.Any(s => 
+                        s.Geography.CountryCode == criteria.country_of_origin));
+            }
+
+            var totalCount = await accessions.CountAsync();
+
+            int skip = (criteria.startPage - 1) * criteria.pageSize;
+            accessions = accessions.Skip(skip).Take(criteria.pageSize);
+
+            return await accessions.
+                Select(p => new AccessionDTO
+                {
+                    id = p.AccessionId,
+                    lookup_name = p.AccessionLookup,
+                }).ToListAsync();
         }
 
         public Task<AccessionDTO> GetAccessionByIdAsync(int id)

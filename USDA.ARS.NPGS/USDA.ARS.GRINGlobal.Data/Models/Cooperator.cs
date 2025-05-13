@@ -769,18 +769,6 @@ public partial class Cooperator
 
     public virtual ICollection<SysGroupUserMap> SysGroupUserMapOwnedByNavigations { get; set; } = new List<SysGroupUserMap>();
 
-    public virtual ICollection<SysIndex> SysIndexCreatedByNavigations { get; set; } = new List<SysIndex>();
-
-    public virtual ICollection<SysIndexField> SysIndexFieldCreatedByNavigations { get; set; } = new List<SysIndexField>();
-
-    public virtual ICollection<SysIndexField> SysIndexFieldModifiedByNavigations { get; set; } = new List<SysIndexField>();
-
-    public virtual ICollection<SysIndexField> SysIndexFieldOwnedByNavigations { get; set; } = new List<SysIndexField>();
-
-    public virtual ICollection<SysIndex> SysIndexModifiedByNavigations { get; set; } = new List<SysIndex>();
-
-    public virtual ICollection<SysIndex> SysIndexOwnedByNavigations { get; set; } = new List<SysIndex>();
-
     public virtual SysLang SysLang { get; set; }
 
     public virtual ICollection<SysLang> SysLangCreatedByNavigations { get; set; } = new List<SysLang>();
@@ -806,18 +794,6 @@ public partial class Cooperator
     public virtual ICollection<SysPermission> SysPermissionModifiedByNavigations { get; set; } = new List<SysPermission>();
 
     public virtual ICollection<SysPermission> SysPermissionOwnedByNavigations { get; set; } = new List<SysPermission>();
-
-    public virtual ICollection<SysSearchAutofield> SysSearchAutofieldCreatedByNavigations { get; set; } = new List<SysSearchAutofield>();
-
-    public virtual ICollection<SysSearchAutofield> SysSearchAutofieldModifiedByNavigations { get; set; } = new List<SysSearchAutofield>();
-
-    public virtual ICollection<SysSearchAutofield> SysSearchAutofieldOwnedByNavigations { get; set; } = new List<SysSearchAutofield>();
-
-    public virtual ICollection<SysSearchResolver> SysSearchResolverCreatedByNavigations { get; set; } = new List<SysSearchResolver>();
-
-    public virtual ICollection<SysSearchResolver> SysSearchResolverModifiedByNavigations { get; set; } = new List<SysSearchResolver>();
-
-    public virtual ICollection<SysSearchResolver> SysSearchResolverOwnedByNavigations { get; set; } = new List<SysSearchResolver>();
 
     public virtual ICollection<SysTable> SysTableCreatedByNavigations { get; set; } = new List<SysTable>();
 
@@ -862,6 +838,30 @@ public partial class Cooperator
     public virtual ICollection<SysUserPermissionMap> SysUserPermissionMapModifiedByNavigations { get; set; } = new List<SysUserPermissionMap>();
 
     public virtual ICollection<SysUserPermissionMap> SysUserPermissionMapOwnedByNavigations { get; set; } = new List<SysUserPermissionMap>();
+
+    public virtual ICollection<TaxonomyFamily> TaxonomyFamilyCreatedByNavigations { get; set; } = new List<TaxonomyFamily>();
+
+    public virtual ICollection<TaxonomyFamily> TaxonomyFamilyModifiedByNavigations { get; set; } = new List<TaxonomyFamily>();
+
+    public virtual ICollection<TaxonomyFamily> TaxonomyFamilyOwnedByNavigations { get; set; } = new List<TaxonomyFamily>();
+
+    public virtual ICollection<TaxonomyGenu> TaxonomyGenuCreatedByNavigations { get; set; } = new List<TaxonomyGenu>();
+
+    public virtual ICollection<TaxonomyGenu> TaxonomyGenuModifiedByNavigations { get; set; } = new List<TaxonomyGenu>();
+
+    public virtual ICollection<TaxonomyGenu> TaxonomyGenuOwnedByNavigations { get; set; } = new List<TaxonomyGenu>();
+
+    public virtual ICollection<TaxonomySpecy> TaxonomySpecyCreatedByNavigations { get; set; } = new List<TaxonomySpecy>();
+
+    public virtual ICollection<TaxonomySpecy> TaxonomySpecyCurator1Cooperators { get; set; } = new List<TaxonomySpecy>();
+
+    public virtual ICollection<TaxonomySpecy> TaxonomySpecyCurator2Cooperators { get; set; } = new List<TaxonomySpecy>();
+
+    public virtual ICollection<TaxonomySpecy> TaxonomySpecyModifiedByNavigations { get; set; } = new List<TaxonomySpecy>();
+
+    public virtual ICollection<TaxonomySpecy> TaxonomySpecyOwnedByNavigations { get; set; } = new List<TaxonomySpecy>();
+
+    public virtual ICollection<TaxonomySpecy> TaxonomySpecyVerifierCooperators { get; set; } = new List<TaxonomySpecy>();
 
     public virtual ICollection<W6SiteInventory> W6SiteInventoryCreatedByNavigations { get; set; } = new List<W6SiteInventory>();
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using USDA.ARS.GRINGlobal.Domain.Models;
 using USDA.ARS.GRINGlobal.Domain.Services;
 
 namespace USDA.ARS.GRINGlobal.API.Web.Controllers
@@ -38,8 +39,8 @@ namespace USDA.ARS.GRINGlobal.API.Web.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAccessionsByCriteria(string criteria)
+        [HttpGet("search")]
+        public async Task<IActionResult> GetAccessionsByCriteria([FromQuery] AccessionCriteriaDTO criteria)
         {
             try
             {
@@ -48,7 +49,7 @@ namespace USDA.ARS.GRINGlobal.API.Web.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error retrieving accessions by criteria {criteria}", criteria);
+                _logger.LogError(ex, "Error retrieving accessions by supplied criteria");
                 return StatusCode(500, "Internal server error");
             }
         }

@@ -34,4 +34,6 @@ public partial class InventoryViabilityRuleMap
     public virtual Cooperator ModifiedByNavigation { get; set; }
 
     public virtual Cooperator OwnedByNavigation { get; set; }
+
+    public virtual TaxonomySpecy TaxonomySpecies { get; set; }
 }

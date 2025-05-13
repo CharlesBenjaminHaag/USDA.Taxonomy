@@ -6,15 +6,32 @@ namespace USDA.ARS.GRINGlobal.API.Web.Controllers
 {
     [EnableCors("DefaultPolicy")]
     [ApiController]
-    [Route("v1/accession")]
+    [Route("v1/cgc")]
     public class CropGermplasmCommitteeController : ControllerBase
     {
-        private readonly ILogger<AccessionController> _logger;
+        private readonly ILogger<CropGermplasmCommitteeController> _logger;
         private readonly ICropGermplasmCommitteeRepository _cropGermplasmCommitteeRepository;
 
-        //[HttpGet("{id}")]
-        //public async Task<IActionResult> GetCropGermplasmCommitteeById(int id)
-        //{
-        //}
+        public CropGermplasmCommitteeController(ICropGermplasmCommitteeRepository accessionRepository, ILogger<CropGermplasmCommitteeController> logger)
+        {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _cropGermplasmCommitteeRepository= accessionRepository ??
+                    throw new ArgumentNullException(nameof(accessionRepository));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetCropGermplasmCommittees()
+        {
+            try
+            {
+                var accessions = await _cropGermplasmCommitteeRepository.GetCropGermplasmCommitteesAsync();
+                return Ok(accessions);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving crop germplasm committees");
+                return StatusCode(500, "Internal server error");
+            }
+        }
     }
 }

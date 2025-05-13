@@ -80,4 +80,10 @@ public partial class Citation
     public virtual Cooperator ModifiedByNavigation { get; set; }
 
     public virtual Cooperator OwnedByNavigation { get; set; }
+
+    public virtual TaxonomyFamily TaxonomyFamily { get; set; }
+
+    public virtual TaxonomyGenu TaxonomyGenus { get; set; }
+
+    public virtual TaxonomySpecy TaxonomySpecies { get; set; }
 }

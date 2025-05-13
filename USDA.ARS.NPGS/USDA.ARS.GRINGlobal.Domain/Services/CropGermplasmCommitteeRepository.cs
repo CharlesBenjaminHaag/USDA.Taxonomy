@@ -20,18 +20,17 @@ namespace USDA.ARS.GRINGlobal.Domain.Services
 
         public async Task<IEnumerable<CropGermplasmCommitteeDTO>> GetCropGermplasmCommitteesAsync(int pageNumber = 1, int pageSize = 10)
         {
-            var cropGermplasmCommitteeCollection = _context.CropGermplasmCommittees as IQueryable<CropGermplasmCommitteeDTO>;
-
-            cropGermplasmCommitteeCollection = (IQueryable<CropGermplasmCommitteeDTO>)_context.CropGermplasmCommittees
-                .Select(c => new CropGermplasmCommitteeDTO
-                {
-                    id = c.CropGermplasmCommitteeId,
-                    name = c.CropGermplasmCommitteeName,
-                    roster_url = c.RosterUrl
-                }).ToListAsync();
-            return cropGermplasmCommitteeCollection;   
+            return await Task.Run(() =>
+            {
+                var cropGermplasmCommittees = _context.CropGermplasmCommittees
+                    .Select(c => new CropGermplasmCommitteeDTO
+                    {
+                        id = c.CropGermplasmCommitteeId,
+                                name = c.CropGermplasmCommitteeName,
+                                roster_url = c.RosterUrl
+                    }).ToList();
+                return cropGermplasmCommittees;
+            });
         }
-
-        
     }
 }

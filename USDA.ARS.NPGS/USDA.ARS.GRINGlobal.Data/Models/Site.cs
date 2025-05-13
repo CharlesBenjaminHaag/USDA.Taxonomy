@@ -56,4 +56,8 @@ public partial class Site
     public virtual Cooperator ModifiedByNavigation { get; set; }
 
     public virtual Cooperator OwnedByNavigation { get; set; }
+
+    public virtual ICollection<TaxonomySpecy> TaxonomySpecyPriority1Sites { get; set; } = new List<TaxonomySpecy>();
+
+    public virtual ICollection<TaxonomySpecy> TaxonomySpecyPriority2Sites { get; set; } = new List<TaxonomySpecy>();
 }

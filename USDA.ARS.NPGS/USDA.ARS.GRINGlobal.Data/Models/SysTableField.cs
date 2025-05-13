@@ -69,13 +69,9 @@ public partial class SysTableField
 
     public virtual Cooperator OwnedByNavigation { get; set; }
 
-    public virtual ICollection<SysIndexField> SysIndexFields { get; set; } = new List<SysIndexField>();
-
     public virtual ICollection<SysPermissionField> SysPermissionFieldParentTableFields { get; set; } = new List<SysPermissionField>();
 
     public virtual ICollection<SysPermissionField> SysPermissionFieldSysTableFields { get; set; } = new List<SysPermissionField>();
-
-    public virtual ICollection<SysSearchAutofield> SysSearchAutofields { get; set; } = new List<SysSearchAutofield>();
 
     public virtual SysTable SysTable { get; set; }
 

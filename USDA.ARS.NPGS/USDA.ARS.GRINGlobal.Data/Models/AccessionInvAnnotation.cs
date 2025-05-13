@@ -47,6 +47,10 @@ public partial class AccessionInvAnnotation
 
     public virtual Cooperator ModifiedByNavigation { get; set; }
 
+    public virtual TaxonomySpecy NewTaxonomySpecies { get; set; }
+
+    public virtual TaxonomySpecy OldTaxonomySpecies { get; set; }
+
     public virtual OrderRequest OrderRequest { get; set; }
 
     public virtual Cooperator OwnedByNavigation { get; set; }

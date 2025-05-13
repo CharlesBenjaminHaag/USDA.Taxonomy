@@ -41,11 +41,7 @@ public partial class SysTable
 
     public virtual Cooperator OwnedByNavigation { get; set; }
 
-    public virtual ICollection<SysIndex> SysIndices { get; set; } = new List<SysIndex>();
-
     public virtual ICollection<SysPermission> SysPermissions { get; set; } = new List<SysPermission>();
-
-    public virtual ICollection<SysSearchResolver> SysSearchResolvers { get; set; } = new List<SysSearchResolver>();
 
     public virtual ICollection<SysTableField> SysTableFields { get; set; } = new List<SysTableField>();
 

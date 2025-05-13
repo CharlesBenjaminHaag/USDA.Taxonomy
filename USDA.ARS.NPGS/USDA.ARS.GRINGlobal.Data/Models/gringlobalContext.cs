@@ -21,6 +21,8 @@ public partial class gringlobalContext : DbContext
 
     public virtual DbSet<AccessionInvAttach> AccessionInvAttaches { get; set; }
 
+    public virtual DbSet<AccessionInvAttachValidation> AccessionInvAttachValidations { get; set; }
+
     public virtual DbSet<AccessionInvGroup> AccessionInvGroups { get; set; }
 
     public virtual DbSet<AccessionInvGroupAttach> AccessionInvGroupAttaches { get; set; }
@@ -217,6 +219,8 @@ public partial class gringlobalContext : DbContext
 
     public virtual DbSet<SysAppErrorLog> SysAppErrorLogs { get; set; }
 
+    public virtual DbSet<SysDbError> SysDbErrors { get; set; }
+
     public virtual DbSet<SysFile> SysFiles { get; set; }
 
     public virtual DbSet<SysFileGroup> SysFileGroups { get; set; }
@@ -233,10 +237,6 @@ public partial class gringlobalContext : DbContext
 
     public virtual DbSet<SysGroupUserMap> SysGroupUserMaps { get; set; }
 
-    public virtual DbSet<SysIndex> SysIndices { get; set; }
-
-    public virtual DbSet<SysIndexField> SysIndexFields { get; set; }
-
     public virtual DbSet<SysLang> SysLangs { get; set; }
 
     public virtual DbSet<SysPermission> SysPermissions { get; set; }
@@ -244,12 +244,6 @@ public partial class gringlobalContext : DbContext
     public virtual DbSet<SysPermissionField> SysPermissionFields { get; set; }
 
     public virtual DbSet<SysPermissionLang> SysPermissionLangs { get; set; }
-
-    public virtual DbSet<SysSearchAutofield> SysSearchAutofields { get; set; }
-
-    public virtual DbSet<SysSearchOperator> SysSearchOperators { get; set; }
-
-    public virtual DbSet<SysSearchResolver> SysSearchResolvers { get; set; }
 
     public virtual DbSet<SysTable> SysTables { get; set; }
 
@@ -266,6 +260,12 @@ public partial class gringlobalContext : DbContext
     public virtual DbSet<SysUserPasswordResetToken> SysUserPasswordResetTokens { get; set; }
 
     public virtual DbSet<SysUserPermissionMap> SysUserPermissionMaps { get; set; }
+
+    public virtual DbSet<TaxonomyFamily> TaxonomyFamilies { get; set; }
+
+    public virtual DbSet<TaxonomyGenu> TaxonomyGenus { get; set; }
+
+    public virtual DbSet<TaxonomySpecy> TaxonomySpecies { get; set; }
 
     public virtual DbSet<W6SiteInventory> W6SiteInventories { get; set; }
 
@@ -411,6 +411,11 @@ public partial class gringlobalContext : DbContext
                 .HasForeignKey(d => d.OwnedBy)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_a_owned");
+
+            entity.HasOne(d => d.TaxonomySpecies).WithMany(p => p.Accessions)
+                .HasForeignKey(d => d.TaxonomySpeciesId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_a_t");
         });
 
         modelBuilder.Entity<AccessionAction>(entity =>
@@ -548,6 +553,14 @@ public partial class gringlobalContext : DbContext
                 .HasForeignKey(d => d.ModifiedBy)
                 .HasConstraintName("fk_aian_modified");
 
+            entity.HasOne(d => d.NewTaxonomySpecies).WithMany(p => p.AccessionInvAnnotationNewTaxonomySpecies)
+                .HasForeignKey(d => d.NewTaxonomySpeciesId)
+                .HasConstraintName("fk_aian_t_new");
+
+            entity.HasOne(d => d.OldTaxonomySpecies).WithMany(p => p.AccessionInvAnnotationOldTaxonomySpecies)
+                .HasForeignKey(d => d.OldTaxonomySpeciesId)
+                .HasConstraintName("fk_aian_t_old");
+
             entity.HasOne(d => d.OrderRequest).WithMany(p => p.AccessionInvAnnotations)
                 .HasForeignKey(d => d.OrderRequestId)
                 .HasConstraintName("fk_aian_or");
@@ -651,6 +664,25 @@ public partial class gringlobalContext : DbContext
                 .HasForeignKey(d => d.OwnedBy)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_aiat_owned");
+        });
+
+        modelBuilder.Entity<AccessionInvAttachValidation>(entity =>
+        {
+            entity.ToTable("accession_inv_attach_validation");
+
+            entity.Property(e => e.AccessionInvAttachValidationId).HasColumnName("accession_inv_attach_validation_id");
+            entity.Property(e => e.AccessionInvAttachId).HasColumnName("accession_inv_attach_id");
+            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
+            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
+            entity.Property(e => e.IsThumbnailVirtualPathValid)
+                .HasMaxLength(1)
+                .HasColumnName("is_thumbnail_virtual_path_valid");
+            entity.Property(e => e.IsVirtualPathValid)
+                .HasMaxLength(1)
+                .HasColumnName("is_virtual_path_valid");
+            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
+            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
+            entity.Property(e => e.Note).HasColumnName("note");
         });
 
         modelBuilder.Entity<AccessionInvGroup>(entity =>
@@ -1504,6 +1536,18 @@ public partial class gringlobalContext : DbContext
                 .HasForeignKey(d => d.OwnedBy)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_ci_owned");
+
+            entity.HasOne(d => d.TaxonomyFamily).WithMany(p => p.Citations)
+                .HasForeignKey(d => d.TaxonomyFamilyId)
+                .HasConstraintName("fk_ci_tf");
+
+            entity.HasOne(d => d.TaxonomyGenus).WithMany(p => p.Citations)
+                .HasForeignKey(d => d.TaxonomyGenusId)
+                .HasConstraintName("fk_ci_tg");
+
+            entity.HasOne(d => d.TaxonomySpecies).WithMany(p => p.Citations)
+                .HasForeignKey(d => d.TaxonomySpeciesId)
+                .HasConstraintName("fk_ci_ts");
         });
 
         modelBuilder.Entity<CodeValue>(entity =>
@@ -5197,6 +5241,11 @@ public partial class gringlobalContext : DbContext
                 .HasForeignKey(d => d.OwnedBy)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_ivrm_owned");
+
+            entity.HasOne(d => d.TaxonomySpecies).WithMany(p => p.InventoryViabilityRuleMaps)
+                .HasForeignKey(d => d.TaxonomySpeciesId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_ivrm_ts");
         });
 
         modelBuilder.Entity<Literature>(entity =>
@@ -7049,6 +7098,23 @@ public partial class gringlobalContext : DbContext
             entity.Property(e => e.Url).HasMaxLength(255);
         });
 
+        modelBuilder.Entity<SysDbError>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToTable("sys_db_error");
+
+            entity.Property(e => e.ErrorDateTime).HasColumnType("datetime");
+            entity.Property(e => e.ErrorId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("ErrorID");
+            entity.Property(e => e.ErrorMessage).IsUnicode(false);
+            entity.Property(e => e.ErrorProcedure).IsUnicode(false);
+            entity.Property(e => e.UserName)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+        });
+
         modelBuilder.Entity<SysFile>(entity =>
         {
             entity.ToTable("sys_file");
@@ -7387,109 +7453,6 @@ public partial class gringlobalContext : DbContext
                 .HasConstraintName("fk_sgum_su");
         });
 
-        modelBuilder.Entity<SysIndex>(entity =>
-        {
-            entity.ToTable("sys_index");
-
-            entity.HasIndex(e => e.CreatedBy, "ndx_fk_si_created");
-
-            entity.HasIndex(e => e.ModifiedBy, "ndx_fk_si_modified");
-
-            entity.HasIndex(e => e.OwnedBy, "ndx_fk_si_owned");
-
-            entity.HasIndex(e => e.SysTableId, "ndx_fk_si_st");
-
-            entity.HasIndex(e => new { e.IndexName, e.SysTableId }, "ndx_uniq_si").IsUnique();
-
-            entity.Property(e => e.SysIndexId).HasColumnName("sys_index_id");
-            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
-            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
-            entity.Property(e => e.IndexName)
-                .IsRequired()
-                .HasMaxLength(50)
-                .HasColumnName("index_name");
-            entity.Property(e => e.IsUnique)
-                .IsRequired()
-                .HasMaxLength(1)
-                .HasColumnName("is_unique");
-            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
-            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
-            entity.Property(e => e.OwnedBy).HasColumnName("owned_by");
-            entity.Property(e => e.OwnedDate).HasColumnName("owned_date");
-            entity.Property(e => e.SysTableId).HasColumnName("sys_table_id");
-
-            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.SysIndexCreatedByNavigations)
-                .HasForeignKey(d => d.CreatedBy)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_si_created");
-
-            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.SysIndexModifiedByNavigations)
-                .HasForeignKey(d => d.ModifiedBy)
-                .HasConstraintName("fk_si_modified");
-
-            entity.HasOne(d => d.OwnedByNavigation).WithMany(p => p.SysIndexOwnedByNavigations)
-                .HasForeignKey(d => d.OwnedBy)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_si_owned");
-
-            entity.HasOne(d => d.SysTable).WithMany(p => p.SysIndices)
-                .HasForeignKey(d => d.SysTableId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_si_st");
-        });
-
-        modelBuilder.Entity<SysIndexField>(entity =>
-        {
-            entity.ToTable("sys_index_field");
-
-            entity.HasIndex(e => e.CreatedBy, "ndx_fk_sif_created");
-
-            entity.HasIndex(e => e.ModifiedBy, "ndx_fk_sif_modified");
-
-            entity.HasIndex(e => e.OwnedBy, "ndx_fk_sif_owned");
-
-            entity.HasIndex(e => e.SysIndexId, "ndx_fk_sif_si");
-
-            entity.HasIndex(e => e.SysTableFieldId, "ndx_fk_sif_stf");
-
-            entity.HasIndex(e => new { e.SysIndexId, e.SysIndexFieldId }, "ndx_uniq_sif").IsUnique();
-
-            entity.Property(e => e.SysIndexFieldId).HasColumnName("sys_index_field_id");
-            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
-            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
-            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
-            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
-            entity.Property(e => e.OwnedBy).HasColumnName("owned_by");
-            entity.Property(e => e.OwnedDate).HasColumnName("owned_date");
-            entity.Property(e => e.SortOrder).HasColumnName("sort_order");
-            entity.Property(e => e.SysIndexId).HasColumnName("sys_index_id");
-            entity.Property(e => e.SysTableFieldId).HasColumnName("sys_table_field_id");
-
-            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.SysIndexFieldCreatedByNavigations)
-                .HasForeignKey(d => d.CreatedBy)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_sif_created");
-
-            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.SysIndexFieldModifiedByNavigations)
-                .HasForeignKey(d => d.ModifiedBy)
-                .HasConstraintName("fk_sif_modified");
-
-            entity.HasOne(d => d.OwnedByNavigation).WithMany(p => p.SysIndexFieldOwnedByNavigations)
-                .HasForeignKey(d => d.OwnedBy)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_sif_owned");
-
-            entity.HasOne(d => d.SysIndex).WithMany(p => p.SysIndexFields)
-                .HasForeignKey(d => d.SysIndexId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_sif_si");
-
-            entity.HasOne(d => d.SysTableField).WithMany(p => p.SysIndexFields)
-                .HasForeignKey(d => d.SysTableFieldId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_sif_stf");
-        });
-
         modelBuilder.Entity<SysLang>(entity =>
         {
             entity.ToTable("sys_lang");
@@ -7711,94 +7674,6 @@ public partial class gringlobalContext : DbContext
                 .HasForeignKey(d => d.SysPermissionId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_spl_sp");
-        });
-
-        modelBuilder.Entity<SysSearchAutofield>(entity =>
-        {
-            entity.ToTable("sys_search_autofield");
-
-            entity.Property(e => e.SysSearchAutofieldId).HasColumnName("sys_search_autofield_id");
-            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
-            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
-            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
-            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
-            entity.Property(e => e.OwnedBy).HasColumnName("owned_by");
-            entity.Property(e => e.OwnedDate).HasColumnName("owned_date");
-            entity.Property(e => e.SysTableFieldId).HasColumnName("sys_table_field_id");
-
-            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.SysSearchAutofieldCreatedByNavigations)
-                .HasForeignKey(d => d.CreatedBy)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_ssa_created");
-
-            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.SysSearchAutofieldModifiedByNavigations)
-                .HasForeignKey(d => d.ModifiedBy)
-                .HasConstraintName("fk_ssa_modified");
-
-            entity.HasOne(d => d.OwnedByNavigation).WithMany(p => p.SysSearchAutofieldOwnedByNavigations)
-                .HasForeignKey(d => d.OwnedBy)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_ssa_owned");
-
-            entity.HasOne(d => d.SysTableField).WithMany(p => p.SysSearchAutofields)
-                .HasForeignKey(d => d.SysTableFieldId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_ssa_stf");
-        });
-
-        modelBuilder.Entity<SysSearchOperator>(entity =>
-        {
-            entity.ToTable("sys_search_operator");
-
-            entity.Property(e => e.SysSearchOperatorId)
-                .HasMaxLength(3)
-                .HasColumnName("sys_search_operator_id");
-            entity.Property(e => e.Syntax)
-                .IsRequired()
-                .HasMaxLength(500)
-                .HasColumnName("syntax");
-            entity.Property(e => e.Title)
-                .IsRequired()
-                .HasMaxLength(50)
-                .HasColumnName("title");
-        });
-
-        modelBuilder.Entity<SysSearchResolver>(entity =>
-        {
-            entity.ToTable("sys_search_resolver");
-
-            entity.Property(e => e.SysSearchResolverId).HasColumnName("sys_search_resolver_id");
-            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
-            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
-            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
-            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
-            entity.Property(e => e.OwnedBy).HasColumnName("owned_by");
-            entity.Property(e => e.OwnedDate).HasColumnName("owned_date");
-            entity.Property(e => e.ResolvedPkeyName)
-                .IsRequired()
-                .HasMaxLength(100)
-                .HasColumnName("resolved_pkey_name");
-            entity.Property(e => e.SysDataviewId).HasColumnName("sys_dataview_id");
-            entity.Property(e => e.SysTableId).HasColumnName("sys_table_id");
-
-            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.SysSearchResolverCreatedByNavigations)
-                .HasForeignKey(d => d.CreatedBy)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_ssr_created");
-
-            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.SysSearchResolverModifiedByNavigations)
-                .HasForeignKey(d => d.ModifiedBy)
-                .HasConstraintName("fk_ssr_modified");
-
-            entity.HasOne(d => d.OwnedByNavigation).WithMany(p => p.SysSearchResolverOwnedByNavigations)
-                .HasForeignKey(d => d.OwnedBy)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_ssr_owned");
-
-            entity.HasOne(d => d.SysTable).WithMany(p => p.SysSearchResolvers)
-                .HasForeignKey(d => d.SysTableId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_ssr_st");
         });
 
         modelBuilder.Entity<SysTable>(entity =>
@@ -8219,6 +8094,360 @@ public partial class gringlobalContext : DbContext
                 .HasForeignKey(d => d.SysUserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_sup_su");
+        });
+
+        modelBuilder.Entity<TaxonomyFamily>(entity =>
+        {
+            entity.ToTable("taxonomy_family");
+
+            entity.HasIndex(e => e.CreatedBy, "ndx_fk_tf_created");
+
+            entity.HasIndex(e => e.CurrentTaxonomyFamilyId, "ndx_fk_tf_cur_tf");
+
+            entity.HasIndex(e => e.ModifiedBy, "ndx_fk_tf_modified");
+
+            entity.HasIndex(e => e.OwnedBy, "ndx_fk_tf_owned");
+
+            entity.HasIndex(e => e.AlternateName, "ndx_tf_alt_name");
+
+            entity.HasIndex(e => e.FamilyName, "ndx_tf_name");
+
+            entity.HasIndex(e => new { e.FamilyName, e.FamilyAuthority, e.SubfamilyName, e.TribeName, e.SubtribeName }, "ndx_uniq_tf").IsUnique();
+
+            entity.Property(e => e.TaxonomyFamilyId).HasColumnName("taxonomy_family_id");
+            entity.Property(e => e.AlternateName)
+                .HasMaxLength(25)
+                .HasColumnName("alternate_name");
+            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
+            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
+            entity.Property(e => e.CurrentTaxonomyFamilyId).HasColumnName("current_taxonomy_family_id");
+            entity.Property(e => e.FamilyAuthority)
+                .HasMaxLength(100)
+                .HasColumnName("family_authority");
+            entity.Property(e => e.FamilyName)
+                .IsRequired()
+                .HasMaxLength(25)
+                .HasColumnName("family_name");
+            entity.Property(e => e.FamilyTypeCode)
+                .HasMaxLength(20)
+                .HasColumnName("family_type_code");
+            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
+            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
+            entity.Property(e => e.Note).HasColumnName("note");
+            entity.Property(e => e.OwnedBy).HasColumnName("owned_by");
+            entity.Property(e => e.OwnedDate).HasColumnName("owned_date");
+            entity.Property(e => e.SubfamilyName)
+                .HasMaxLength(25)
+                .HasColumnName("subfamily_name");
+            entity.Property(e => e.SubtribeName)
+                .HasMaxLength(25)
+                .HasColumnName("subtribe_name");
+            entity.Property(e => e.SuprafamilyRankCode)
+                .HasMaxLength(20)
+                .HasColumnName("suprafamily_rank_code");
+            entity.Property(e => e.SuprafamilyRankName)
+                .HasMaxLength(100)
+                .HasColumnName("suprafamily_rank_name");
+            entity.Property(e => e.TaxonomyClassificationId).HasColumnName("taxonomy_classification_id");
+            entity.Property(e => e.TribeName)
+                .HasMaxLength(25)
+                .HasColumnName("tribe_name");
+            entity.Property(e => e.TypeTaxonomyGenusId).HasColumnName("type_taxonomy_genus_id");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.TaxonomyFamilyCreatedByNavigations)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_tf_created");
+
+            entity.HasOne(d => d.CurrentTaxonomyFamily).WithMany(p => p.InverseCurrentTaxonomyFamily)
+                .HasForeignKey(d => d.CurrentTaxonomyFamilyId)
+                .HasConstraintName("fk_tf_cur_tf");
+
+            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.TaxonomyFamilyModifiedByNavigations)
+                .HasForeignKey(d => d.ModifiedBy)
+                .HasConstraintName("fk_tf_modified");
+
+            entity.HasOne(d => d.OwnedByNavigation).WithMany(p => p.TaxonomyFamilyOwnedByNavigations)
+                .HasForeignKey(d => d.OwnedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_tf_owned");
+
+            entity.HasOne(d => d.TypeTaxonomyGenus).WithMany(p => p.TaxonomyFamilies)
+                .HasForeignKey(d => d.TypeTaxonomyGenusId)
+                .HasConstraintName("fk_tf_tg");
+        });
+
+        modelBuilder.Entity<TaxonomyGenu>(entity =>
+        {
+            entity.HasKey(e => e.TaxonomyGenusId);
+
+            entity.ToTable("taxonomy_genus");
+
+            entity.HasIndex(e => e.CurrentTaxonomyGenusId, "fk_tg_cur_tg");
+
+            entity.HasIndex(e => e.CreatedBy, "ndx_fk_tg_created");
+
+            entity.HasIndex(e => e.ModifiedBy, "ndx_fk_tg_modified");
+
+            entity.HasIndex(e => e.OwnedBy, "ndx_fk_tg_owned");
+
+            entity.HasIndex(e => e.TaxonomyFamilyId, "ndx_fk_tg_tf");
+
+            entity.HasIndex(e => e.GenusName, "ndx_tg_name");
+
+            entity.HasIndex(e => new { e.TaxonomyFamilyId, e.GenusName, e.GenusAuthority, e.SubgenusName, e.SectionName, e.SubsectionName, e.SeriesName, e.SubseriesName }, "ndx_uniq_tg").IsUnique();
+
+            entity.Property(e => e.TaxonomyGenusId).HasColumnName("taxonomy_genus_id");
+            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
+            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
+            entity.Property(e => e.CurrentTaxonomyGenusId).HasColumnName("current_taxonomy_genus_id");
+            entity.Property(e => e.GenusAuthority)
+                .HasMaxLength(100)
+                .HasColumnName("genus_authority");
+            entity.Property(e => e.GenusName)
+                .IsRequired()
+                .HasMaxLength(30)
+                .HasColumnName("genus_name");
+            entity.Property(e => e.HybridCode)
+                .HasMaxLength(20)
+                .HasColumnName("hybrid_code");
+            entity.Property(e => e.IsWebVisible)
+                .IsRequired()
+                .HasMaxLength(1)
+                .HasColumnName("is_web_visible");
+            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
+            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
+            entity.Property(e => e.Note).HasColumnName("note");
+            entity.Property(e => e.OwnedBy).HasColumnName("owned_by");
+            entity.Property(e => e.OwnedDate).HasColumnName("owned_date");
+            entity.Property(e => e.QualifyingCode)
+                .HasMaxLength(20)
+                .HasColumnName("qualifying_code");
+            entity.Property(e => e.SectionName)
+                .HasMaxLength(30)
+                .HasColumnName("section_name");
+            entity.Property(e => e.SeriesName)
+                .HasMaxLength(30)
+                .HasColumnName("series_name");
+            entity.Property(e => e.SubgenusName)
+                .HasMaxLength(30)
+                .HasColumnName("subgenus_name");
+            entity.Property(e => e.SubsectionName)
+                .HasMaxLength(30)
+                .HasColumnName("subsection_name");
+            entity.Property(e => e.SubseriesName)
+                .HasMaxLength(30)
+                .HasColumnName("subseries_name");
+            entity.Property(e => e.TaxonomyFamilyId).HasColumnName("taxonomy_family_id");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.TaxonomyGenuCreatedByNavigations)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_tg_created");
+
+            entity.HasOne(d => d.CurrentTaxonomyGenus).WithMany(p => p.InverseCurrentTaxonomyGenus)
+                .HasForeignKey(d => d.CurrentTaxonomyGenusId)
+                .HasConstraintName("fk_tg_cur_tgt");
+
+            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.TaxonomyGenuModifiedByNavigations)
+                .HasForeignKey(d => d.ModifiedBy)
+                .HasConstraintName("fk_tg_modified");
+
+            entity.HasOne(d => d.OwnedByNavigation).WithMany(p => p.TaxonomyGenuOwnedByNavigations)
+                .HasForeignKey(d => d.OwnedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_tg_owned");
+
+            entity.HasOne(d => d.TaxonomyFamily).WithMany(p => p.TaxonomyGenus)
+                .HasForeignKey(d => d.TaxonomyFamilyId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_tg_tf");
+        });
+
+        modelBuilder.Entity<TaxonomySpecy>(entity =>
+        {
+            entity.HasKey(e => e.TaxonomySpeciesId);
+
+            entity.ToTable("taxonomy_species");
+
+            entity.HasIndex(e => e.VerifierCooperatorId, "ndx_fk_ts_c");
+
+            entity.HasIndex(e => e.CreatedBy, "ndx_fk_ts_created");
+
+            entity.HasIndex(e => e.CurrentTaxonomySpeciesId, "ndx_fk_ts_cur_t");
+
+            entity.HasIndex(e => e.ModifiedBy, "ndx_fk_ts_modified");
+
+            entity.HasIndex(e => e.OwnedBy, "ndx_fk_ts_owned");
+
+            entity.HasIndex(e => e.Priority1SiteId, "ndx_fk_ts_s");
+
+            entity.HasIndex(e => e.Priority2SiteId, "ndx_fk_ts_s2");
+
+            entity.HasIndex(e => e.TaxonomyGenusId, "ndx_fk_ts_tg");
+
+            entity.HasIndex(e => e.Name, "ndx_ts_name");
+
+            entity.HasIndex(e => e.NomenNumber, "ndx_ts_nomen");
+
+            entity.HasIndex(e => e.SpeciesName, "ndx_ts_s_name");
+
+            entity.HasIndex(e => new { e.TaxonomyGenusId, e.Name, e.NameAuthority, e.Protologue, e.SynonymCode }, "ndx_uniq_ts").IsUnique();
+
+            entity.Property(e => e.TaxonomySpeciesId).HasColumnName("taxonomy_species_id");
+            entity.Property(e => e.AlternateName)
+                .HasMaxLength(2000)
+                .HasColumnName("alternate_name");
+            entity.Property(e => e.CommonFertilizationCode)
+                .HasMaxLength(20)
+                .HasColumnName("common_fertilization_code");
+            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
+            entity.Property(e => e.CreatedDate).HasColumnName("created_date");
+            entity.Property(e => e.Curator1CooperatorId).HasColumnName("curator1_cooperator_id");
+            entity.Property(e => e.Curator2CooperatorId).HasColumnName("curator2_cooperator_id");
+            entity.Property(e => e.CurrentTaxonomySpeciesId).HasColumnName("current_taxonomy_species_id");
+            entity.Property(e => e.FormaAuthority)
+                .HasMaxLength(100)
+                .HasColumnName("forma_authority");
+            entity.Property(e => e.FormaName)
+                .HasMaxLength(30)
+                .HasColumnName("forma_name");
+            entity.Property(e => e.FormaRankType)
+                .HasMaxLength(30)
+                .HasColumnName("forma_rank_type");
+            entity.Property(e => e.HybridParentage)
+                .HasMaxLength(500)
+                .HasColumnName("hybrid_parentage");
+            entity.Property(e => e.IsFormaHybrid)
+                .IsRequired()
+                .HasMaxLength(1)
+                .HasColumnName("is_forma_hybrid");
+            entity.Property(e => e.IsNamePending)
+                .IsRequired()
+                .HasMaxLength(1)
+                .HasColumnName("is_name_pending");
+            entity.Property(e => e.IsSpecificHybrid)
+                .IsRequired()
+                .HasMaxLength(1)
+                .HasColumnName("is_specific_hybrid");
+            entity.Property(e => e.IsSubspecificHybrid)
+                .IsRequired()
+                .HasMaxLength(1)
+                .HasColumnName("is_subspecific_hybrid");
+            entity.Property(e => e.IsSubvarietalHybrid)
+                .IsRequired()
+                .HasMaxLength(1)
+                .HasColumnName("is_subvarietal_hybrid");
+            entity.Property(e => e.IsVarietalHybrid)
+                .IsRequired()
+                .HasMaxLength(1)
+                .HasColumnName("is_varietal_hybrid");
+            entity.Property(e => e.IsWebVisible)
+                .IsRequired()
+                .HasMaxLength(1)
+                .HasColumnName("is_web_visible");
+            entity.Property(e => e.LifeFormCode)
+                .HasMaxLength(20)
+                .HasColumnName("life_form_code");
+            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
+            entity.Property(e => e.ModifiedDate).HasColumnName("modified_date");
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(100)
+                .HasColumnName("name");
+            entity.Property(e => e.NameAuthority)
+                .HasMaxLength(100)
+                .HasColumnName("name_authority");
+            entity.Property(e => e.NameVerifiedDate).HasColumnName("name_verified_date");
+            entity.Property(e => e.NomenNumber).HasColumnName("nomen_number");
+            entity.Property(e => e.Note).HasColumnName("note");
+            entity.Property(e => e.OwnedBy).HasColumnName("owned_by");
+            entity.Property(e => e.OwnedDate).HasColumnName("owned_date");
+            entity.Property(e => e.Priority1SiteId).HasColumnName("priority1_site_id");
+            entity.Property(e => e.Priority2SiteId).HasColumnName("priority2_site_id");
+            entity.Property(e => e.Protologue)
+                .HasMaxLength(500)
+                .HasColumnName("protologue");
+            entity.Property(e => e.ProtologueVirtualPath)
+                .HasMaxLength(255)
+                .HasColumnName("protologue_virtual_path");
+            entity.Property(e => e.RestrictionCode)
+                .HasMaxLength(20)
+                .HasColumnName("restriction_code");
+            entity.Property(e => e.SiteNote).HasColumnName("site_note");
+            entity.Property(e => e.SpeciesAuthority)
+                .HasMaxLength(100)
+                .HasColumnName("species_authority");
+            entity.Property(e => e.SpeciesName)
+                .IsRequired()
+                .HasMaxLength(30)
+                .HasColumnName("species_name");
+            entity.Property(e => e.SubspeciesAuthority)
+                .HasMaxLength(100)
+                .HasColumnName("subspecies_authority");
+            entity.Property(e => e.SubspeciesName)
+                .HasMaxLength(30)
+                .HasColumnName("subspecies_name");
+            entity.Property(e => e.SubvarietyAuthority)
+                .HasMaxLength(100)
+                .HasColumnName("subvariety_authority");
+            entity.Property(e => e.SubvarietyName)
+                .HasMaxLength(30)
+                .HasColumnName("subvariety_name");
+            entity.Property(e => e.SynonymCode)
+                .HasMaxLength(20)
+                .HasColumnName("synonym_code");
+            entity.Property(e => e.TaxonomyGenusId).HasColumnName("taxonomy_genus_id");
+            entity.Property(e => e.VarietyAuthority)
+                .HasMaxLength(100)
+                .HasColumnName("variety_authority");
+            entity.Property(e => e.VarietyName)
+                .HasMaxLength(30)
+                .HasColumnName("variety_name");
+            entity.Property(e => e.VerifierCooperatorId).HasColumnName("verifier_cooperator_id");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.TaxonomySpecyCreatedByNavigations)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_ts_created");
+
+            entity.HasOne(d => d.Curator1Cooperator).WithMany(p => p.TaxonomySpecyCurator1Cooperators)
+                .HasForeignKey(d => d.Curator1CooperatorId)
+                .HasConstraintName("fk_ts_curator1");
+
+            entity.HasOne(d => d.Curator2Cooperator).WithMany(p => p.TaxonomySpecyCurator2Cooperators)
+                .HasForeignKey(d => d.Curator2CooperatorId)
+                .HasConstraintName("fk_ts_curator2");
+
+            entity.HasOne(d => d.CurrentTaxonomySpecies).WithMany(p => p.InverseCurrentTaxonomySpecies)
+                .HasForeignKey(d => d.CurrentTaxonomySpeciesId)
+                .HasConstraintName("FK_taxonomy_species_taxonomy_species");
+
+            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.TaxonomySpecyModifiedByNavigations)
+                .HasForeignKey(d => d.ModifiedBy)
+                .HasConstraintName("fk_ts_modified");
+
+            entity.HasOne(d => d.OwnedByNavigation).WithMany(p => p.TaxonomySpecyOwnedByNavigations)
+                .HasForeignKey(d => d.OwnedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_ts_owned");
+
+            entity.HasOne(d => d.Priority1Site).WithMany(p => p.TaxonomySpecyPriority1Sites)
+                .HasForeignKey(d => d.Priority1SiteId)
+                .HasConstraintName("fk_ts_s");
+
+            entity.HasOne(d => d.Priority2Site).WithMany(p => p.TaxonomySpecyPriority2Sites)
+                .HasForeignKey(d => d.Priority2SiteId)
+                .HasConstraintName("fk_ts_s2");
+
+            entity.HasOne(d => d.TaxonomyGenus).WithMany(p => p.TaxonomySpecies)
+                .HasForeignKey(d => d.TaxonomyGenusId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_ts_tg");
+
+            entity.HasOne(d => d.VerifierCooperator).WithMany(p => p.TaxonomySpecyVerifierCooperators)
+                .HasForeignKey(d => d.VerifierCooperatorId)
+                .HasConstraintName("fk_ts_c");
         });
 
         modelBuilder.Entity<W6SiteInventory>(entity =>

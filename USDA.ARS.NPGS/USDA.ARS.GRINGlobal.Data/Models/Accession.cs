@@ -93,6 +93,8 @@ public partial class Accession
 
     public virtual Cooperator OwnedByNavigation { get; set; }
 
+    public virtual TaxonomySpecy TaxonomySpecies { get; set; }
+
     public virtual ICollection<WebOrderRequestItem> WebOrderRequestItems { get; set; } = new List<WebOrderRequestItem>();
 
     public virtual ICollection<WebUserCartItem> WebUserCartItems { get; set; } = new List<WebUserCartItem>();

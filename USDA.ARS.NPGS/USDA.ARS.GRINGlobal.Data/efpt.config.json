@@ -31,6 +31,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[accession_inv_attach_validation]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[accession_inv_group]",
          "ObjectType": 0
       },
@@ -423,6 +427,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[sys_db_error]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[sys_file]",
          "ObjectType": 0
       },
@@ -455,14 +463,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[sys_index]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[sys_index_field]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[sys_lang]",
          "ObjectType": 0
       },
@@ -476,18 +476,6 @@
       },
       {
          "Name": "[dbo].[sys_permission_lang]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[sys_search_autofield]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[sys_search_operator]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[sys_search_resolver]",
          "ObjectType": 0
       },
       {
@@ -520,6 +508,18 @@
       },
       {
          "Name": "[dbo].[sys_user_permission_map]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[taxonomy_family]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[taxonomy_genus]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[taxonomy_species]",
          "ObjectType": 0
       },
       {

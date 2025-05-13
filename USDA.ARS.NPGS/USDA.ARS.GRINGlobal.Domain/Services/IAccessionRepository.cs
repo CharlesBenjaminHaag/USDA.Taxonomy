@@ -11,7 +11,7 @@ namespace USDA.ARS.GRINGlobal.Domain.Services
     { 
         Task<IEnumerable<AccessionDTO>> GetAllAccessionsAsync(int pageNumber = 1, int pageSize = 10);
         Task<AccessionDTO> GetAccessionByIdAsync(int id);
-        Task<IEnumerable<AccessionDTO>> GetAccessionsByCriteriaAsync(string criteria);
+        Task<IEnumerable<AccessionDTO>> GetAccessionsByCriteriaAsync(AccessionCriteriaDTO criteria);
         Task<IEnumerable<TabularReportItemDTO>> GetReportSummaryDiversityAsync();
 
         Task AddAccessionAsync(AccessionDTO accession);
