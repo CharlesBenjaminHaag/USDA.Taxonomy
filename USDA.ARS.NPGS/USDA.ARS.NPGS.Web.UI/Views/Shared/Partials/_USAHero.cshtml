@@ -11,7 +11,7 @@
             <div class="grid-row grid-gap">
                 <div class="tablet:grid-col-auto">
                     <img class="usa-media-block__img" src="/img/npgs_plants_corn.jpg" alt="Alt text" style="height: 120px; width: 140px;">
-                    <p style="font-weight:bold; margin-top:0px; margin-bottom:0px; text-align:center;"><a href="@Url.Action("Index","NPGS")" style="color: white;">Plants (NPGS)</a></p>
+                    <p style="font-weight:bold; margin-top:0px; margin-bottom:0px; text-align:center;"><a href="@Url.Action("NPGS","Pages")" style="color: white;">Plants (NPGS)</a></p>
                 </div>
                 <div class="tablet:grid-col-auto">
                     <img class="usa-media-block__img" src="/img/animals.jpg" alt="Alt text" style="height: 120px; width: 140px;">
@@ -22,14 +22,14 @@
                 <div class="tablet:grid-col-auto">
                     <img class="usa-media-block__img" src="/img/NPGSMicrobial Penicillium spore head.jpg" alt="Alt text" style="height: 120px; width: 140px;">
                     <p style="font-weight: bold; margin-top: 0px; margin-bottom: 0px; text-align: center;">
-                        <a href="@Url.Action("Index","NPGS", new { @context = "microbial-collections"})" style="color: white;">Microbes</a>
+                        <a href="@Url.Action("Microbes","Pages")" style="color: white;">Microbes</a>
                     </p>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<script type="text/javascript">
+@* <script type="text/javascript">
     $(function () {
         $('#btnSearchGRINGlobal').on('click', function (e) {
             e.preventDefault();
@@ -40,4 +40,4 @@
             }
         });
     });
-</script>
+</script> *@

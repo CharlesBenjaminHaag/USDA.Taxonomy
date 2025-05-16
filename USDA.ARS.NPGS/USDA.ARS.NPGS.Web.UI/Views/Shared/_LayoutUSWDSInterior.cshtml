@@ -1,14 +1,15 @@
 ﻿<!DOCTYPE html>
 <html>
-<head>
+    <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>USDA-ARS Germplasm Resources Information Network (GRIN)</title>
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://npgstest.ars-grin.gov/NPGS/assets/uswds/dist/css/uswds.css" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <title>View</title>
     @await RenderSectionAsync("Scripts", required: false)
-
+    
     <style type="text/css">
         .video-wrapper {
             max-width: 700px; /* reduce to your preferred width */
@@ -24,13 +25,13 @@
             margin: 0 auto; /* centers the div horizontally */
         }
 
-            .video-container iframe {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-            }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
 
         tag-link-external::after {
             content: "↗"; /* This is the external link arrow character */
@@ -38,35 +39,83 @@
             margin-left: 0.2em; /* Optional: Adds slight space between the link text and the arrow */
             vertical-align: middle; /* Aligns the arrow with the text */
         }
-    </style>
-</head>
-    <body>
-    <script type="text/javascript" src="https://npgstest.ars-grin.gov/NPGS/assets/uswds/dist/js/uswds.min.js"></script>
 
-        <a class="usa-skipnav" href="#main-content">Skip to main content</a>
+        .usa-collection__meta-item a {
+            color: white;
+        }
+
+        .usa-sidenav__item {
+            border-bottom:1px;
+            padding-left:0px;
+            margin-left:0px;
+        }
+        
+        .sidenav-menu {
+            padding-left:0px;
+        }
+      
+        .usa-accordion__button.data-list {
+            background-color: #0050d8;
+            color:white;
+        }
+
+        .usa-accordion__button.data-list:hover {
+            background-color: #252f3e;
+            color: white;
+        }
+
+        /* .site-accordion-heading .usa-accordion__button {
+    background-image: url(../img/icons/remove-white.svg),linear-gradient(transparent,transparent);
+    background-repeat: no-repeat;
+    background-color: #0050d8;
+    color: #fff; */
+}
+
+
+        .usa-accordion__button.sidenav {
+            background-color:#f0f0f0;
+                color: black;
+            }
+    </style>
+    </head>
+    <body>
+        <script type="text/javascript" src="https://npgstest.ars-grin.gov/NPGS/assets/uswds/dist/js/uswds.min.js"></script>
+        @* <a class="usa-skipnav" href="#main-content">Skip to main content</a> *@
         @Html.Partial("~/Views/Shared/Partials/_USABanner.cshtml")
         <div class="usa-overlay"></div>
         @Html.Partial("~/Views/Shared/Partials/_USANavExtendedHeaderWithMegamenu.cshtml")
-    <main id="main-content">
         @Html.Partial("~/Views/Shared/Partials/_USAHeroInterior.cshtml")
-        <section class="grid-container usa-section">
-            @RenderBody()
-        </section>
-    </main>
+        @RenderBody()
         @Html.Partial("~/Views/Shared/Partials/_USAFooter.cshtml")
     </body>
 </html>
-<script type="text/javascript">
-    //$(function () {
-    //    $('#btnSearchGRINGlobal').on('click', function () {
-    //        var searchstring = $('#search');
+<script>
+    $(document).ready(function () {
+        initializeAccordionButtonImages();
+    });
 
-    //        alert("DEBUG " + searchstring.val());
+    function initializeAccordionButtonImages() {
+        const $buttons = $('.usa-accordion__button.data-list');
 
-            
-    //        if (searchString.length > 0) {
-    //            window.location.href = "https://npgsweb.ars-grin.gov/gringlobal/search?q=" + searchString;
-    //        }
-    //    });
-    //});
+        // Set initial background image (collapsed)
+        $buttons.css('background-image', 'url(https://designsystem.digital.gov/assets/img/icons/add-white.svg), linear-gradient(transparent, transparent)');
+
+        // Unbind old click handlers to avoid duplicates
+        $buttons.off('click.accordionToggle');
+
+        // Add new click handler
+        $buttons.on('click.accordionToggle', function () {
+        const $button = $(this);
+
+        setTimeout(() => {
+            const isExpanded = $button.attr('aria-expanded') === 'true';
+
+            const newImage = isExpanded
+            ? 'url(https://designsystem.digital.gov/assets/img/icons/remove-white.svg)'
+            : 'url(https://designsystem.digital.gov/assets/img/icons/add-white.svg)';
+
+            $button.css('background-image', `${newImage}, linear-gradient(transparent, transparent)`);
+        }, 10);
+        });
+    }
 </script>

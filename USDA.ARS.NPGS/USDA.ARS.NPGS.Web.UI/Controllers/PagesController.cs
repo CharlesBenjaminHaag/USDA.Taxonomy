@@ -25,12 +25,12 @@ namespace USDA.ARS.NPGS.Web.UI.Controllers
         public IActionResult GRINGlobal()
         {
             ViewBag.PageTitle = "NPGS Directory";
-            return View("~/Views/Pages/gringlobal.cshtml");
+            return View("~/Views/Pages/grin-global.cshtml");
         }
 
         public IActionResult TechnicalResources()
         {
-            ViewBag.PageTitle = "NPGS Directory";
+            ViewBag.PageTitle = "Technical Resources";
             return View("~/Views/Pages/technical-resources.cshtml");
         }
 
@@ -38,6 +38,12 @@ namespace USDA.ARS.NPGS.Web.UI.Controllers
         {
             ViewBag.PageTitle = "NPGS Directory";
             return View("~/Views/Pages/microbes.cshtml");
+        }
+
+        public IActionResult CGC()
+        {
+            ViewBag.PageTitle = "Crop Germplasm Committees";
+            return View("~/Views/Pages/cgc.cshtml");
         }
 
         public IActionResult PVP()

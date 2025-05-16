@@ -27,7 +27,14 @@ namespace USDA.ARS.GRINGlobal.Domain.Services
                     {
                         id = c.CropGermplasmCommitteeId,
                                 name = c.CropGermplasmCommitteeName,
-                                roster_url = c.RosterUrl
+                                roster_url = c.RosterUrl,
+                                documents = c.CropGermplasmCommitteeDocuments.Select(d => new DocumentDTO
+                                {
+                                    id = d.CropGermplasmCommitteeDocumentId,
+                                    title = d.DocumentTitle,
+                                    category = d.CategoryCode,
+                                    url = d.Url
+                                }).ToList()
                     }).ToList();
                 return cropGermplasmCommittees;
             });

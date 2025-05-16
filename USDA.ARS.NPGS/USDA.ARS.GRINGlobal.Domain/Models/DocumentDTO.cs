@@ -8,6 +8,7 @@ namespace USDA.ARS.GRINGlobal.Domain.Models
 {
     public class DocumentDTO
     {
+        public int id { get; set; }
         public string title { get; set; }
         public string url  { get; set; }
         public string category { get; set; }

@@ -107,7 +107,7 @@
                
                 <h4 class="usa-accordion__heading">
                   <button type="button"
-                          class="usa-accordion__button data-list"
+                          class="usa-accordion__button"
                           aria-expanded="false"
                           aria-controls="${headingId}">
                     ${committee.name}
@@ -132,7 +132,6 @@
             `);
             $container.append($accordionItem);
           });
-          initializeAccordionButtonImages();
         },
         error: function (xhr, status, error) {
           $loading.hide();

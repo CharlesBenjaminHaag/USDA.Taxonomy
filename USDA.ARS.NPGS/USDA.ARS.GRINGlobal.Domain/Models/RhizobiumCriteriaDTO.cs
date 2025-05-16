@@ -1,15 +1,15 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace USDA.ARS.GRINGlobal.Domain.Models
 {
-    public class RhizobiumDTO
+    public class RhizobiumCriteriaDTO : CriteriaBaseDTO
     {
-        public int id { get; set; }
-
         public string usda_accession_code { get; set; }
 
         public string host_plant_name { get; set; }
@@ -23,9 +23,5 @@ namespace USDA.ARS.GRINGlobal.Domain.Models
         public string note { get; set; }
 
         public string genus_spp { get; set; }
-
-        public DateTime? created_date { get; set; }
-
-        public DateTime? modified_date { get; set; }
     }
 }
