@@ -33,67 +33,30 @@ namespace USDA.ARS.GRINGlobal.Domain.Services
 
         public async Task<IEnumerable<AccessionDTO>> GetAccessionsByCriteriaAsync(AccessionCriteriaDTO criteria)
         {
-            var sql = new StringBuilder("SELECT Accession, Plant_Name, DOI, taxonomy_species_id, Origin, Genebank, Image, Availability, Received, Source_Type, Source_Date, Collection_Site, Improvement_Level InitialReceivedDate FROM gringlobal].dbo].vw_GRINGlobal_Accession_Summary]");
+            var sql = new StringBuilder("SELECT accession_name, plant_name, doi, taxonomy_species_id, taxonomy_species_name, origin_location, genebank_name, image_url, availability, received_date, source_type, source_date, source_collection_location, source_location_lat_long, source_location_elevation, source_habitat_description, improvement_level, narrative, accession_id, initial_received_date FROM vw_GRINGlobal_Accession_Summary WHERE 1=1 ");
 
             var parameters = new List<SqlParameter>();
 
             if (!string.IsNullOrEmpty(criteria.accession_identifier))
             {
-                sql.Append(" AND Name LIKE '%' + @name + '%'");
-                parameters.Add(new SqlParameter("@accession_identifier", criteria.accession_identifier));
+                sql.Append(" AND accession_name LIKE @name");
+                parameters.Add(new SqlParameter("@accession_identifier", $"%{criteria.accession_identifier}%"));
             }
 
-            //if (minAge.HasValue)
-            //{
-            //    sql.Append(" AND Age >= @minAge");
-            //    parameters.Add(new SqlParameter("@minAge", minAge.Value));
-            //}
-
-            //// Execute query
-            //var results = await context.Database
-            //    .SqlQueryRaw<MyDto>(sql.ToString(), parameters.ToArray())
-            //    .ToListAsync();
-
-            var accessions = _context.Accessions.AsQueryable();
-
-            if (!String.IsNullOrEmpty(criteria.accession_identifier))
+            if (!string.IsNullOrEmpty(criteria.scientific_name))
             {
-                accessions = accessions.Where(a => 
-                    a.AccessionLookup.Contains(criteria.accession_identifier));
+                sql.Append(" AND taxonomy_species_name LIKE @taxonomy_species_name");
+                parameters.Add(new SqlParameter("@taxonomy_species_name", $"%{criteria.scientific_name}%"));
             }
-
-            if (!String.IsNullOrEmpty(criteria.scientific_name))
+            if (!string.IsNullOrEmpty(criteria.genebank_name))
             {
-                accessions = accessions.Where(a => 
-                    a.TaxonomySpecies.Name.Contains(criteria.scientific_name));
+                sql.Append(" AND genebank_name LIKE @genebank_name");
+                parameters.Add(new SqlParameter("@genebank_name", criteria.genebank_name));
             }
-
-            if (!String.IsNullOrEmpty(criteria.plant_name))
-            {
-                accessions = accessions.Where(a =>
-                    a.Inventories.Any(i => 
-                        i.AccessionInvNames.Any(n => 
-                            n.PlantName.Contains(criteria.plant_name))));
-            }
-
-            if (!String.IsNullOrEmpty(criteria.country_of_origin))
-            {
-                accessions = accessions.Where(a => 
-                    a.AccessionSources.Any(s => 
-                        s.Geography.CountryCode == criteria.country_of_origin));
-            }
-
-            var totalCount = await accessions.CountAsync();
-
-            int skip = (criteria.startPage - 1) * criteria.pageSize;
-            accessions = accessions.Skip(skip).Take(criteria.pageSize);
-
-            return await accessions.
-                Select(p => new AccessionDTO
-                {
-                    id = p.AccessionId,
-                    lookup_name = p.AccessionLookup,
-                }).ToListAsync();
+            var results = await _context.Database
+                .SqlQueryRaw<AccessionDTO>(sql.ToString(), parameters.ToArray())
+                .ToListAsync();
+            return results;
         }
 
         public Task<AccessionDTO> GetAccessionByIdAsync(int id)
