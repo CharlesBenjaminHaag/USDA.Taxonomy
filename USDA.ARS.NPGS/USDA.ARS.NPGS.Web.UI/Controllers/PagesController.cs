@@ -18,13 +18,13 @@ namespace USDA.ARS.NPGS.Web.UI.Controllers
 
         public IActionResult Citations()
         {
-            ViewBag.PageTitle = "NPGS Directory";
+            ViewBag.PageTitle = "Citing the NPGS";
             return View("~/Views/Pages/citations.cshtml");
         }
 
         public IActionResult GRINGlobal()
         {
-            ViewBag.PageTitle = "NPGS Directory";
+            ViewBag.PageTitle = "GRIN-Global";
             return View("~/Views/Pages/grin-global.cshtml");
         }
 
@@ -36,7 +36,7 @@ namespace USDA.ARS.NPGS.Web.UI.Controllers
 
         public IActionResult Microbes()
         {
-            ViewBag.PageTitle = "NPGS Directory";
+            ViewBag.PageTitle = "Microbes";
             return View("~/Views/Pages/microbes.cshtml");
         }
 
@@ -48,7 +48,7 @@ namespace USDA.ARS.NPGS.Web.UI.Controllers
 
         public IActionResult PVP()
         {
-            ViewBag.PageTitle = "NPGS Directory";
+            ViewBag.PageTitle = "Plant Variety Protection";
             return View("~/Views/Pages/pvp.cshtml");
         }
     }

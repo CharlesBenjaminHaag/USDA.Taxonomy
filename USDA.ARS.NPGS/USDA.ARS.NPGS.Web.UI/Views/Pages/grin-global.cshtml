@@ -1,6 +1,8 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutUSWDSInterior.cshtml";
 }
+
+
 <div class="usa-section">
     <div class="grid-container">
         <div class="grid-row grid-gap">
@@ -21,28 +23,26 @@
                         <div class="usa-accordion usa-accordion--bordered site-accordion-code site-component-preview">
                             <h2 id="address-form-preview" class="usa-accordion__heading site-accordion-heading">
                                 <a id="component-preview" class="usa-anchor"></a>
-                                <button type="button" class="usa-accordion__button" aria-controls="address-form-preview-content" aria-expanded="true">
+                                <button type="button" class="usa-accordion__button data-list" aria-controls="address-form-preview-content" aria-expanded="true">
                                     GRIN-Global Search
                                 </button>
                             </h2>
                             <div id="address-form-preview-content" class="usa-accordion__content">
-                                <form class="usa-form usa-form--large">
+                                <form id="search-form-grin-global-accessions" class="usa-form usa-form--large">
                                     <fieldset class="usa-fieldset">
                                         <legend class="usa-legend usa-legend--large">Search Available Accessions</legend>
-                                        <label class="usa-label" for="mailing-address-1">Name</label>
-                                        <input class="usa-input" id="mailing-address-1" name="mailing-address-1">
-                                        <label class="usa-label" for="mailing-address-2">Scientific Name</label>
-                                        <input class="usa-input" id="mailing-address-2" name="mailing-address-2">
-                                        <label class="usa-label" for="city">
-                                            City
-                                            <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
+                                        <label class="usa-label" for="pi-number">PI Number/Name</label>
+                                        <input class="usa-input" id="accession_identifier" name="accession_identifier">
+                                        <label class="usa-label" for="scientific_name">Scientific Name</label>
+                                        <input class="usa-input" id="scientific_name" name="scientific_name">
+                                        
+                                        <label class="usa-label" for="plant_name">Plant Name</label>
+                                        <input class="usa-input" id="plant_name" name="plant-name">
+
+                                        <label class="usa-label" for="genebank_name">
+                                            Genebank
                                         </label>
-                                        <input class="usa-input" id="city" name="city" required="">
-                                        <label class="usa-label" for="state">
-                                            State, territory, or military post
-                                            <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
-                                        </label>
-                                        <select class="usa-select" id="state" name="state">
+                                        <select class="usa-select" id="genebank_name" name="genebank_name">
                                             <option value="">- Select -</option>
                                             <option value="AL">AL - Alabama</option>
                                             <option value="AK">AK - Alaska</option>
@@ -108,13 +108,95 @@
                                             <option value="AE">AE - Armed Forces Middle East</option>
                                             <option value="AP">AP - Armed Forces Pacific</option>
                                         </select>
-                                        <label class="usa-label" for="zip">ZIP code</label>
-                                        <input class="usa-input usa-input--medium" id="zip" name="zip" pattern="[\d]{5}(-[\d]{4})?">
-                                        <label class="usa-label" for="urbanization">Urbanization (Puerto Rico only)</label>
-                                        <input class="usa-input" id="urbanization" name="urbanization">
+                                        
+                                        <label class="usa-label" for="country_of_origin">
+                                            Country of Origin
+                                        </label>
+                                        <select class="usa-select" id="country_of_origin" name="country_of_origin">
+                                            <option value="">- Select -</option>
+                                            <option value="AL">AL - Alabama</option>
+                                            <option value="AK">AK - Alaska</option>
+                                            <option value="AS">AS - American Samoa</option>
+                                            <option value="AZ">AZ - Arizona</option>
+                                            <option value="AR">AR - Arkansas</option>
+                                            <option value="CA">CA - California</option>
+                                            <option value="CO">CO - Colorado</option>
+                                            <option value="CT">CT - Connecticut</option>
+                                            <option value="DE">DE - Delaware</option>
+                                            <option value="DC">DC - District of Columbia</option>
+                                            <option value="FL">FL - Florida</option>
+                                            <option value="GA">GA - Georgia</option>
+                                            <option value="GU">GU - Guam</option>
+                                            <option value="HI">HI - Hawaii</option>
+                                            <option value="ID">ID - Idaho</option>
+                                            <option value="IL">IL - Illinois</option>
+                                            <option value="IN">IN - Indiana</option>
+                                            <option value="IA">IA - Iowa</option>
+                                            <option value="KS">KS - Kansas</option>
+                                            <option value="KY">KY - Kentucky</option>
+                                            <option value="LA">LA - Louisiana</option>
+                                            <option value="ME">ME - Maine</option>
+                                            <option value="MD">MD - Maryland</option>
+                                            <option value="MA">MA - Massachusetts</option>
+                                            <option value="MI">MI - Michigan</option>
+                                            <option value="MN">MN - Minnesota</option>
+                                            <option value="MS">MS - Mississippi</option>
+                                            <option value="MO">MO - Missouri</option>
+                                            <option value="MT">MT - Montana</option>
+                                            <option value="NE">NE - Nebraska</option>
+                                            <option value="NV">NV - Nevada</option>
+                                            <option value="NH">NH - New Hampshire</option>
+                                            <option value="NJ">NJ - New Jersey</option>
+                                            <option value="NM">NM - New Mexico</option>
+                                            <option value="NY">NY - New York</option>
+                                            <option value="NC">NC - North Carolina</option>
+                                            <option value="ND">ND - North Dakota</option>
+                                            <option value="MP">MP - Northern Mariana Islands</option>
+                                            <option value="OH">OH - Ohio</option>
+                                            <option value="OK">OK - Oklahoma</option>
+                                            <option value="OR">OR - Oregon</option>
+                                            <option value="PA">PA - Pennsylvania</option>
+                                            <option value="PR">PR - Puerto Rico</option>
+                                            <option value="RI">RI - Rhode Island</option>
+                                            <option value="SC">SC - South Carolina</option>
+                                            <option value="SD">SD - South Dakota</option>
+                                            <option value="TN">TN - Tennessee</option>
+                                            <option value="TX">TX - Texas</option>
+                                            <option value="UM">UM - United States Minor Outlying Islands</option>
+                                            <option value="UT">UT - Utah</option>
+                                            <option value="VT">VT - Vermont</option>
+                                            <option value="VI">VI - Virgin Islands</option>
+                                            <option value="VA">VA - Virginia</option>
+                                            <option value="WA">WA - Washington</option>
+                                            <option value="WV">WV - West Virginia</option>
+                                            <option value="WI">WI - Wisconsin</option>
+                                            <option value="WY">WY - Wyoming</option>
+                                            <option value="AA">AA - Armed Forces Americas</option>
+                                            <option value="AE">AE - Armed Forces Africa</option>
+                                            <option value="AE">AE - Armed Forces Canada</option>
+                                            <option value="AE">AE - Armed Forces Europe</option>
+                                            <option value="AE">AE - Armed Forces Middle East</option>
+                                            <option value="AP">AP - Armed Forces Pacific</option>
+                                        </select>
                                     </fieldset>
+                                    <button id="search-button" class="usa-button" type="button">Search</button>
                                 </form>
                             </div>
+                        </div>
+                        <div id="">
+                            <table class="usa-table usa-table--striped" id="search-results-table">
+                                <thead>
+                                    <tr>
+                                        <th>Accession</th>
+                                        <th>Plant Name</th>
+                                        <th>Scientific Name</th>
+                                        <th>Origin</th>
+                                        <th>Genebank</th>
+                                        <th>Source</th>
+                                        <th>Improvement Level</th>
+                                    </tr>
+                                </thead>
+                            </table>
                         </div>
                     </section>
                 </p>
@@ -128,17 +210,54 @@
         </div>
     </div>
 </div>
+
+
+
 <script>
-        $(document).ready(function () {
-      // Initialize the DataTable (empty for now)
-      const table = $('#results-table').DataTable({
+    $(document).ready(function () {
+      const table = $('#search-results-table').DataTable({
         data: [],
+          language: {
+            emptyTable: "", // blank to suppress the initial message
+            zeroRecords: "🚫 No matching results found." // shown only after a search
+        },
+        deferLoading: 0,
         columns: [
-          { data: 'firstName' },
-          { data: 'lastName' },
-          { data: 'age' }
+          {
+            data: 'accession_name',
+            render: function (data, type, row) {
+            if (type === 'display') {
+                return `<a href="https://npgsweb.ars-grin.gov/gringlobal/accessiondetail?id=${row.accession_id}" target="_blank">${data}</a>`;
+            }
+            return data; // For other types (e.g. filter, sort), return raw text
+            }
+          },
+          { data: 'plant_name' },
+          {
+            data: 'taxonomy_species_name',
+            render: function (data, type, row) {
+            if (type === 'display') {
+                return `<a href="https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomydetail?id=${row.taxonomy_species_id}" target="_blank">${data}</a>`;
+            }
+            return data; // For other types (e.g. filter, sort), return raw text
+            }
+          },
+
+
+          { data: 'origin_location' },
+          { data: 'genebank_name' },
+          { data: 'source_type' },
+          { data: 'improvement_level' }
         ]
       });
+
+    table.on('preXhr.dt', function () {
+        $('#overlay').show();
+    });
+
+    table.on('xhr.dt', function () {
+        $('#overlay').hide();
+    });
 
       // Function to collect form input values into a plain object
       function collectFormData($form) {
@@ -158,18 +277,20 @@
 
       // Function to reset form and clear DataTable
       function resetFormAndTable() {
-        $('#search-form')[0].reset(); // native DOM reset for inputs
+        $('#search-form-grin-global-accessions')[0].reset(); // native DOM reset for inputs
         table.clear().draw();
       }
 
       // Submit handler
-      $('#search-form').on('submit', function (e) {
-        e.preventDefault();
+      $('#search-button').on('click', function () {
+        //e.preventDefault();
 
-        const formData = collectFormData($(this));
+        const formData = collectFormData($("#search-form-grin-global-accessions"));
+
+        console.log("DEBUG FORM DATA " + formData);
 
         $.ajax({
-          url: '/api/search', // Replace with your actual API endpoint
+          url: 'https://npgstest.ars-grin.gov/NPGS/api/v1/accession/search', // Replace with your actual API endpoint
           method: 'GET',       // Or 'POST' if needed
           data: formData,
           dataType: 'json',
@@ -181,6 +302,11 @@
           }
         });
       });
+
+      // Search button handler
+      // $('#search-button').on('click', function () {
+      //   resetFormAndTable();
+      // });
 
       // Reset button handler
       $('#reset-button').on('click', function () {
