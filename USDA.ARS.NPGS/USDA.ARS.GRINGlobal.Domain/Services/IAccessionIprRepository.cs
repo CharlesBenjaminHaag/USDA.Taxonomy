@@ -7,8 +7,8 @@ using USDA.ARS.GRINGlobal.Domain.Models;
 
 namespace USDA.ARS.GRINGlobal.Domain.Services
 {
-    public interface IRhizobiumRepository
+    public interface IAccessionIprRepository
     {
-        Task<IEnumerable<RhizobiumDTO>> GetRhizobiaByCriteriaAsync(RhizobiumCriteriaDTO criteria);
+        Task<IEnumerable<AccessionIprDTO>> GetAccessionIprsByCriteriaAsync(AccessionIprCriteriaDTO criteria);
     }
 }

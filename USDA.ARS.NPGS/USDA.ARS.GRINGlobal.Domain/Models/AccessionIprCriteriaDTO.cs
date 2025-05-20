@@ -6,15 +6,11 @@ using System.Threading.Tasks;
 
 namespace USDA.ARS.GRINGlobal.Domain.Models
 {
-    public class AccessionIprDTO
+    public class AccessionIprCriteriaDTO
     {
-        public int? accession_ipr_id { get; set; }
-
-        public int? accession_id { get; set; }
-
         public string? type_code { get; set; }
 
-        public string? status_code { get; set; } 
+        public string? status_code { get; set; }
 
         public string? ipr_number { get; set; }
 
@@ -29,9 +25,5 @@ namespace USDA.ARS.GRINGlobal.Domain.Models
         public DateTime? accepted_Date { get; set; }
 
         public DateTime? expected_date { get; set; }
-                
-        public AccessionDTO Accession { get; set; }
-
-        //public virtual ICollection<Citation> Citations { get; set; } = new List<Citation>();
     }
 }

@@ -37,7 +37,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<gringlobalContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("GRINGlobalConnectionString")).EnableSensitiveDataLogging().UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 
 builder.Services.AddScoped<IAccessionRepository, AccessionRepository>();
+builder.Services.AddScoped<IAccessionIprRepository, AccessionIprRepository>();
 builder.Services.AddScoped<ICropGermplasmCommitteeRepository, CropGermplasmCommitteeRepository>();
+builder.Services.AddScoped<IRhizobiumRepository, RhizobiumRepository>();
+builder.Services.AddScoped<IRhizobiumRepository, RhizobiumRepository>();
+
+//builder.Services.AddScoped<IGeographyRepository, GeographyRepository>();
 
 var app = builder.Build();
 
