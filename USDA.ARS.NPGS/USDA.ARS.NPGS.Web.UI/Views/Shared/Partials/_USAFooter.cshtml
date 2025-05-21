@@ -9,14 +9,14 @@
                     <a class="usa-footer__primary-link" href="@Url.Action("Index","Home")">Home</a>
                 </li>
                 <li class="mobile-lg:grid-col-4 desktop:grid-col-auto usa-footer__primary-content">
-                    <a class="usa-footer__primary-link" href="@Url.Action("Index","NPGS")">Plants (NPGS)</a>
+                    <a class="usa-footer__primary-link" href="@Url.Action("Index","NPGS")">Collections</a>
                 </li>
                 <!--CBH Ask KC if needed; header and footer menus should match. -->
-                @*<li class="mobile-lg:grid-col-4 desktop:grid-col-auto usa-footer__primary-content">
+                <li class="mobile-lg:grid-col-4 desktop:grid-col-auto usa-footer__primary-content">
                     <a class="usa-footer__primary-link" href="https://agrin.ars.usda.gov/main_webpage_dev/ars?language=EN&record_source=US">
                         NPGS Strategic Plan
                     </a>
-                </li>*@
+                </li>
                 <li class="mobile-lg:grid-col-4 desktop:grid-col-auto usa-footer__primary-content">
                     <a class="usa-footer__primary-link" href="" target="_blank" rel="noopener noreferrer">Animals (NAGP)</a>
                 </li>
@@ -30,8 +30,8 @@
                     <a href="https://nareeeab.ree.usda.gov/committees/national-genetic-resources-advisory-council" target="_blank" rel="noopener noreferrer" class="usa-footer__primary-link"><span>NGRAC</span></a>
                 </li>
             </ul>
-        </nav>
-    </div>
+        </nav> 
+    </div>  
     <div class="usa-footer__secondary-section">
         <div class="grid-container">
             <div class="grid-row grid-gap">
@@ -51,7 +51,11 @@
                 <div class="usa-footer__contact-links mobile-lg:grid-col-6">
                     <div class="usa-footer__social-links grid-row grid-gap-1">
                         <div class="grid-col-auto">
-                            <a class="usa-social-link" href="javascript:void(0);">
+                            <a 
+                                class="usa-social-link" 
+                                href="https://www.facebook.com/AgriculturalResearchService/" 
+                                target="_blank" 
+                                rel="noreferrer">
                                 <img class="usa-social-link__icon"
                                      src="https://www.ars.usda.gov/ARSUserFiles/00000000/images/social_media///square-facebook-icon.jpg"
                                      alt="Facebook" />
@@ -63,30 +67,32 @@
                                      src="https://www.ars.usda.gov/ARSUserFiles/00000000/images/social_media///twitter.png"
                                      alt="Twitter" />
                             </a>
-                        </div>
-                        <div class="grid-col-auto">
-                            <a class="usa-social-link" href="javascript:void(0);">
+                        </div> 
+                         <div class="grid-col-auto">
+                            <a 
+                                class="usa-social-link" 
+                                href="https://www.youtube.com/c/USDAARS"
+                                target="_blank"
+                                rel="noreferrer">
                                 <img class="usa-social-link__icon"
                                      src="https://www.ars.usda.gov/ARSUserFiles/00000000/images/social_media///youtube.png"
                                      alt="YouTube" />
                             </a>
                         </div>
                         <div class="grid-col-auto">
-                            <a class="usa-social-link" href="javascript:void(0);">
+                            <a 
+                                class="usa-social-link" 
+                                href="https://www.linkedin.com/company/usda-ars/posts/?feedView=all"
+                                target="_blank"
+                                rel="noreferrer">
                                 <img class="usa-social-link__icon"
                                      src="https://www.ars.usda.gov//ARSUserFiles/00000000/images/social_media///linkedin.png"
                                      alt="LinkedIn" />
                             </a>
-                        </div>
-    <div class="grid-col-auto">
-            <a class="usa-social-link" href="javascript:void(0);">
-                <img class="usa-social-link__icon"
-                     src="/assets/img/usa-icons/rss_feed.svg"
-                     alt="RSS" />
-            </a>
-        </div>
-    </div>
-                    <p class="usa-footer__contact-heading">
+                        </div> 
+      
+    </div> 
+                     <p class="usa-footer__contact-heading">
                         Connect With ARS
                     </p>
                     <address class="usa-footer__address">
@@ -103,15 +109,15 @@
             </div>
         </div>
     </div>
-</footer>
+</footer>  
 
 
-@*<div class="usa-identifier">
+<div class="usa-identifier">
     <section class="usa-identifier__section usa-identifier__section--masthead" aria-label="Agency identifier">
         <div class="usa-identifier__container">
             <div class="usa-identifier__logos">
                 <a href="javascript:void(0)" class="usa-identifier__logo">
-                    <img class="usa-identifier__logo-img" src="./img/circle-gray-20.svg" alt="<Parent agency> logo" role="img">
+                    <img class="usa-identifier__logo-img" src="https://localhost:7174/img/USDA-Logo.png" alt="<Parent agency> logo" role="img">
                 </a>
             </div><section class="usa-identifier__identity" aria-label="Agency description">
                 <p class="usa-identifier__identity-domain">domain.gov</p>
@@ -169,7 +175,7 @@
             <a href="https://www.usa.gov/" class="usa-link">Visit USA.gov</a>
         </div>
     </section>
-</div>*@
+</div>
 
 
 <!--<footer class="usa-footer">

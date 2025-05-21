@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.dataTables.min.css" />
 
-   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
     <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js"></script>
     
@@ -68,23 +68,110 @@
             color:white;
         }
 
+        .usa-accordion__button.data-entry {
+            background-color: #0050d8;
+            color:white;
+        }
+
         .usa-accordion__button.data-list:hover {
             background-color: #252f3e;
             color: white;
         }
 
-        /* .site-accordion-heading .usa-accordion__button {
-    background-image: url(../img/icons/remove-white.svg),linear-gradient(transparent,transparent);
-    background-repeat: no-repeat;
-    background-color: #0050d8;
-    color: #fff; */
-}
-
-
         .usa-accordion__button.sidenav {
             background-color:#f0f0f0;
                 color: black;
-            }
+        }
+
+        .grid-container {
+            margin-left: auto;
+            margin-right: auto;
+            /* max-width: 64rem; */
+           /*  max-width: 84rem;  */
+            max-width: none; 
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .dataTables_filter {
+            text-align: left !important;
+            direction: ltr !important;
+            
+        }
+        
+        .dataTables_filter label {
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+        }
+        .dataTables_filter, .dataTables_length {
+            margin-bottom:1rem;
+        }
+
+        .usa-form {
+            font-family: Source Sans Pro Web, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif;
+            font-size: 1.06rem;
+            line-height: 1.3;
+        }
+
+        .usa-form, .usa-form--large {
+            max-width: none;
+        }
+
+        .usa-banner__inner {
+            padding-left: 1rem;
+            padding-right: 1rem;
+            margin-left: auto;
+            margin-right: auto;
+            /*max-width:64rem;*/
+           max-width:94rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            padding-right: 0;
+        }
+
+         
+        .usa-header--extended .usa-navbar{
+            margin-left:auto;
+            margin-right:auto;
+            max-width:94rem;
+            
+            padding-left:1rem;
+            padding-right:1rem;
+            display:block;
+            height:auto;
+            overflow:auto;
+        }
+         
+        .usa-header--extended .usa-nav__inner {
+            margin-left: auto;
+            margin-right: auto;
+            /*max-width: 64rem;*/
+            max-width: 94rem; 
+            
+            padding-left: 1rem;
+            padding-right: 1rem;
+            position: relative;
+        }
+       
+        .usa-icon-list--size-lg .usa-icon-list__content{
+          max-width:72ex;
+          font-size:1.46rem;
+          padding-left:0.584rem;
+        }
+
+        .usa-hero__callout--shrink {
+          display: inline-block;
+          width: auto;
+          max-width: 100%; /* Optional: prevent overflow */
+          white-space: nowrap; /* Optional: prevent wrapping */
+        }
+
+       
+
     </style>
     </head>
     <body>
@@ -96,28 +183,55 @@
         @Html.Partial("~/Views/Shared/Partials/_USAHeroInterior.cshtml")
         @RenderBody()
         @Html.Partial("~/Views/Shared/Partials/_USAFooter.cshtml")
-        <div id="overlay" style="
-              display: none;
-              position: fixed;
-              top: 0; left: 0;
-              width: 100%; height: 100%;
-              background: rgba(255, 255, 255, 0.8);
-              z-index: 9999;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              font-size: 24px;
-              font-weight: bold;
-              color: #333;
-            ">
-              🔍 Searching... Please wait.
+        
+        
+        <div id="overlay" style="display: none;
+          position: fixed;
+          top: 0; left: 0;
+          width: 100%; height: 100%;
+          background: rgba(255, 255, 255, 0.7);
+          z-index: 9999;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 24px;
+          font-weight: bold;
+          color: #333;">
+            🔄 Searching...
         </div>
     </body>
 </html>
 <script>
     $(document).ready(function () {
+        $('#overlay').hide();
         initializeAccordionButtonImages();
+        initializeAccordionButtonImagesDataEntry();
     });
+
+    function initializeAccordionButtonImagesDataEntry() {
+        const $buttons = $('.usa-accordion__button.data-entry');
+
+        // Set initial background image (collapsed)
+        $buttons.css('background-image', 'url(https://designsystem.digital.gov/assets/img/icons/remove-white.svg), linear-gradient(transparent, transparent)');
+
+        // Unbind old click handlers to avoid duplicates
+        $buttons.off('click.accordionToggle');
+
+        // Add new click handler
+        $buttons.on('click.accordionToggle', function () {
+        const $button = $(this);
+
+        setTimeout(() => {
+            const isExpanded = $button.attr('aria-expanded') === 'true';
+
+            const newImage = isExpanded
+            ? 'url(https://designsystem.digital.gov/assets/img/icons/remove-white.svg)'
+            : 'url(https://designsystem.digital.gov/assets/img/icons/add-white.svg)';
+
+            $button.css('background-image', `${newImage}, linear-gradient(transparent, transparent)`);
+        }, 10);
+        });
+    }
 
     function initializeAccordionButtonImages() {
         const $buttons = $('.usa-accordion__button.data-list');

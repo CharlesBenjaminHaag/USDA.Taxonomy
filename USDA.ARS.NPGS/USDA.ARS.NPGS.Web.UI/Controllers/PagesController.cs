@@ -51,5 +51,11 @@ namespace USDA.ARS.NPGS.Web.UI.Controllers
             ViewBag.PageTitle = "Plant Variety Protection";
             return View("~/Views/Pages/pvp.cshtml");
         }
+
+        public IActionResult Rhizobium()
+        {
+            ViewBag.PageTitle = "Plant Variety Protection";
+            return View("~/Views/Pages/rhizobium.cshtml");
+        }
     }
 }
