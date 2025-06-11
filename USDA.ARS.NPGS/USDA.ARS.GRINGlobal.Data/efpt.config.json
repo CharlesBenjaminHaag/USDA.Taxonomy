@@ -573,6 +573,26 @@
       {
          "Name": "[dbo].[web_user_shipping_address]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[accession_availability_lookup]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[accession_inventory_attach_lookup]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[accession_lookup]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[accession_lookup_availability]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[vw_GRINGlobal_Accession_Overview]",
+         "ObjectType": 3
       }
    ],
    "UiHint": null,

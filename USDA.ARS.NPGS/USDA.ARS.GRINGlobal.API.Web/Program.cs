@@ -38,6 +38,7 @@ builder.Services.AddDbContext<gringlobalContext>(options => options.UseSqlServer
 
 builder.Services.AddScoped<IAccessionRepository, AccessionRepository>();
 builder.Services.AddScoped<IAccessionIprRepository, AccessionIprRepository>();
+builder.Services.AddScoped<ISiteRepository, SiteRepository>();
 builder.Services.AddScoped<ICropGermplasmCommitteeRepository, CropGermplasmCommitteeRepository>();
 builder.Services.AddScoped<IRhizobiumRepository, RhizobiumRepository>();
 builder.Services.AddScoped<IRhizobiumRepository, RhizobiumRepository>();

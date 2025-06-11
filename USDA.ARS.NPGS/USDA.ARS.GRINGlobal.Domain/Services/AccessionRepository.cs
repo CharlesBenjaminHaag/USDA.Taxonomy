@@ -33,30 +33,79 @@ namespace USDA.ARS.GRINGlobal.Domain.Services
 
         public async Task<IEnumerable<AccessionDTO>> GetAccessionsByCriteriaAsync(AccessionCriteriaDTO criteria)
         {
-            var sql = new StringBuilder("SELECT accession_name, plant_name, doi, taxonomy_species_id, taxonomy_species_name, origin_location, genebank_name, image_url, availability, received_date, source_type, source_date, source_collection_location, source_location_lat_long, source_location_elevation, source_habitat_description, improvement_level, narrative, accession_id, initial_received_date FROM vw_GRINGlobal_Accession_Summary WHERE 1=1 ");
+            var query = _context.VwGringlobalAccessionOverviews.AsQueryable();
 
-            var parameters = new List<SqlParameter>();
-
-            if (!string.IsNullOrEmpty(criteria.accession_identifier))
+            if (!String.IsNullOrEmpty(criteria.accession_identifier))
             {
-                sql.Append(" AND accession_name LIKE @name");
-                parameters.Add(new SqlParameter("@accession_identifier", $"%{criteria.accession_identifier}%"));
+                query = query.Where(v => v.AccessionIdentifier == criteria.accession_identifier);
             }
 
-            if (!string.IsNullOrEmpty(criteria.scientific_name))
+            if (!String.IsNullOrEmpty(criteria.plant_name))
             {
-                sql.Append(" AND taxonomy_species_name LIKE @taxonomy_species_name");
-                parameters.Add(new SqlParameter("@taxonomy_species_name", $"%{criteria.scientific_name}%"));
+                query = query.Where(v => v.PlantName.Contains(criteria.plant_name));
             }
-            if (!string.IsNullOrEmpty(criteria.genebank_name))
+
+            if (!String.IsNullOrEmpty(criteria.scientific_name))
             {
-                sql.Append(" AND genebank_name LIKE @genebank_name");
-                parameters.Add(new SqlParameter("@genebank_name", criteria.genebank_name));
+                query = query.Where(v => v.TaxonomySpeciesName.Contains(criteria.scientific_name));
             }
-            var results = await _context.Database
-                .SqlQueryRaw<AccessionDTO>(sql.ToString(), parameters.ToArray())
+
+            var results = await query
+                .Select(r => new AccessionDTO
+                {
+                    accession_id = r.AccessionId,
+                    accession_identifier = r.AccessionIdentifier,
+                    plant_name = r.PlantName,
+                    taxonomy_species_name = r.TaxonomySpeciesName,
+                    origin_location = "",
+                    genebank_name = r.GenebankName,
+                    image_url = r.ImageUrl,
+                    availability_status = r.AvailabilityStatus,
+                    improvement_level = r.ImprovementLevel
+                    })
                 .ToListAsync();
             return results;
+
+
+
+            //var sql = new StringBuilder("SELECT * FROM FROM vw_GRINGlobal_Accession_Overview WHERE 1=1 ");
+
+            //var parameters = new List<SqlParameter>();
+
+            //if (!string.IsNullOrEmpty(criteria.accession_identifier))
+            //{
+            //    sql.Append(" AND accession_identifier LIKE @name");
+            //    parameters.Add(new SqlParameter("@accession_identifier", $"%{criteria.accession_identifier}%"));
+            //}
+
+            //if (!string.IsNullOrEmpty(criteria.scientific_name))
+            //{
+            //    sql.Append(" AND taxonomy_species_name LIKE @taxonomy_species_name");
+            //    parameters.Add(new SqlParameter("@taxonomy_species_name", $"%{criteria.scientific_name}%"));
+            //}
+
+            //if (!string.IsNullOrEmpty(criteria.plant_name))
+            //{
+            //    sql.Append(" AND plant_name LIKE @plant_name");
+            //    parameters.Add(new SqlParameter("@plant_name", $"%{criteria.plant_name}%"));
+            //}
+
+            //if (!string.IsNullOrEmpty(criteria.genebank_name))
+            //{
+            //    sql.Append(" AND genebank_name LIKE @genebank_name");
+            //    parameters.Add(new SqlParameter("@genebank_name", criteria.genebank_name));
+            //}
+
+            //if (!string.IsNullOrEmpty(criteria.country_of_origin))
+            //{
+            //    sql.Append(" AND origin_location LIKE @country_of_origin");
+            //    parameters.Add(new SqlParameter("@country_of_origin", criteria.country_of_origin));
+            //}
+
+            //var results = await _context.Database
+            //    .SqlQueryRaw<AccessionDTO>(sql.ToString(), parameters.ToArray())
+            //    .ToListAsync();
+            //return results;
         }
 
         public Task<AccessionDTO> GetAccessionByIdAsync(int id)
@@ -76,10 +125,8 @@ namespace USDA.ARS.GRINGlobal.Domain.Services
 
         public async Task<IEnumerable<TabularReportItemDTO>> GetReportSummaryDiversityAsync()
         {
-            var report = await _context.Database.SqlQueryRaw<TabularReportItemDTO>("SELECT Accession, total_field FROM vw_GRINGlobal_Rpt_Summary_Diversity ORDER BY title_field").ToListAsync();
+            var report = await _context.Database.SqlQueryRaw<TabularReportItemDTO>("SELECT title_field, total_field FROM vw_GRINGlobal_Rpt_Summary_Diversity ORDER BY title_field").ToListAsync();
             return report;
         }
-
-
     }
 }

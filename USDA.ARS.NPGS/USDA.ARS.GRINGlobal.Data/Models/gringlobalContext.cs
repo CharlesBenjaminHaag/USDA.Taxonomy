@@ -17,6 +17,8 @@ public partial class gringlobalContext : DbContext
 
     public virtual DbSet<AccessionAction> AccessionActions { get; set; }
 
+    public virtual DbSet<AccessionAvailabilityLookup> AccessionAvailabilityLookups { get; set; }
+
     public virtual DbSet<AccessionInvAnnotation> AccessionInvAnnotations { get; set; }
 
     public virtual DbSet<AccessionInvAttach> AccessionInvAttaches { get; set; }
@@ -33,7 +35,13 @@ public partial class gringlobalContext : DbContext
 
     public virtual DbSet<AccessionInvVoucher> AccessionInvVouchers { get; set; }
 
+    public virtual DbSet<AccessionInventoryAttachLookup> AccessionInventoryAttachLookups { get; set; }
+
     public virtual DbSet<AccessionIpr> AccessionIprs { get; set; }
+
+    public virtual DbSet<AccessionLookup> AccessionLookups { get; set; }
+
+    public virtual DbSet<AccessionLookupAvailability> AccessionLookupAvailabilities { get; set; }
 
     public virtual DbSet<AccessionPedigree> AccessionPedigrees { get; set; }
 
@@ -267,6 +275,8 @@ public partial class gringlobalContext : DbContext
 
     public virtual DbSet<TaxonomySpecy> TaxonomySpecies { get; set; }
 
+    public virtual DbSet<VwGringlobalAccessionOverview> VwGringlobalAccessionOverviews { get; set; }
+
     public virtual DbSet<W6SiteInventory> W6SiteInventories { get; set; }
 
     public virtual DbSet<WebCooperator> WebCooperators { get; set; }
@@ -491,6 +501,25 @@ public partial class gringlobalContext : DbContext
                 .HasConstraintName("fk_aa_owned");
         });
 
+        modelBuilder.Entity<AccessionAvailabilityLookup>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("accession_availability_lookup");
+
+            entity.Property(e => e.AvailabilityStatus)
+                .IsRequired()
+                .HasMaxLength(13)
+                .IsUnicode(false)
+                .HasColumnName("availability_status");
+            entity.Property(e => e.Lookup)
+                .HasMaxLength(132)
+                .HasColumnName("lookup");
+            entity.Property(e => e.TargetId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("target_id");
+        });
+
         modelBuilder.Entity<AccessionInvAnnotation>(entity =>
         {
             entity.ToTable("accession_inv_annotation");
@@ -575,6 +604,8 @@ public partial class gringlobalContext : DbContext
         {
             entity.ToTable("accession_inv_attach");
 
+            entity.HasIndex(e => e.FileExtension, "IX_accession_inv_attach_file_ext");
+
             entity.HasIndex(e => e.AttachCooperatorId, "ndx_fk_aiat_c");
 
             entity.HasIndex(e => e.CreatedBy, "ndx_fk_aiat_created");
@@ -612,6 +643,10 @@ public partial class gringlobalContext : DbContext
             entity.Property(e => e.DescriptionCode)
                 .HasMaxLength(20)
                 .HasColumnName("description_code");
+            entity.Property(e => e.FileExtension)
+                .HasMaxLength(3)
+                .HasComputedColumnSql("(right([virtual_path],(3)))", true)
+                .HasColumnName("file_extension");
             entity.Property(e => e.InventoryId).HasColumnName("inventory_id");
             entity.Property(e => e.IsThumbnailVirtualPathValid)
                 .HasMaxLength(1)
@@ -1008,6 +1043,37 @@ public partial class gringlobalContext : DbContext
                 .HasConstraintName("fk_aiv_owned");
         });
 
+        modelBuilder.Entity<AccessionInventoryAttachLookup>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("accession_inventory_attach_lookup");
+
+            entity.Property(e => e.AccessionId).HasColumnName("accession_id");
+            entity.Property(e => e.AccessionInvAttachId).HasColumnName("accession_inv_attach_id");
+            entity.Property(e => e.CategoryCode)
+                .IsRequired()
+                .HasMaxLength(20)
+                .HasColumnName("category_code");
+            entity.Property(e => e.ContentType)
+                .HasMaxLength(100)
+                .HasColumnName("content_type");
+            entity.Property(e => e.CopyrightInformation)
+                .HasMaxLength(100)
+                .HasColumnName("copyright_information");
+            entity.Property(e => e.IsWebVisible)
+                .IsRequired()
+                .HasMaxLength(1)
+                .HasColumnName("is_web_visible");
+            entity.Property(e => e.ThumbnailVirtualPath)
+                .HasMaxLength(255)
+                .HasColumnName("thumbnail_virtual_path");
+            entity.Property(e => e.VirtualPath)
+                .IsRequired()
+                .HasMaxLength(255)
+                .HasColumnName("virtual_path");
+        });
+
         modelBuilder.Entity<AccessionIpr>(entity =>
         {
             entity.ToTable("accession_ipr");
@@ -1077,6 +1143,44 @@ public partial class gringlobalContext : DbContext
                 .HasForeignKey(d => d.OwnedBy)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_ar_owned");
+        });
+
+        modelBuilder.Entity<AccessionLookup>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("accession_lookup");
+
+            entity.Property(e => e.Lookup)
+                .HasMaxLength(132)
+                .HasColumnName("lookup");
+            entity.Property(e => e.StatusCode)
+                .IsRequired()
+                .HasMaxLength(20)
+                .HasColumnName("status_code");
+            entity.Property(e => e.TargetId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("target_id");
+            entity.Property(e => e.TaxonomySpeciesId).HasColumnName("taxonomy_species_id");
+        });
+
+        modelBuilder.Entity<AccessionLookupAvailability>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("accession_lookup_availability");
+
+            entity.Property(e => e.AvailabilityStatus)
+                .IsRequired()
+                .HasMaxLength(13)
+                .IsUnicode(false)
+                .HasColumnName("availability_status");
+            entity.Property(e => e.Lookup)
+                .HasMaxLength(132)
+                .HasColumnName("lookup");
+            entity.Property(e => e.TargetId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("target_id");
         });
 
         modelBuilder.Entity<AccessionPedigree>(entity =>
@@ -8448,6 +8552,60 @@ public partial class gringlobalContext : DbContext
             entity.HasOne(d => d.VerifierCooperator).WithMany(p => p.TaxonomySpecyVerifierCooperators)
                 .HasForeignKey(d => d.VerifierCooperatorId)
                 .HasConstraintName("fk_ts_c");
+        });
+
+        modelBuilder.Entity<VwGringlobalAccessionOverview>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("vw_GRINGlobal_Accession_Overview");
+
+            entity.Property(e => e.AccessionId).HasColumnName("accession_id");
+            entity.Property(e => e.AccessionIdentifier)
+                .HasMaxLength(132)
+                .HasColumnName("accession_identifier");
+            entity.Property(e => e.AvailabilityStatus)
+                .IsRequired()
+                .HasMaxLength(13)
+                .IsUnicode(false)
+                .HasColumnName("availability_status");
+            entity.Property(e => e.Doi)
+                .HasMaxLength(20)
+                .HasColumnName("doi");
+            entity.Property(e => e.GenebankName)
+                .HasMaxLength(20)
+                .HasColumnName("genebank_name");
+            entity.Property(e => e.ImageUrl)
+                .HasMaxLength(255)
+                .HasColumnName("image_url");
+            entity.Property(e => e.ImprovementLevel)
+                .HasMaxLength(500)
+                .HasColumnName("improvement_level");
+            entity.Property(e => e.Narrative).HasColumnName("narrative");
+            entity.Property(e => e.PlantName)
+                .IsRequired()
+                .HasMaxLength(202)
+                .HasColumnName("plant_name");
+            entity.Property(e => e.ReceivedDate).HasColumnName("received_date");
+            entity.Property(e => e.ReceivedYear).HasColumnName("received_year");
+            entity.Property(e => e.SourceCollectionSite).HasColumnName("source_collection_site");
+            entity.Property(e => e.SourceCoordinates)
+                .HasMaxLength(42)
+                .HasColumnName("source_coordinates");
+            entity.Property(e => e.SourceDate)
+                .HasMaxLength(4000)
+                .HasColumnName("source_date");
+            entity.Property(e => e.SourceElevation)
+                .HasMaxLength(20)
+                .HasColumnName("source_elevation");
+            entity.Property(e => e.SourceHabitat).HasColumnName("source_habitat");
+            entity.Property(e => e.SourceType)
+                .HasMaxLength(20)
+                .HasColumnName("source_type");
+            entity.Property(e => e.TaxonomySpeciesId).HasColumnName("taxonomy_species_id");
+            entity.Property(e => e.TaxonomySpeciesName)
+                .HasMaxLength(801)
+                .HasColumnName("taxonomy_species_name");
         });
 
         modelBuilder.Entity<W6SiteInventory>(entity =>

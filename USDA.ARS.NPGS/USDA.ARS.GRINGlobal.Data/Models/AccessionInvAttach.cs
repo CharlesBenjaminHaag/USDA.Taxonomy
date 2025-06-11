@@ -57,6 +57,8 @@ public partial class AccessionInvAttach
 
     public DateTime? ValidatedDate { get; set; }
 
+    public string FileExtension { get; set; }
+
     public virtual Cooperator AttachCooperator { get; set; }
 
     public virtual Cooperator CreatedByNavigation { get; set; }
