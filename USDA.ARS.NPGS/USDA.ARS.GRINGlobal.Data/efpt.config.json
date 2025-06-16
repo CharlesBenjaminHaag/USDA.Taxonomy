@@ -591,6 +591,14 @@
          "ObjectType": 3
       },
       {
+         "Name": "[dbo].[accession_overview]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[code_value_lookup]",
+         "ObjectType": 3
+      },
+      {
          "Name": "[dbo].[vw_GRINGlobal_Accession_Overview]",
          "ObjectType": 3
       }

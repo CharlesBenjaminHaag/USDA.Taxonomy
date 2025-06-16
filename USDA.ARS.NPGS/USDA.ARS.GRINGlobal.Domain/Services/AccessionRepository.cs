@@ -37,7 +37,7 @@ namespace USDA.ARS.GRINGlobal.Domain.Services
 
             if (!String.IsNullOrEmpty(criteria.accession_identifier))
             {
-                query = query.Where(v => v.AccessionIdentifier == criteria.accession_identifier);
+                query = query.Where(v => v.AccessionIdentifier.Contains(criteria.accession_identifier));
             }
 
             if (!String.IsNullOrEmpty(criteria.plant_name))
@@ -63,7 +63,7 @@ namespace USDA.ARS.GRINGlobal.Domain.Services
                     availability_status = r.AvailabilityStatus,
                     improvement_level = r.ImprovementLevel
                     })
-                .ToListAsync();
+                .OrderBy(a => a.accession_id).Skip(criteria.pageSize * (criteria.startPage - 1)).ToListAsync();
             return results;
 
 

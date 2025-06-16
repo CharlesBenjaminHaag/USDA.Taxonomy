@@ -34,14 +34,21 @@ builder.Services.AddControllers(options =>
 builder.Services.AddProblemDetails();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<gringlobalContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("GRINGlobalConnectionString")).EnableSensitiveDataLogging().UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+//builder.Services.AddDbContext<gringlobalContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("GRINGlobalConnectionString")).EnableSensitiveDataLogging().UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+
+builder.Services.AddDbContext<gringlobalContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("GRINGlobalConnectionString"))
+           .EnableSensitiveDataLogging() // optional, shows parameter values
+           .LogTo(Log.Information, new[] { DbLoggerCategory.Database.Command.Name }, LogLevel.Information);
+});
 
 builder.Services.AddScoped<IAccessionRepository, AccessionRepository>();
 builder.Services.AddScoped<IAccessionIprRepository, AccessionIprRepository>();
 builder.Services.AddScoped<ISiteRepository, SiteRepository>();
 builder.Services.AddScoped<ICropGermplasmCommitteeRepository, CropGermplasmCommitteeRepository>();
 builder.Services.AddScoped<IRhizobiumRepository, RhizobiumRepository>();
-builder.Services.AddScoped<IRhizobiumRepository, RhizobiumRepository>();
+builder.Services.AddScoped<ICodeValueRepository, CodeValueRepository>();
 
 //builder.Services.AddScoped<IGeographyRepository, GeographyRepository>();
 

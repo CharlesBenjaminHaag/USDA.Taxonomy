@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace USDA.ARS.GRINGlobal.Data.Models;
 
-public partial class VwGringlobalAccessionOverview
+public partial class AccessionOverview
 {
     public int AccessionId { get; set; }
 
