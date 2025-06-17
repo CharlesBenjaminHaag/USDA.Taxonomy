@@ -113,7 +113,7 @@
         deferLoading: 0,
         columns: [
           {
-            data: 'accession_name',
+            data: 'accession_identifier',
             render: function (data, type, row) {
             if (type === 'display') {
                 return `<a href="https://npgsweb.ars-grin.gov/gringlobal/accessiondetail?id=${row.accession_id}" target="_blank">${data}</a>`;
@@ -142,38 +142,64 @@
     
     // Populate select lists
     getGenebanks();
+    getCountries();
 
     function getGenebanks() {
-            $.ajax({
-                    url: 'https://npgstest.ars-grin.gov/NPGS/api/v1/site',
-                type: 'GET',
-                success: function (data) {
-                    var $select = $('#genebank_name');
-                    $select.empty(); // Clear existing
+        $.ajax({
+            url: 'https://npgstest.ars-grin.gov/NPGS/api/v1/site/all',
+            type: 'GET',
+            success: function (data) {
+                var $select = $('#genebank_name');
+                $select.empty(); // Clear existing
 
-                    // Add "None" option
+                // Add "None" option
+                $select.append($('<option>', {
+                    value: '',
+                    text: 'None'
+                }));
+
+                // Add data options
+                $.each(data, function (index, item) {
                     $select.append($('<option>', {
-                        value: '',
-                        text: 'None'
+                        value: item.site_id,
+                        text: item.full_name
                     }));
-
-                    // Add data options
-                    $.each(data, function (index, item) {
-                        $select.append($('<option>', {
-                            value: item.site_id,
-                            text: item.full_name
-                        }));
-                    });
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error loading genebanks:", error);
-                    $('#categorySelect').html('<option>Error loading</option>');
-                }
-            });
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error("Error loading genebanks:", error);
+                $('#categorySelect').html('<option>Error loading</option>');
+            }
+        });
     }
 
     function getCountries() {
+        $.ajax({
+            url: 'https://npgstest.ars-grin.gov/NPGS/api/v1/geography/countries',
+            type: 'GET',
+            success: function (data) {
+                    var $select = $('#country_of_origin');
+                $select.empty(); // Clear existing
 
+                // Add "None" option
+                $select.append($('<option>', {
+                    value: '',
+                    text: 'None'
+                }));
+
+                // Add data options
+                $.each(data, function (index, item) {
+                    $select.append($('<option>', {
+                        value: item.country_code,
+                        text: item.country_name
+                    }));
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error("Error loading genebanks:", error);
+                $('#categorySelect').html('<option>Error loading</option>');
+            }
+        });
     }
 
     function getImprovementLevels() {
@@ -194,6 +220,10 @@
 
             if (key) {
                 data[key] = $input.val();
+
+                //debug
+                    console.log(`DEBUG Collected data: ${key} = ${data[key]}`);
+
             }
         });
         return data;

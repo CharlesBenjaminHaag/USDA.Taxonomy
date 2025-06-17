@@ -78,12 +78,17 @@ namespace USDA.ARS.GRINGlobal.Domain.Services
                     plant_name = r.PlantName,
                     taxonomy_species_id = r.TaxonomySpeciesId,
                     taxonomy_species_name = r.TaxonomySpeciesName,
-                    origin_location = r.SourceCountryName,
+                    genebank_id = r.GenebankId,
                     genebank_name = r.GenebankName,
                     image_url = r.ImageUrl,
+                    received_date = r.ReceivedDate,
+                    received_year = r.ReceivedYear,
+                    source_type = r.SourceType,
+                    source_country_code = r.SourceCountryCode,
+                    source_country_name = r.SourceCountryName,
                     availability_status = r.AvailabilityStatus,
-                    improvement_level = r.ImprovementLevel
-                    })
+                    improvement_level = r.ImprovementLevel,
+                })
                 .OrderBy(a => a.accession_id).Skip(criteria.pageSize * (criteria.startPage - 1)).ToListAsync();
             return results;
 
