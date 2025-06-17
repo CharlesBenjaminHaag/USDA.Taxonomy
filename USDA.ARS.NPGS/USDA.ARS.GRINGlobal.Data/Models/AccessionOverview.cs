@@ -19,6 +19,8 @@ public partial class AccessionOverview
 
     public string TaxonomySpeciesName { get; set; }
 
+    public int GenebankId { get; set; }
+
     public string GenebankName { get; set; }
 
     public string ImageUrl { get; set; }
@@ -30,6 +32,10 @@ public partial class AccessionOverview
     public int? ReceivedYear { get; set; }
 
     public string SourceType { get; set; }
+
+    public string SourceCountryCode { get; set; }
+
+    public string SourceCountryName { get; set; }
 
     public string SourceDate { get; set; }
 

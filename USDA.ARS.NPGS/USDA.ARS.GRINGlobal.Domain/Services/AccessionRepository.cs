@@ -33,7 +33,7 @@ namespace USDA.ARS.GRINGlobal.Domain.Services
 
         public async Task<IEnumerable<AccessionDTO>> GetAccessionsByCriteriaAsync(AccessionCriteriaDTO criteria)
         {
-            var query = _context.VwGringlobalAccessionOverviews.AsQueryable();
+            var query = _context.AccessionOverviews.AsQueryable();
 
             if (!String.IsNullOrEmpty(criteria.accession_identifier))
             {
@@ -50,14 +50,35 @@ namespace USDA.ARS.GRINGlobal.Domain.Services
                 query = query.Where(v => v.TaxonomySpeciesName.Contains(criteria.scientific_name));
             }
 
+            if (criteria.genebank_id > 0)
+            {
+                query = query.Where(v => v.GenebankId == criteria.genebank_id);
+            }
+
+            if (!String.IsNullOrEmpty(criteria.genebank_name))
+            {
+                query = query.Where(v => v.GenebankName.Contains(criteria.genebank_name));
+            }
+
+            if (!String.IsNullOrEmpty(criteria.country_of_origin))
+            {
+                query = query.Where(v => v.SourceCountryCode == criteria.country_of_origin);
+            }
+
+            if (criteria.received_year > 0)
+            {
+                query = query.Where(v => v.ReceivedYear == criteria.received_year);
+            }
+
             var results = await query
                 .Select(r => new AccessionDTO
                 {
                     accession_id = r.AccessionId,
                     accession_identifier = r.AccessionIdentifier,
                     plant_name = r.PlantName,
+                    taxonomy_species_id = r.TaxonomySpeciesId,
                     taxonomy_species_name = r.TaxonomySpeciesName,
-                    origin_location = "",
+                    origin_location = r.SourceCountryName,
                     genebank_name = r.GenebankName,
                     image_url = r.ImageUrl,
                     availability_status = r.AvailabilityStatus,

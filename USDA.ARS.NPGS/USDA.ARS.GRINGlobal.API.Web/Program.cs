@@ -49,8 +49,7 @@ builder.Services.AddScoped<ISiteRepository, SiteRepository>();
 builder.Services.AddScoped<ICropGermplasmCommitteeRepository, CropGermplasmCommitteeRepository>();
 builder.Services.AddScoped<IRhizobiumRepository, RhizobiumRepository>();
 builder.Services.AddScoped<ICodeValueRepository, CodeValueRepository>();
-
-//builder.Services.AddScoped<IGeographyRepository, GeographyRepository>();
+builder.Services.AddScoped<IGeographyRepository, GeographyRepository>();
 
 var app = builder.Build();
 

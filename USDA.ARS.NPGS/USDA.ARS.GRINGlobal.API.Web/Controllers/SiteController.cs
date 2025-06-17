@@ -19,7 +19,7 @@ namespace USDA.ARS.GRINGlobal.API.Web.Controllers
                     throw new ArgumentNullException(nameof(siteRepository));
         }
 
-        [HttpGet]
+        [HttpGet("all")]
         public async Task<IActionResult> GetAllSites()
         {
             try

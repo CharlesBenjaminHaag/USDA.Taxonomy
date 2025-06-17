@@ -9,8 +9,6 @@ namespace USDA.ARS.GRINGlobal.Domain.Services
 {
     public interface IGeographyRepository
     {
-        Task<IEnumerable<RhizobiumDTO>> GetAllRhizobiumAsync(int pageNumber = 1, int pageSize = 10);
-        Task<RhizobiumDTO> GetRhizobiumByIdAsync(int id);
-        Task<IEnumerable<AccessionDTO>> GetRhizobiumByCriteriaAsync(AccessionCriteriaDTO criteria);
+        Task<IEnumerable<GeographyDTO>> GetAllCountriesAsync(int pageNumber = 1, int pageSize = 10);
     }
 }

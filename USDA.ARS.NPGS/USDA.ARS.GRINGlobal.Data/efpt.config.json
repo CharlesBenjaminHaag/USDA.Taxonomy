@@ -599,7 +599,11 @@
          "ObjectType": 3
       },
       {
-         "Name": "[dbo].[vw_GRINGlobal_Accession_Overview]",
+         "Name": "[dbo].[cooperator_lookup]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[country_view]",
          "ObjectType": 3
       }
    ],

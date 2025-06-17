@@ -69,7 +69,11 @@ public partial class gringlobalContext : DbContext
 
     public virtual DbSet<CooperatorGroup> CooperatorGroups { get; set; }
 
+    public virtual DbSet<CooperatorLookup> CooperatorLookups { get; set; }
+
     public virtual DbSet<CooperatorMap> CooperatorMaps { get; set; }
+
+    public virtual DbSet<CountryView> CountryViews { get; set; }
 
     public virtual DbSet<Crop> Crops { get; set; }
 
@@ -278,8 +282,6 @@ public partial class gringlobalContext : DbContext
     public virtual DbSet<TaxonomyGenu> TaxonomyGenus { get; set; }
 
     public virtual DbSet<TaxonomySpecy> TaxonomySpecies { get; set; }
-
-    public virtual DbSet<VwGringlobalAccessionOverview> VwGringlobalAccessionOverviews { get; set; }
 
     public virtual DbSet<W6SiteInventory> W6SiteInventories { get; set; }
 
@@ -1205,6 +1207,7 @@ public partial class gringlobalContext : DbContext
             entity.Property(e => e.Doi)
                 .HasMaxLength(20)
                 .HasColumnName("doi");
+            entity.Property(e => e.GenebankId).HasColumnName("genebank_id");
             entity.Property(e => e.GenebankName)
                 .IsRequired()
                 .HasMaxLength(20)
@@ -1226,6 +1229,14 @@ public partial class gringlobalContext : DbContext
             entity.Property(e => e.SourceCoordinates)
                 .HasMaxLength(42)
                 .HasColumnName("source_coordinates");
+            entity.Property(e => e.SourceCountryCode)
+                .IsRequired()
+                .HasMaxLength(20)
+                .HasColumnName("source_country_code");
+            entity.Property(e => e.SourceCountryName)
+                .IsRequired()
+                .HasMaxLength(500)
+                .HasColumnName("source_country_name");
             entity.Property(e => e.SourceDate)
                 .HasMaxLength(4000)
                 .HasColumnName("source_date");
@@ -2133,6 +2144,20 @@ public partial class gringlobalContext : DbContext
                 .HasConstraintName("fk_cg_s");
         });
 
+        modelBuilder.Entity<CooperatorLookup>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("cooperator_lookup");
+
+            entity.Property(e => e.Lookup)
+                .HasMaxLength(304)
+                .HasColumnName("lookup");
+            entity.Property(e => e.TargetId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("target_id");
+        });
+
         modelBuilder.Entity<CooperatorMap>(entity =>
         {
             entity.ToTable("cooperator_map");
@@ -2182,6 +2207,23 @@ public partial class gringlobalContext : DbContext
                 .HasForeignKey(d => d.OwnedBy)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_cm_owned");
+        });
+
+        modelBuilder.Entity<CountryView>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("country_view");
+
+            entity.Property(e => e.CountryCode)
+                .IsRequired()
+                .HasMaxLength(20)
+                .HasColumnName("country_code");
+            entity.Property(e => e.Countryname)
+                .IsRequired()
+                .HasMaxLength(500)
+                .HasColumnName("countryname");
+            entity.Property(e => e.GeographyId).HasColumnName("geography_id");
         });
 
         modelBuilder.Entity<Crop>(entity =>
@@ -8635,62 +8677,6 @@ public partial class gringlobalContext : DbContext
             entity.HasOne(d => d.VerifierCooperator).WithMany(p => p.TaxonomySpecyVerifierCooperators)
                 .HasForeignKey(d => d.VerifierCooperatorId)
                 .HasConstraintName("fk_ts_c");
-        });
-
-        modelBuilder.Entity<VwGringlobalAccessionOverview>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToView("vw_GRINGlobal_Accession_Overview");
-
-            entity.Property(e => e.AccessionId).HasColumnName("accession_id");
-            entity.Property(e => e.AccessionIdentifier)
-                .HasMaxLength(132)
-                .HasColumnName("accession_identifier");
-            entity.Property(e => e.AvailabilityStatus)
-                .IsRequired()
-                .HasMaxLength(11)
-                .IsUnicode(false)
-                .HasColumnName("availability_status");
-            entity.Property(e => e.Doi)
-                .HasMaxLength(20)
-                .HasColumnName("doi");
-            entity.Property(e => e.GenebankName)
-                .IsRequired()
-                .HasMaxLength(20)
-                .HasColumnName("genebank_name");
-            entity.Property(e => e.ImageUrl)
-                .HasMaxLength(255)
-                .HasColumnName("image_url");
-            entity.Property(e => e.ImprovementLevel)
-                .HasMaxLength(500)
-                .HasColumnName("improvement_level");
-            entity.Property(e => e.Narrative).HasColumnName("narrative");
-            entity.Property(e => e.PlantName)
-                .IsRequired()
-                .HasMaxLength(202)
-                .HasColumnName("plant_name");
-            entity.Property(e => e.ReceivedDate).HasColumnName("received_date");
-            entity.Property(e => e.ReceivedYear).HasColumnName("received_year");
-            entity.Property(e => e.SourceCollectionSite).HasColumnName("source_collection_site");
-            entity.Property(e => e.SourceCoordinates)
-                .HasMaxLength(42)
-                .HasColumnName("source_coordinates");
-            entity.Property(e => e.SourceDate)
-                .HasMaxLength(4000)
-                .HasColumnName("source_date");
-            entity.Property(e => e.SourceElevation)
-                .HasMaxLength(20)
-                .HasColumnName("source_elevation");
-            entity.Property(e => e.SourceHabitat).HasColumnName("source_habitat");
-            entity.Property(e => e.SourceType)
-                .IsRequired()
-                .HasMaxLength(20)
-                .HasColumnName("source_type");
-            entity.Property(e => e.TaxonomySpeciesId).HasColumnName("taxonomy_species_id");
-            entity.Property(e => e.TaxonomySpeciesName)
-                .HasMaxLength(801)
-                .HasColumnName("taxonomy_species_name");
         });
 
         modelBuilder.Entity<W6SiteInventory>(entity =>

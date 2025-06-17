@@ -2,6 +2,9 @@
     Layout = "~/Views/Shared/_LayoutUSWDSInterior.cshtml";
 }
 
+<style>
+    .usa-accordion__content { padding:0px;}
+</style>
 
 <div class="usa-section">
     <div class="grid-container">
@@ -23,40 +26,46 @@
                         <div class="usa-accordion usa-accordion--bordered usa-accordion--multiselectable" data-allow-multiple>
                             <h4 class="usa-accordion__heading">
                                 <button type="button"
-                                        class="usa-accordion__button data-list"
-                                        aria-expanded="false"
+                                        class="usa-accordion__button data-entry"
+                                        aria-expanded="true"
                                         aria-controls="m-accordion-grin-global">
                                     Search GRIN-Global Accessions
                                 </button>
                             </h4>
                             <div id="m-accordion-grin-global" class="usa-accordion__content usa-prose">
-                                <form id="search-form-grin-global-accessions" class="usa-form usa-form--large">
+                                <form id="search-form-grin-global-accessions" class="usa-form usa-form--large" style="padding:0px;">
                                     <div class="grid-container">
-                                        <div class="grid-row grid-gap-1">
-                                            <div class="grid-col-6">
+                                        <div class="grid-row">
+                                            <div class="grid-col-3">
                                                 <fieldset class="usa-fieldset">
-
                                                     <label class="usa-label" for="pi-number">PI Number/Name</label>
                                                     <input class="usa-input" id="accession_identifier" name="accession_identifier">
-
-                                                    <label class="usa-label" for="scientific_name">Scientific Name</label>
-                                                    <input class="usa-input" id="scientific_name" name="scientific_name">
-
-
                                                 </fieldset>
                                             </div>
-                                            <div class="grid-col-6">
+
+                                            <div class="grid-col-3">
+                                                <fieldset class="usa-fieldset">
+                                                    <label class="usa-label" for="scientific_name">Scientific Name</label>
+                                                    <input class="usa-input" id="scientific_name" name="scientific_name">
+                                                </fieldset>
+                                            </div>
+                                            <div class="grid-col-3">
                                                 <fieldset class="usa-fieldset">
                                                     <label class="usa-label" for="plant_name">Plant Name</label>
                                                     <input class="usa-input" id="plant_name" name="plant-name">
-
-                                                    <label class="usa-label" for="genebank_name">
+                                                </fieldset>
+                                            </div>    
+                                            <div class="grid-col-3">
+                                                <fieldset class="usa-fieldset">
+                                                   <label class="usa-label" for="genebank_name">
                                                         Genebank
                                                     </label>
                                                     <select class="usa-select" id="genebank_name" name="genebank_name">
-                                                        
                                                     </select>
-
+                                                </fieldset>
+                                            </div>
+                                            <div class="grid-col-3">
+                                                <fieldset class="usa-fieldset">
                                                     <label class="usa-label" for="country_of_origin">
                                                         Country of Origin
                                                     </label>
@@ -64,54 +73,32 @@
                                                        
                                                     </select>
                                                 </fieldset>
+                                                <button id="reset-button" class="usa-button usa-button--secondary float-lg-end" type="button">Reset</button>
+                                                <button id="search-button" class="usa-button float-lg-end" type="button">Search</button>
+
                                             </div>
                                         </div>
                                     </div>
-                                    <button id="reset-button" class="usa-button" type="button">Search</button>
-                                    <button id="search-button" class="usa-button" type="button">Search</button>
                                 </form>
                                 <hr />
-                                <table class="usa-table usa-table--borderless" id="search-results-table" width="100%">
-                                    <thead>
-                                        <tr>
-                                            <th>Accession</th>
-                                            <th>Plant Name</th>
-                                            <th>Scientific Name</th>
-                                            <th>Origin</th>
-                                            <th>Genebank</th>
-                                            <th>Source</th>
-                                            <th>Improvement Level</th>
-                                        </tr>
-                                    </thead>
-                                </table>
+                                
                             </div>
+                            <table class="usa-table usa-table--borderless" id="search-results-table" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Accession</th>
+                                        <th>Plant Name</th>
+                                        <th>Scientific Name</th>
+                                        <th>Origin</th>
+                                        <th>Genebank</th>
+                                        <th>Source</th>
+                                        <th>Improvement Level</th>
+                                    </tr>
+                                </thead>
+                            </table>
                         </div>
-                        <p>
-                            <a href="https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomysearch" class="usa-link--external" target="_blank" rel="noreferrer">GRIN Taxonomy</a> is another frequently consulted resource provided by the NPGS. It includes up-to-date
-                            taxonomic information, geographical distributions, and economic uses for crops and their wild 
-                            relatives and serves as a global resource for plant nomenclature. Additional information about 
-                            the GRIN-Global Project is available <a href="https://www.grin-global.org/" class="usa-link--external" target="_blank" rel="noreferrer">here↗</a>
-                        </p>
-                        <div class="usa-accordion usa-accordion--bordered usa-accordion--multiselectable" data-allow-multiple>
-                            <h4 class="usa-accordion__heading">
-                                <button type="button"
-                                        class="usa-accordion__button data-list"
-                                        aria-expanded="false"
-                                        aria-controls="m-accordion-taxonomy">
-                                    Search Taxonomy
-                                </button>
-                            </h4>
-                            <div id="m-accordion-taxonomy" class="usa-accordion__content usa-prose">
-                                <h3>TO DO</h3>
-                            </div>
-                        </div>
-                    </section>
-                    <section>
-                        
-                        
                     </section>
                 </p>
-                
             </main>
         </div>
     </div>
@@ -152,25 +139,48 @@
           { data: 'improvement_level' }
         ]
     });
+    
+    // Populate select lists
+    getGenebanks();
 
-    // table.on('preXhr.dt', function () {
-    //     $('#overlay').show();
-    // });
+    function getGenebanks() {
+            $.ajax({
+                    url: 'https://npgstest.ars-grin.gov/NPGS/api/v1/site',
+                type: 'GET',
+                success: function (data) {
+                    var $select = $('#genebank_name');
+                    $select.empty(); // Clear existing
 
-    // table.on('xhr.dt', function () {
-    //     $('#overlay').hide();
-    // });
+                    // Add "None" option
+                    $select.append($('<option>', {
+                        value: '',
+                        text: 'None'
+                    }));
 
-    // Function to populate select lists
-    function init() {
-        // TODO
-    }
-
-    function getSites() {
-
+                    // Add data options
+                    $.each(data, function (index, item) {
+                        $select.append($('<option>', {
+                            value: item.site_id,
+                            text: item.full_name
+                        }));
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error loading genebanks:", error);
+                    $('#categorySelect').html('<option>Error loading</option>');
+                }
+            });
     }
 
     function getCountries() {
+
+    }
+
+    function getImprovementLevels() {
+
+    }
+
+    function getAvailabilityStatuses() {
 
     }
 

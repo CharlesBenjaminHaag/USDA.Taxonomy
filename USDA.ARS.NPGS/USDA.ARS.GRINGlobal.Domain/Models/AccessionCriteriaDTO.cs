@@ -13,7 +13,9 @@ namespace USDA.ARS.GRINGlobal.Domain.Models
         public string? accession_identifier { get; set; }
         public string? scientific_name { get; set; }
         public string? plant_name { get; set; }
+        public int? genebank_id { get; set; }
         public string? genebank_name { get; set; }
         public string? country_of_origin { get; set; }
+        public int received_year { get; set; }
     }
 }
