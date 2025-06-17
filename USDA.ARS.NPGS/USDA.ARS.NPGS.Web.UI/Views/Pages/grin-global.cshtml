@@ -75,28 +75,49 @@
                                                 </fieldset>
                                                 <button id="reset-button" class="usa-button usa-button--secondary float-lg-end" type="button">Reset</button>
                                                 <button id="search-button" class="usa-button float-lg-end" type="button">Search</button>
-
+                                            </div>
+                                            <div class="grid-col-3">
+                                                <fieldset class="usa-fieldset">
+                                                    <label class="usa-label" for="genebank_name">
+                                                        Year Germplasm Received
+                                                    </label>
+                                                    <select class="usa-select" id="received_year" name="received_year">
+                                                        <option value="2025">2025</option>
+                                                        <option value="2024">2024</option>
+                                                        <option value="2023">2023</option>
+                                                        <option value="2022">2022</option>
+                                                        <option value="2021">2021</option>
+                                                        <option value="2020">2020</option>
+                                                        <option value="2019">2019</option>
+                                                        <option value="2018">2018</option>
+                                                        <option value="2017">2017</option>
+                                                        <option value="2016">2016</option>
+                                                    </select>
+                                                </fieldset>
                                             </div>
                                         </div>
                                     </div>
                                 </form>
                                 <hr />
-                                
                             </div>
-                            <table class="usa-table usa-table--borderless" id="search-results-table" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th>Accession</th>
-                                        <th>Plant Name</th>
-                                        <th>Scientific Name</th>
-                                        <th>Origin</th>
-                                        <th>Genebank</th>
-                                        <th>Source</th>
-                                        <th>Improvement Level</th>
-                                    </tr>
-                                </thead>
-                            </table>
                         </div>
+                    </section>
+                    <section>
+                        <h3 id="row-count-heading"></h3>
+                        <table class="usa-table usa-table--borderless" id="search-results-table" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Accession</th>
+                                    <th>Plant Name</th>
+                                    <th>Scientific Name</th>
+                                    <th>Origin</th>
+                                    <th>Genebank</th>
+                                    <th>Source</th>
+                                    <th>Improvement Level</th>
+                                    <th>Availability</th>
+                                </tr>
+                            </thead>
+                        </table>
                     </section>
                 </p>
             </main>
@@ -112,34 +133,58 @@
         data: [],
         deferLoading: 0,
         columns: [
-          {
-            data: 'accession_identifier',
-            render: function (data, type, row) {
-            if (type === 'display') {
-                return `<a href="https://npgsweb.ars-grin.gov/gringlobal/accessiondetail?id=${row.accession_id}" target="_blank">${data}</a>`;
+            {
+                data: 'accession_identifier',
+                render: function (data, type, row) {
+                    if (type === 'display') {
+                        return `<a href="https://npgsweb.ars-grin.gov/gringlobal/accessiondetail?id=${row.accession_id}" target="_blank">${data}</a>`;
+                    }
+                    return data; // For other types (e.g. filter, sort), return raw text
+                }
+            },
+            { data: 'plant_name' },
+            {
+                data: 'taxonomy_species_name',
+                render: function (data, type, row) {
+                    if (type === 'display') {
+                        return `<a href="https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomydetail?id=${row.taxonomy_species_id}" target="_blank">${data}</a>`;
+                    }
+                    return data; // For other types (e.g. filter, sort), return raw text
+                }
+            },
+            { 
+                data: 'source_country_name' 
+            },
+            {
+                data: 'genebank_name',
+                render: function (data, type, row) {
+                    if (type === 'display') {
+                        return `<a href="https://npgsweb.ars-grin.gov/gringlobal/site?id=${row.genebank_id}" target="_blank">${data}</a>`;
+                    }
+                    return data; // For other types (e.g. filter, sort), return raw text
+                }
+            },
+            { data: 'source_type' },
+            { data: 'improvement_level' },
+            {
+                data: 'availability_status',
+                render: function (data, type, row) {
+                    if (type === 'display') {
+                        let color = data === 'ACTIVE' ? 'green' : 'red';
+                        return `<span style="display:inline-block;padding:2px 8px;border-radius:4px;background-color:${color};color:white;font-weight:bold;">${data}</span>`;
+                    }
+                    return data;
+                }
             }
-            return data; // For other types (e.g. filter, sort), return raw text
-            }
-          },
-          { data: 'plant_name' },
-          {
-            data: 'taxonomy_species_name',
-            render: function (data, type, row) {
-            if (type === 'display') {
-                return `<a href="https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomydetail?id=${row.taxonomy_species_id}" target="_blank">${data}</a>`;
-            }
-            return data; // For other types (e.g. filter, sort), return raw text
-            }
-          },
-
-
-          { data: 'origin_location' },
-          { data: 'genebank_name' },
-          { data: 'source_type' },
-          { data: 'improvement_level' }
         ]
     });
-    
+
+        // Listen for draw event to update the row count
+    table.on('draw', function () {
+        const info = table.page.info(); // gets paging info
+        $('#row-count-heading').text(`${info.recordsDisplay} rows found`);
+    });
+
     // Populate select lists
     getGenebanks();
     getCountries();
