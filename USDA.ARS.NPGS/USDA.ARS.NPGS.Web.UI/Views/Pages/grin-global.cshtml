@@ -17,11 +17,22 @@
                     Detailed NPGS collection information is accessible from GRIN-Global, an online information
                     management system. The types of information available for NPGS accessions include passport,
                     taxonomy, trait and genetic data, images, and much more.
-                    <a 
-                        href="https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomysearch" 
-                        class="usa-link--external" 
-                        target="_blank" rel="noreferrer">
-                        Visit the GRIN-Global public website</a> to start searching accessions, or use the convenient tool below.
+                    <a href="https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomysearch"
+                       class="usa-link--external"
+                       target="_blank" rel="noreferrer">
+                        Visit the GRIN-Global public website
+                    </a> to start searching accessions, or use the convenient tool below.
+                </p>
+                
+                <div id="error-alert" class="usa-alert usa-alert--error" role="alert">
+                    <div class="usa-alert__body">
+                        <h4 class="usa-alert__heading">Error</h4>
+                        <p id="error-alert-text" class="usa-alert__text">
+                            An application error has occurred.
+                        </p>
+                    </div>
+                </div>
+
                     <section>
                         <div class="usa-accordion usa-accordion--bordered usa-accordion--multiselectable" data-allow-multiple>
                             <h4 class="usa-accordion__heading">
@@ -35,7 +46,7 @@
                             <div id="m-accordion-grin-global" class="usa-accordion__content usa-prose">
                                 <form id="search-form-grin-global-accessions" class="usa-form usa-form--large" style="padding:0px;">
                                     <div class="grid-container">
-                                        <div class="grid-row">
+                                        <div class="grid-row grid-gap-1">
                                             <div class="grid-col-3">
                                                 <fieldset class="usa-fieldset">
                                                     <label class="usa-label" for="pi-number">PI Number/Name</label>
@@ -57,10 +68,10 @@
                                             </div>    
                                             <div class="grid-col-3">
                                                 <fieldset class="usa-fieldset">
-                                                   <label class="usa-label" for="genebank_name">
+                                                   <label class="usa-label" for="genebank_id">
                                                         Genebank
                                                     </label>
-                                                    <select class="usa-select" id="genebank_name" name="genebank_name">
+                                                    <select class="usa-select" id="genebank_id" name="genebank_id">
                                                     </select>
                                                 </fieldset>
                                             </div>
@@ -82,6 +93,7 @@
                                                         Year Germplasm Received
                                                     </label>
                                                     <select class="usa-select" id="received_year" name="received_year">
+                                                        <option value="0">Any year</option>
                                                         <option value="2025">2025</option>
                                                         <option value="2024">2024</option>
                                                         <option value="2023">2023</option>
@@ -98,7 +110,6 @@
                                         </div>
                                     </div>
                                 </form>
-                                <hr />
                             </div>
                         </div>
                     </section>
@@ -119,7 +130,7 @@
                             </thead>
                         </table>
                     </section>
-                </p>
+                
             </main>
         </div>
     </div>
@@ -127,6 +138,16 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+
+    function hideErrorSection() {
+        $('#error-alert').hide();
+    }
+
+    $('input, textarea, select').on('input change', hideErrorSection);
+
+    $('form').on('click', hideErrorSection);
+
+    $("#error-alert").hide();
 
     // Configure search-results datatable(s).
     const table = $('#search-results-table').DataTable({
@@ -170,7 +191,7 @@
                 data: 'availability_status',
                 render: function (data, type, row) {
                     if (type === 'display') {
-                        let color = data === 'ACTIVE' ? 'green' : 'red';
+                        let color = data === 'Available' ? 'green' : 'red';
                         return `<span style="display:inline-block;padding:2px 8px;border-radius:4px;background-color:${color};color:white;font-weight:bold;">${data}</span>`;
                     }
                     return data;
@@ -180,10 +201,10 @@
     });
 
         // Listen for draw event to update the row count
-    table.on('draw', function () {
-        const info = table.page.info(); // gets paging info
-        $('#row-count-heading').text(`${info.recordsDisplay} rows found`);
-    });
+    // table.on('draw', function () {
+    //     const info = table.page.info(); // gets paging info
+    //     $('#row-count-heading').text(`${info.recordsDisplay} rows found`);
+    // });
 
     // Populate select lists
     getGenebanks();
@@ -194,7 +215,7 @@
             url: 'https://npgstest.ars-grin.gov/NPGS/api/v1/site/all',
             type: 'GET',
             success: function (data) {
-                var $select = $('#genebank_name');
+                var $select = $('#genebank_id');
                 $select.empty(); // Clear existing
 
                 // Add "None" option
@@ -213,7 +234,7 @@
             },
             error: function (xhr, status, error) {
                 console.error("Error loading genebanks:", error);
-                $('#categorySelect').html('<option>Error loading</option>');
+                $('#error-alert-text').html('<option>Error loading</option>');
             }
         });
     }
@@ -242,7 +263,7 @@
             },
             error: function (xhr, status, error) {
                 console.error("Error loading genebanks:", error);
-                $('#categorySelect').html('<option>Error loading</option>');
+                $('#error-alert-text').html('<option>Error loading</option>');
             }
         });
     }
@@ -298,18 +319,19 @@
             table.clear().rows.add(response).draw();
 
             if (response && response.length > 0) {
-                $('#search-status').text(`${response.length} record(s) found.`);
+                    $('#row-count-heading').text(`${response.length} record(s) found.`);
             } else {
-                $('#search-status').text('🚫 No records found.');
+                    $('#row-count-heading').text('🚫 No records found.');
             }
 
             },
             error: function (xhr, status, error) {
-            $('#search-status').text('❌ An error occurred while searching.');
-            $('#overlay').hide();
+                $('#error-alert-text').html('❌ An error occurred while searching: ' + status + error);
+                $('#error-alert').show();
+                $('#overlay').hide();
             },
             complete: function () {
-            $('#overlay').hide();
+                $('#overlay').hide();
             }
         });
     });
