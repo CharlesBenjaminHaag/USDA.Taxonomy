@@ -28,6 +28,12 @@ namespace USDA.ARS.NPGS.Web.UI.Controllers
             return View("~/Views/Pages/grin-global.cshtml");
         }
 
+        public IActionResult Education()
+        {
+            ViewBag.PageTitle = "GRIN-U Education";
+            return View("~/Views/Pages/education.cshtml");
+        }
+
         public IActionResult TechnicalResources()
         {
             ViewBag.PageTitle = "Technical Resources";

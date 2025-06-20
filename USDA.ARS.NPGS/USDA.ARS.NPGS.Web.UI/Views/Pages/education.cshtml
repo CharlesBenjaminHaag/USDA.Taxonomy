@@ -1,6 +1,9 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutUSWDSInterior.cshtml";
 }
+<style>
+    .usa-accordion__content { padding-top:0px;}
+</style>
 <div class="usa-section">
     <div class="grid-container">
         <div class="grid-row grid-gap">
@@ -8,136 +11,173 @@
                 @Html.Partial("~/Views/Shared/Partials/_SideNav.cshtml")
             </div>
             <main class="usa-layout-docs__main desktop:grid-col-10 usa-prose usa-layout-docs" id="main-content">
-                <a id="overview"></a>
+                <h3>What is GRIN-U?</h3>
                 <p>
-                    Crop Germplasm Committees (CGC) serve as subject matter experts to guide curatorial staff
-                    on best practices, including the priorities and techniques for characterizing the collections.
-                    They also help review proposals that fund plant explorations and evaluation grants for
-                    scientific rigor.
+                    <a href="https://grin-u.org/" target="_blank" rel="noreferrer">GRIN-U ↗</a> is a website devoted to providing 
+                    educational information relating to plant genetic resources conservation and use, with a focus on the NPGS. 
+                    This information is freely available for instructing classes, training programs, and for the public. 
+                    Available content includes videos, eBooks, infographics, articles, and more.
                 </p>
+                <h3>GRIN-U on YouTube</h3>
                 <p>
-                    There are currently 44 CGCs representing almost all major and minor crops of economic
-                    importance in the U.S. Each committee includes a chair and members from government
-                    agencies, universities, and commercial interests who volunteer their time and expertise
-                    to support the NPGS.
+                The <a href="https://www.youtube.com/channel/UCl7eJjGcQzb0RcmhH11XtIA" target="_blank" rel="noreferrer">
+                    GRIN-U Education YouTube channel</a> has videos that are mostly filmed by the NPGS for numerous topics 
+                    relating to plant genetic resources.
                 </p>
-
-                <h3 id="section-heading-h3">Policy and Guidance Documents</h3>
-               
-                <table class="usa-table usa-table--borderless usa-table--striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">Document title</th>
-                            <th scope="col">Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">
-                                <a href="https://www.ars-grin.gov/npgs/cgc_reports/2019_CGC_Roles_and_Responsibilities_26_July_2019.doc">
-                                    Roles and Responsibilities
-                                </a>
-                            </th>
-                            <td>
-                                Additional information about CGC organization and function.
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <a href="https://www.ars-grin.gov/npgs/cgc_reports/Crop_Vulnerability_Statement_Outline.doc">
-                                    Crop Vulnerability Statement Outline
-                                </a>
-                            </th>
-                            <td>
-                                A guide to the format and content of Crop Vulnerability Statements.
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row">
-                                <a href="https://www.ars-grin.gov/npgs/cgc_reports/PGR Success Story Fillable Form 4.18.22.docx">
-                                    Success Story Template
-                                </a>
-                            </th>
-                            <td>
-                                A template for sharing a Success Story resulting from the utilization of Plant Genetic Resources.
-                            </td>
-                        </tr>
-                        <!--TODO-->
-
-
-                    </tbody>
-                </table>
-                <a id="committees"></a>
-
-                <h3 id="section-heading-h3TEST">Crop Germplasm Committee Directory</h3>
-                <p>
-                    All current Crop Germplasm Commmittees are listed below. To view documents pertinent to each
-                    committee, you may either browse the expandable list below, or use the
-                    <a class="usa-link" href="@Url.Action("Search","Document")">CGC Document Search</a>.
-
-                    <div id="committeesAccordion" class="usa-accordion--bordered">
+                <section>
+                    <div class="usa-accordion usa-accordion--bordered">
+                    <h4 class="usa-accordion__heading">
+                        <button type="button"
+                                class="usa-accordion__button"
+                                aria-expanded="true"
+                                aria-controls="b-a1">
+                            Search GRIN-U Content
+                        </button>
+                    </h4>
+                    <div id="b-a1" class="usa-accordion__content usa-prose">
+                        <form class="usa-form">
+                    <fieldset class="usa-fieldset grid-row grid-gap align-items-end">
+                        <div class="tablet:grid-col-4">
+                            <label for="sort-select" class="usa-label">Sort By</label>
+                            <select id="sort-select" class="usa-select">
+                                <option value="date-desc">Newest first</option>
+                                <option value="date-asc">Oldest first</option>
+                                <option value="title-asc">Title A–Z</option>
+                                <option value="title-desc">Title Z–A</option>
+                            </select>
+                        </div>
+                        <div class="tablet:grid-col-4">
+                            <label for="search-input" class="usa-label">Title Contains</label>
+                            <input id="search-input" type="text" class="usa-input" placeholder="Enter keyword...">
+                        </div>
+                        <div class="tablet:grid-col-4 display-flex flex-column">
+                           @*  <label class="usa-label">View:</label> *@
+                            <div class="usa-button-group" style="margin-top:26px;">
+                                <button id="view-cards" type="button" class="usa-button usa-button--outline">View As Cards</button>
+                                <button id="view-collection" type="button" class="usa-button usa-button--outline">View As List</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
                     </div>
-                    <div id="loadingMessage">Loading committees...</div>
-                    <div id="errorMessage" style="color: red; display: none;">Failed to load committees. Please try again later.</div>
-
-                    <h3 id="section-heading-h3TEST2">Annual CGC Chair Briefings</h3>
-                    <a id="briefings"></a>
-                    <h3>LIST HERE</h3>
+                </div>
+                </section>
+                <div id="rss-feed-display" class="grid-row grid-gap margin-top-2"></div>
             </main>
         </div>
     </div>
 </div>
 <script>
-    $(document).ready(function () {
-      const $container = $('#committeesAccordion');
-      const $loading = $('#loadingMessage');
-      const $error = $('#errorMessage');
+       $(document).ready(function () {
+      const rssUrl = 'https://grin-u.org/feed/';
+      const apiUrl = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(rssUrl);
+      let rssItems = [];
+      let currentView = 'cards';
 
-      $.ajax({
-        url: 'https://npgstest.ars-grin.gov/NPGS/api/v1/cgc',
-        method: 'GET',
-        dataType: 'json',
-        success: function (committees) {
-          $loading.hide();
+      function extractImage(item) {
+        if (item.thumbnail) return item.thumbnail;
+        const match = item.description.match(/<img[^>]+src="([^"]+)"/i);
+        return match ? match[1] : null;
+      }
 
-          committees.forEach(committee => {
-            const headingId = `committee-${committee.id}`;
-            const $accordionItem = $(`
-               
-                <h4 class="usa-accordion__heading">
-                  <button type="button"
-                          class="usa-accordion__button"
-                          aria-expanded="false"
-                          aria-controls="${headingId}">
-                    ${committee.name}
-                  </button>
-                </h4>
-                <div id="${headingId}" class="usa-accordion__content usa-prose" hidden>
-                  <p>
-                    <a href="${committee.roster_url}" class="usa-link" target="_blank">Committee Roster</a>
-                  </p>
-                  ${committee.documents && committee.documents.length > 0 ? `
-                    <h5>Documents</h5>
-                    <ul>
-                      ${committee.documents.map(doc => `
-                        <li>
-                          <a href="${doc.url}" class="usa-link" target="_blank">${doc.title}</a> (${doc.category})
-                        </li>
-                      `).join('')}
-                    </ul>
-                  ` : '<p>No documents available.</p>'}
+      function filterItems(keyword) {
+        return rssItems.filter(item => item.title.toLowerCase().includes(keyword.toLowerCase()));
+      }
+
+      function sortItems(items, sortValue) {
+        return [...items].sort((a, b) => {
+          const titleA = a.title.toLowerCase(), titleB = b.title.toLowerCase();
+          const dateA = new Date(a.pubDate), dateB = new Date(b.pubDate);
+          switch (sortValue) {
+            case 'date-asc': return dateA - dateB;
+            case 'date-desc': return dateB - dateA;
+            case 'title-asc': return titleA.localeCompare(titleB);
+            case 'title-desc': return titleB.localeCompare(titleA);
+          }
+        });
+      }
+
+      function renderCards(items) {
+        let html = '';
+        items.forEach(item => {
+          const img = extractImage(item);
+          html += `
+            <div class="tablet:grid-col-4">
+              <div class="usa-card">
+                <div class="usa-card__container">
+                  ${img ? `<div class="usa-card__media"><img src="${img}" alt="Image for ${item.title}"></div>` : ''}
+                  <div class="usa-card__header">
+                    <h2 class="usa-card__heading">
+                      <a href="${item.link}" target="_blank">${item.title}</a>
+                    </h2>
+                  </div>
+                  <div class="usa-card__body">
+                    <p>${item.description}</p>
+                    <p><strong>Published:</strong> ${new Date(item.pubDate).toLocaleDateString()}</p>
+                  </div>
                 </div>
-               
-            `);
-            $container.append($accordionItem);
-          });
-        },
-        error: function (xhr, status, error) {
-          $loading.hide();
-          $error.show();
-          console.error("Error loading committees:", status, error);
+              </div>
+            </div>
+          `;
+        });
+        $('#rss-feed-display').html(html);
+      }
+
+      function renderCollection(items) {
+        let html = '<div class="usa-collection">';
+        items.forEach(item => {
+          const img = extractImage(item);
+          html += `
+            <div class="usa-collection__item">
+              ${img ? `<div class="usa-collection__img"><img src="${img}" alt="Thumbnail"></div>` : ''}
+              <div class="usa-collection__body">
+                <h3 class="usa-collection__heading">
+                  <a class="usa-link" href="${item.link}" target="_blank">${item.title}</a>
+                </h3>
+                <p class="usa-collection__description">${item.description}</p>
+                <ul class="usa-collection__meta">
+                  <li class="usa-collection__meta-item"><strong>Published:</strong> ${new Date(item.pubDate).toLocaleDateString()}</li>
+                </ul>
+              </div>
+            </div>
+          `;
+        });
+        html += '</div>';
+        $('#rss-feed-display').html(html);
+      }
+
+      function updateView() {
+        const keyword = $('#search-input').val();
+        const sortValue = $('#sort-select').val();
+        const filtered = sortItems(filterItems(keyword), sortValue);
+        if (currentView === 'cards') {
+          renderCards(filtered);
+        } else {
+          renderCollection(filtered);
+        }
+      }
+
+      // Initial load
+      $.getJSON(apiUrl, function (data) {
+        if (data.status === 'ok') {
+          rssItems = data.items;
+          updateView();
+        } else {
+          $('#rss-feed-display').html('<p class="usa-alert usa-alert--error">Failed to load feed.</p>');
         }
       });
+
+      // Handlers
+      $('#sort-select').on('change', updateView);
+      $('#search-input').on('input', updateView);
+      $('#view-cards').on('click', function () {
+        currentView = 'cards';
+        updateView();
+      });
+      $('#view-collection').on('click', function () {
+        currentView = 'collection';
+        updateView();
+      });
     });
+
 </script>

@@ -131,65 +131,67 @@
                 
                 <div class="grid-container">
                     <div class="grid-row">
-                        <div class="tablet:grid-col">
+                        <div class="tablet:grid-col-4">
                             <h5>NPGS Infographic</h5>
-                            <canvas id="pdf-canvas" style="display:none;"></canvas>
-                            <a id="pdf-link" href="/docs/NPGS-Infographic-Poster-9.14.24-English.pdf" target="_blank">
-                                <img id="pdf-thumbnail" src="" alt="PDF Thumbnail" />
+                            <canvas id="pdf-canvas1" style="display:none;"></canvas>
+                            <a id="pdf-link1" href="/docs/NPGS-Infographic-Poster-9.14.24-English.pdf" target="_blank">
+                                <img id="pdf-thumbnail1" src="" alt="PDF Thumbnail" />
                             </a>
                         </div>
-                        <div class="tablet:grid-col">
-
+                        <div class="tablet:grid-col-4">
+                            <h5>Global Food Security Infographic</h5>
+                            <canvas id="pdf-canvas2" style="display:none;"></canvas>
+                            <a id="pdf-link2" href="/docs/PGRInfographicFoodSecurity_English-Colorado-State-University-CropsTesting.pdf" target="_blank">
+                                <img id="pdf-thumbnail2" src="" alt="PDF Thumbnail" />
+                            </a>
                         </div>
-                        <div class="tablet:grid-col">
-
+                        <div class="tablet:grid-col-4">
+                            <h5>Genebanks and Conservation Infographic</h5>
+                            <canvas id="pdf-canvas3" style="display:none;"></canvas>
+                            <a id="pdf-link3" href="/docs/PGRInfographicGenebanks_English-Colorado-State-University-CropsTesting.pdf" target="_blank">
+                                <img id="pdf-thumbnail3" src="" alt="PDF Thumbnail" />
+                            </a>
                         </div>
                     </div>
                 </div>
                
-
-               @*  <p>
-                    <a href="https://grin-u.org/wp-content/uploads/2024/09/NPGS-Infographic-Poster-9.14.24-English.pdf">
-                        <svg class="usa-icon" aria-hidden="true" focusable="false" role="img">
-                            <use href="/assets/img/sprite.svg#arrow_downward"></use>
-                        </svg>Click here to download an informational poster on the role of the NPGS
-                    </a>
-                </p>
-                <p>
-                    <a href="https://grin-u.org/wp-content/uploads/2021/06/PGRInfographicGenebanks_English-Colorado-State-University-CropsTesting.pdf" , target="_blank">
-                        <svg class="usa-icon" aria-hidden="true" focusable="false" role="img">
-                            <use href="/assets/img/sprite.svg#arrow_downward"></use>
-                        </svg>
-                        Click here to download an informational poster on the role of plant genebanks
-                    </a>
-                </p> *@
             </main>
         </div>
     </div>
 </div>
 <script>
     
-    const url = '/docs/NPGS-Infographic-Poster-9.14.24-English.pdf';
+    renderThumbnail(1, '/docs/NPGS-Infographic-Poster-9.14.24-English.pdf');
+    renderThumbnail(2, '/docs/PGRInfographicFoodSecurity_English-Colorado-State-University-CropsTesting.pdf');
+    renderThumbnail(3, '/docs/PGRInfographicGenebanks_English-Colorado-State-University-CropsTesting.pdf');
 
-    const loadingTask = pdfjsLib.getDocument(url);
-    loadingTask.promise.then(pdf => {
-      return pdf.getPage(1);
-    }).then(page => {
-      const scale = 0.125; // adjust thumbnail size
-      const viewport = page.getViewport({ scale });
-      const canvas = document.getElementById('pdf-canvas');
-      const context = canvas.getContext('2d');
-      canvas.width = viewport.width;
-      canvas.height = viewport.height;
 
-      const renderContext = {
-        canvasContext: context,
-        viewport: viewport
-      };
-      return page.render(renderContext).promise;
-    }).then(() => {
-      const canvas = document.getElementById('pdf-canvas');
-      const thumbnail = canvas.toDataURL();
-      document.getElementById('pdf-thumbnail').src = thumbnail;
-    }).catch(console.error);
+    function renderThumbnail(displayOrder, url) {
+
+        const canvasId = 'pdf-canvas' + displayOrder;
+        const thumbnailId = 'pdf-thumbnail' + displayOrder;
+        const loadingTask = pdfjsLib.getDocument(url);
+
+        loadingTask.promise.then(pdf => {
+            return pdf.getPage(1);
+        }).then(page => {
+            const scale = 0.155; // adjust thumbnail size
+            const viewport = page.getViewport({ scale });
+            const canvas = document.getElementById(canvasId);
+            const context = canvas.getContext('2d');
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+
+            const renderContext = {
+            canvasContext: context,
+            viewport: viewport
+        };
+        return page.render(renderContext).promise;
+        }).then(() => {
+            const canvas = document.getElementById(canvasId);
+            const thumbnail = canvas.toDataURL();
+            document.getElementById(thumbnailId).src = thumbnail;
+        }).catch(console.error);
+    }
+
 </script>

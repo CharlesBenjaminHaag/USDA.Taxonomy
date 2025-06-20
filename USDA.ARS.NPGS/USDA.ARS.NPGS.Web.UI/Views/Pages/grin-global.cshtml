@@ -4,6 +4,49 @@
 
 <style>
     .usa-accordion__content { padding:0px;}
+
+    .usa-button-group__item .usa-button {
+        white-space: nowrap;
+        min-width: 6rem;
+        text-align: center;
+    }
+
+    .tree-node .level-content {
+        position: relative;
+        margin-top: 0.5rem;
+        margin-bottom: 0.7rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        border-left: 4px dashed;
+        border-right: 4px dashed;
+    }
+
+    /* Level-specific colors */
+    .level-1 {
+        border-color: #005ea2;
+        background-color: #f0f4f6;
+    }
+
+    .level-2 {
+        border-color: #00bde3;
+        background-color: #e1f3f8;
+    }
+
+    .level-3 {
+        border-color: #2e8540;
+        background-color: #edf7ed;
+
+    }
+
+    /* Optional: Rounded borders and spacing for visual polish */
+    .level-content {
+        border-radius: 0.25rem;
+        padding-top: 0.5rem;
+        padding-bottom: 0.7rem;
+    }
+
+
+    
 </style>
 
 <div class="usa-section">
@@ -13,124 +56,234 @@
                 @Html.Partial("~/Views/Shared/Partials/_SideNav.cshtml")
             </div>
             <main class="usa-layout-docs__main desktop:grid-col-10 usa-prose usa-layout-docs" id="main-content">
-                <p>
-                    Detailed NPGS collection information is accessible from GRIN-Global, an online information
-                    management system. The types of information available for NPGS accessions include passport,
-                    taxonomy, trait and genetic data, images, and much more.
-                    <a href="https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomysearch"
-                       class="usa-link--external"
-                       target="_blank" rel="noreferrer">
-                        Visit the GRIN-Global public website
-                    </a> to start searching accessions, or use the convenient tool below.
-                </p>
                 
-                <div id="error-alert" class="usa-alert usa-alert--error" role="alert">
-                    <div class="usa-alert__body">
-                        <h4 class="usa-alert__heading">Error</h4>
-                        <p id="error-alert-text" class="usa-alert__text">
-                            An application error has occurred.
+                
+           <section>
+
+                    <ul class="usa-button-group usa-button-group--segmented" role="tablist">
+                        <li class="usa-button-group__item">
+                            <button type="button" class="usa-button" role="tab" aria-controls="panel-map" aria-selected="true">GRIN-Global Accessions</button>
+                        </li>
+                        <li class="usa-button-group__item">
+                            <button type="button" class="usa-button usa-button--outline" role="tab" aria-controls="panel-hybrid" aria-selected="false">Taxonomy</button>
+                        </li>
+                       @*  <li class="usa-button-group__item">
+                            <button type="button" class="usa-button usa-button--outline" role="tab" aria-controls="panel-satellite" aria-selected="false">Satellite</button>
+                        </li> *@
+                    </ul>
+
+                    <div id="panel-map" role="tabpanel" aria-labelledby="tab-map">
+                        <p>
+                            Detailed NPGS collection information is accessible from GRIN-Global, an online information
+                            management system. The types of information available for NPGS accessions include passport,
+                            taxonomy, trait and genetic data, images, and much more.
+                            <a href="https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomysearch"
+                               class="usa-link--external"
+                               target="_blank" rel="noreferrer">
+                                Visit the GRIN-Global public website
+                            </a> to start searching accessions, or use the convenient tool below.
                         </p>
-                    </div>
-                </div>
 
-                    <section>
-                        <div class="usa-accordion usa-accordion--bordered usa-accordion--multiselectable" data-allow-multiple>
-                            <h4 class="usa-accordion__heading">
-                                <button type="button"
-                                        class="usa-accordion__button data-entry"
-                                        aria-expanded="true"
-                                        aria-controls="m-accordion-grin-global">
-                                    Search GRIN-Global Accessions
-                                </button>
-                            </h4>
-                            <div id="m-accordion-grin-global" class="usa-accordion__content usa-prose">
-                                <form id="search-form-grin-global-accessions" class="usa-form usa-form--large" style="padding:0px;">
-                                    <div class="grid-container">
-                                        <div class="grid-row grid-gap-1">
-                                            <div class="grid-col-3">
-                                                <fieldset class="usa-fieldset">
-                                                    <label class="usa-label" for="pi-number">PI Number/Name</label>
-                                                    <input class="usa-input" id="accession_identifier" name="accession_identifier">
-                                                </fieldset>
-                                            </div>
-
-                                            <div class="grid-col-3">
-                                                <fieldset class="usa-fieldset">
-                                                    <label class="usa-label" for="scientific_name">Scientific Name</label>
-                                                    <input class="usa-input" id="scientific_name" name="scientific_name">
-                                                </fieldset>
-                                            </div>
-                                            <div class="grid-col-3">
-                                                <fieldset class="usa-fieldset">
-                                                    <label class="usa-label" for="plant_name">Plant Name</label>
-                                                    <input class="usa-input" id="plant_name" name="plant-name">
-                                                </fieldset>
-                                            </div>    
-                                            <div class="grid-col-3">
-                                                <fieldset class="usa-fieldset">
-                                                   <label class="usa-label" for="genebank_id">
-                                                        Genebank
-                                                    </label>
-                                                    <select class="usa-select" id="genebank_id" name="genebank_id">
-                                                    </select>
-                                                </fieldset>
-                                            </div>
-                                            <div class="grid-col-3">
-                                                <fieldset class="usa-fieldset">
-                                                    <label class="usa-label" for="country_of_origin">
-                                                        Country of Origin
-                                                    </label>
-                                                    <select class="usa-select" id="country_of_origin" name="country_of_origin">
-                                                       
-                                                    </select>
-                                                </fieldset>
-                                                <button id="reset-button" class="usa-button usa-button--secondary float-lg-end" type="button">Reset</button>
-                                                <button id="search-button" class="usa-button float-lg-end" type="button">Search</button>
-                                            </div>
-                                            <div class="grid-col-3">
-                                                <fieldset class="usa-fieldset">
-                                                    <label class="usa-label" for="genebank_name">
-                                                        Year Germplasm Received
-                                                    </label>
-                                                    <select class="usa-select" id="received_year" name="received_year">
-                                                        <option value="0">Any year</option>
-                                                        <option value="2025">2025</option>
-                                                        <option value="2024">2024</option>
-                                                        <option value="2023">2023</option>
-                                                        <option value="2022">2022</option>
-                                                        <option value="2021">2021</option>
-                                                        <option value="2020">2020</option>
-                                                        <option value="2019">2019</option>
-                                                        <option value="2018">2018</option>
-                                                        <option value="2017">2017</option>
-                                                        <option value="2016">2016</option>
-                                                    </select>
-                                                </fieldset>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+                        <div id="error-alert" class="usa-alert usa-alert--error" role="alert">
+                            <div class="usa-alert__body">
+                                <h4 class="usa-alert__heading">Error</h4>
+                                <p id="error-alert-text" class="usa-alert__text">
+                                    An application error has occurred.
+                                </p>
                             </div>
                         </div>
-                    </section>
-                    <section>
-                        <h3 id="row-count-heading"></h3>
-                        <table class="usa-table usa-table--borderless" id="search-results-table" width="100%">
-                            <thead>
-                                <tr>
-                                    <th>Accession</th>
-                                    <th>Plant Name</th>
-                                    <th>Scientific Name</th>
-                                    <th>Origin</th>
-                                    <th>Genebank</th>
-                                    <th>Source</th>
-                                    <th>Improvement Level</th>
-                                    <th>Availability</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </section>
-                
+                        <section>
+                            <div class="usa-accordion usa-accordion--bordered usa-accordion--multiselectable" data-allow-multiple>
+                                <h4 class="usa-accordion__heading">
+                                    <button type="button"
+                                            class="usa-accordion__button data-entry"
+                                            aria-expanded="true"
+                                            aria-controls="m-accordion-grin-global">
+                                        Search GRIN-Global Accessions
+                                    </button>
+                                </h4>
+                                <div id="m-accordion-grin-global" class="usa-accordion__content usa-prose">
+                                    <form id="search-form-grin-global-accessions" class="usa-form usa-form--large" style="padding:0px;">
+                                        <div class="grid-container">
+                                            <div class="grid-row grid-gap-1">
+                                                <div class="grid-col-3">
+                                                    <fieldset class="usa-fieldset">
+                                                        <label class="usa-label" for="pi-number">PI Number/Name</label>
+                                                        <input class="usa-input" id="accession_identifier" name="accession_identifier">
+                                                    </fieldset>
+                                                </div>
+
+                                                <div class="grid-col-3">
+                                                    <fieldset class="usa-fieldset">
+                                                        <label class="usa-label" for="scientific_name">Scientific Name</label>
+                                                        <input class="usa-input" id="scientific_name" name="scientific_name">
+                                                    </fieldset>
+                                                </div>
+                                                <div class="grid-col-3">
+                                                    <fieldset class="usa-fieldset">
+                                                        <label class="usa-label" for="plant_name">Plant Name</label>
+                                                        <input class="usa-input" id="plant_name" name="plant-name">
+                                                    </fieldset>
+                                                </div>
+                                                <div class="grid-col-3">
+                                                    <fieldset class="usa-fieldset">
+                                                        <label class="usa-label" for="genebank_id">
+                                                            Genebank
+                                                        </label>
+                                                        <select class="usa-select" id="genebank_id" name="genebank_id">
+                                                        </select>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="grid-col-3">
+                                                    <fieldset class="usa-fieldset">
+                                                        <label class="usa-label" for="country_of_origin">
+                                                            Country of Origin
+                                                        </label>
+                                                        <select class="usa-select" id="country_of_origin" name="country_of_origin">
+                                                        </select>
+                                                    </fieldset>
+                                                    <button id="reset-button" class="usa-button usa-button--secondary float-lg-end" type="button">Reset</button>
+                                                    <button id="search-button" class="usa-button float-lg-end" type="button">Search</button>
+                                                </div>
+                                                <div class="grid-col-3">
+                                                    <fieldset class="usa-fieldset">
+                                                        <label class="usa-label" for="genebank_name">
+                                                            Year Germplasm Received
+                                                        </label>
+                                                        <select class="usa-select" id="received_year" name="received_year">
+                                                            <option value="0">Any year</option>
+                                                            <option value="2025">2025</option>
+                                                            <option value="2024">2024</option>
+                                                            <option value="2023">2023</option>
+                                                            <option value="2022">2022</option>
+                                                            <option value="2021">2021</option>
+                                                            <option value="2020">2020</option>
+                                                            <option value="2019">2019</option>
+                                                            <option value="2018">2018</option>
+                                                            <option value="2017">2017</option>
+                                                            <option value="2016">2016</option>
+                                                        </select>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </section>
+                        <section>
+                            <h3 id="row-count-heading"></h3>
+                            <table class="usa-table usa-table--borderless" id="search-results-table" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Accession</th>
+                                        <th>Plant Name</th>
+                                        <th>Scientific Name</th>
+                                        <th>Origin</th>
+                                        <th>Genebank</th>
+                                        <th>Source</th>
+                                        <th>Improvement Level</th>
+                                        <th>Availability</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </section>
+                    </div>
+                    <div id="panel-hybrid" role="tabpanel" aria-labelledby="tab-hybrid" hidden>
+                        <p><a href="https://npgsweb.ars-grin.gov/gringlobal/taxon/taxonomysearch" target="_blank" rel="noreferrer">GRIN Taxonomy</a> is another frequently consulted resource that the NPGS provides. It includes
+                            up-to-date taxonomic information, geographical distributions, and economic uses for crops
+                            and their wild relatives, and serves as a global resource for plant nomenclature.
+                        </p>
+                        <p>
+                            Additional information about the GRIN-Global Project is available <a href="https://www.grin-global.org/" >here ↗</a>.
+                        </p>
+                        
+                        <!-- TEST TREEVIEW -->
+                        @* <div class="usa-accordion level-1 tree-node">
+                            <h4 class="usa-accordion__heading">
+                                <button class="usa-accordion__button" aria-expanded="false" aria-controls="lvl1">
+                                    🌲 Parent Node
+                                </button>
+                            </h4>
+                            <div id="lvl1" class="usa-accordion__content level-content level-1">
+                                Level 1 content
+
+                                <div class="usa-accordion level-2 tree-node">
+                                    <h4 class="usa-accordion__heading">
+                                        <button class="usa-accordion__button" aria-expanded="false" aria-controls="lvl2">
+                                            Child Node
+                                        </button>
+                                    </h4>
+                                    <div id="lvl2" class="usa-accordion__content level-content level-2">
+                                        Level 2 content
+
+                                        <div class="usa-accordion level-3 tree-node">
+                                            <h4 class="usa-accordion__heading">
+                                                <button class="usa-accordion__button" aria-expanded="false" aria-controls="lvl3">
+                                                    Grandchild Node
+                                                </button>
+                                            </h4>
+                                            <div id="lvl3" class="usa-accordion__content level-content level-3">
+                                                Level 3 content
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="usa-accordion level-2 tree-node">
+                                    <h4 class="usa-accordion__heading">
+                                        <button class="usa-accordion__button" aria-expanded="false" aria-controls="lvl2">
+                                            Child Node
+                                        </button>
+                                    </h4>
+                                    <div id="lvl2" class="usa-accordion__content level-content level-2">
+                                        Level 2 content
+
+                                        <div class="usa-accordion level-3 tree-node">
+                                            <h4 class="usa-accordion__heading">
+                                                <button class="usa-accordion__button" aria-expanded="false" aria-controls="lvl3">
+                                                    Grandchild Node
+                                                </button>
+                                            </h4>
+                                            <div id="lvl3" class="usa-accordion__content level-content level-3">
+                                                Level 3 content
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="usa-accordion level-2 tree-node">
+                                    <h4 class="usa-accordion__heading">
+                                        <button class="usa-accordion__button" aria-expanded="false" aria-controls="lvl2">
+                                            Child Node
+                                        </button>
+                                    </h4>
+                                    <div id="lvl2" class="usa-accordion__content level-content level-2">
+                                        Level 2 content
+
+                                        <div class="usa-accordion level-3 tree-node">
+                                            <h4 class="usa-accordion__heading">
+                                                <button class="usa-accordion__button" aria-expanded="false" aria-controls="lvl3">
+                                                    Grandchild Node
+                                                </button>
+                                            </h4>
+                                            <div id="lvl3" class="usa-accordion__content level-content level-3">
+                                                Level 3 content
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div> *@
+                    </div>
+                    <div id="panel-satellite" role="tabpanel" aria-labelledby="tab-satellite" hidden>
+                        <p>This is the Satellite view content.</p>
+                    </div>
+               </section> 
             </main>
         </div>
     </div>
@@ -341,4 +494,25 @@
         resetFormAndTable();
     });
 });
+
+ // Tab selector code
+
+         const tabs = document.querySelectorAll('[role="tab"]');
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => {
+            t.classList.add('usa-button--outline');
+            t.setAttribute('aria-selected', 'false');
+            document.getElementById(t.getAttribute('aria-controls')).hidden = true;
+          });
+
+          tab.classList.remove('usa-button--outline');
+          tab.setAttribute('aria-selected', 'true');
+          document.getElementById(tab.getAttribute('aria-controls')).hidden = false;
+        });
+      });
+ 
+
+
 </script>
