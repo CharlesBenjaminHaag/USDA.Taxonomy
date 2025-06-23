@@ -353,11 +353,6 @@
         ]
     });
 
-        // Listen for draw event to update the row count
-    // table.on('draw', function () {
-    //     const info = table.page.info(); // gets paging info
-    //     $('#row-count-heading').text(`${info.recordsDisplay} rows found`);
-    // });
 
     // Populate select lists
     getGenebanks();
@@ -493,26 +488,21 @@
     $('#reset-button').on('click', function () {
         resetFormAndTable();
     });
-});
 
- // Tab selector code
+    const tabs = document.querySelectorAll('[role="tab"]');
 
-         const tabs = document.querySelectorAll('[role="tab"]');
-
-      tabs.forEach(tab => {
+    tabs.forEach(tab => {
         tab.addEventListener('click', () => {
-          tabs.forEach(t => {
-            t.classList.add('usa-button--outline');
-            t.setAttribute('aria-selected', 'false');
-            document.getElementById(t.getAttribute('aria-controls')).hidden = true;
-          });
+            tabs.forEach(t => {
+                t.classList.add('usa-button--outline');
+                t.setAttribute('aria-selected', 'false');
+                document.getElementById(t.getAttribute('aria-controls')).hidden = true;
+            });
 
-          tab.classList.remove('usa-button--outline');
-          tab.setAttribute('aria-selected', 'true');
-          document.getElementById(tab.getAttribute('aria-controls')).hidden = false;
+            tab.classList.remove('usa-button--outline');
+            tab.setAttribute('aria-selected', 'true');
+            document.getElementById(tab.getAttribute('aria-controls')).hidden = false;
         });
-      });
- 
-
-
+    });
+});
 </script>

@@ -1,4 +1,75 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutUSWDSInterior.cshtml";
 }
-<h3>RHIZO HERE</h3>
+<div class="usa-section">
+    <div class="grid-container">
+        <div class="grid-row grid-gap">
+            <div class="usa-layout-docs__sidenav desktop:grid-col-2">
+                @Html.Partial("~/Views/Shared/Partials/_SideNav.cshtml")
+            </div>
+            <main class="usa-layout-docs__main desktop:grid-col-10 usa-prose usa-layout-docs" id="main-content">
+                <h3>Rhizobium Dataset</h3>
+                <table id="rhizobium-search-results-table" class="usa-table">
+                    <thead>
+                        <tr>
+                            <th>USDA Accession Code</th>
+                            <th>Genus Spp.</th>
+                            <th>Host Plant Name</th>
+                            <th>Common Name</th>
+                            <th>Source Name</th>
+                            <th>Geographic Source Name</th>
+                        </tr>
+                    </thead>
+                </table>
+            </main>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    
+    GetData();
+    
+    // Configure search-results datatable(s).
+    const table = $('#rhizobium-search-results-table').DataTable({
+        data: [],
+        deferLoading: 0,
+        columns: [
+            { data: 'usda_accession_code' },
+            { data: 'genus_spp' },
+            { data: 'host_plant_name' },
+            { data: 'common_name' },
+            { data: 'source_name' },
+            { data: 'geo_source_name' },
+        ]
+    });
+
+    function GetData() {
+        $('#overlay').show();
+        $('#search-status').text('');
+
+        $.ajax({
+            url: 'https://npgstest.ars-grin.gov/NPGS/api/v1/rhizobium/search', // Replace with your actual API endpoint
+            method: 'GET',       // Or 'POST' if needed
+            data: [],
+            dataType: 'json',
+            success: function (response) {
+            table.clear().rows.add(response).draw();
+
+            if (response && response.length > 0) {
+                    $('#row-count-heading').text(`${response.length} record(s) found.`);
+            } else {
+                    $('#row-count-heading').text('🚫 No records found.');
+            }
+
+            },
+            error: function (xhr, status, error) {
+                $('#error-alert-text').html('❌ An error occurred while searching: ' + status + error);
+                $('#error-alert').show();
+                $('#overlay').hide();
+            },
+            complete: function () {
+                $('#overlay').hide();
+            }
+        });
+    }
+</script>
