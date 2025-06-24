@@ -43,6 +43,8 @@ public partial class AccessionIpr
 
     public int OwnedBy { get; set; }
 
+    public string ApplicationStatus { get; set; }
+
     public virtual Accession Accession { get; set; }
 
     public virtual ICollection<Citation> Citations { get; set; } = new List<Citation>();

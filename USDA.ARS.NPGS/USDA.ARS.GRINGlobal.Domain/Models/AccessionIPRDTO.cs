@@ -14,7 +14,9 @@ namespace USDA.ARS.GRINGlobal.Domain.Models
 
         public string? type_code { get; set; }
 
-        public string? status_code { get; set; } 
+        public string? status_code { get; set; }
+
+        public string? status_description { get; set; }
 
         public string? ipr_number { get; set; }
 
@@ -25,6 +27,8 @@ namespace USDA.ARS.GRINGlobal.Domain.Models
         public DateTime? certificate_issued_date { get; set; }
 
         public DateTime? certificate_expired_date { get; set; }
+        
+        public string?  certificate_expired_status { get; set; }
 
         public DateTime? accepted_Date { get; set; }
 

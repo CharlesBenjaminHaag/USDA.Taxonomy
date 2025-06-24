@@ -8,101 +8,117 @@
                 @Html.Partial("~/Views/Shared/Partials/_SideNav.cshtml")
             </div>
             <main class="usa-layout-docs__main desktop:grid-col-10 usa-prose usa-layout-docs" id="main-content">
-
                 <div class="grid-row grid-gap">
-                    <div class="tablet:grid-col-6">
-
-                        <ul class="usa-collection">
-                            <li class="usa-collection__item">
-                                <div class="usa-collection__body">
-                                    <h4 class="usa-collection__heading">
-                                        Crop Germplasm Committees (CGC)
+                    <ul class="usa-card-group">
+                        <li class="usa-card tablet-lg:grid-col-3 grid-col-3 maxw-sm">
+                            <div class="usa-card__container">
+                                <div class="usa-card__header">
+                                    <h4 class="usa-card__heading">
+                                        <a href="@Url.Action("Index","CGC")">Crop Germplasm Committees (CGC)</a>
                                     </h4>
-                                    <p class="usa-collection__description">
+                                </div>
+                                <div class="usa-card__body">
+                                    <p>
                                         Crop Germplasm Committees (CGC) serve as subject matter experts to guide curatorial staff on best practices, including the priorities and techniques for characterizing the collections. They also help review proposals that fund plant explorations and evaluation grants for scientific rigor.
                                     </p>
-                                    @*<ul class="usa-collection__meta" aria-label="More information">
-                                            <li class="usa-collection__meta-item">
-                                                <time datetime="2020-09-30T12:00:00+01:00">Last Updated: September 30, 2020</time>
-                                            </li>
-                                        </ul>*@
-                                    <ul class="usa-collection__meta" aria-label="Topics">
-                                        <li class="usa-collection__meta-item usa-tag usa-tag--new"><a href="@Url.Action("Index","CGC")">Browse Committees</a></li>
-                                        <li class="usa-collection__meta-item usa-tag usa-tag--new"><a href="@Url.Action("Search","Document")">Search Documents</a></li>
-                                    </ul>
                                 </div>
-                            </li>
-                            <li class="usa-collection__item">
-                                <div class="usa-collection__body">
-                                    <h4 class="usa-collection__heading">
-                                        Plant Inventory Books
+                                <div class="usa-card__footer">
+@*                                     <ul class="usa-button-group usa-button-group--segmented">
+                                        <li class="usa-button-group__item" style="margin:2px;">
+                                            <button type="button" class="usa-button usa-button--unstyled" style="margin:2px;">TEST</button>
+                                        </li>
+                                        <li class="usa-button-group__item" style="margin:2px;">
+                                            <button type="button" class="usa-button usa-button--unstyled" style="margin:2px;">Hybrid</button>
+                                        </li>
+                                        <li class="usa-button-group__item" style="margin:2px;">
+                                            <button type="button" class="usa-button usa-button--unstyled">
+                                                Satellite
+                                            </button>
+                                        </li>
+                                    </ul>
+ *@                                </div>
+                            </div>
+                        </li>
+                        <li class="usa-card tablet-lg:grid-col-3 grid-col-3 maxw-sm">
+                            <div class="usa-card__container">
+                                <div class="usa-card__header">
+                                    <h4 class="usa-card__heading">
+                                        <a href="https://www.ars.usda.gov/northeast-area/beltsville-md-barc/beltsville-agricultural-research-center/national-germplasm-resources-laboratory/docs/plant-inventory-books/" target="_blank" rel="noreferrer">
+                                            Plant Inventory Books ↗
+                                        </a>
                                     </h4>
-                                    <p class="usa-collection__description">
-                                        The Plant Inventory Books contain information on plant material introduced into the U.S. National Plant Germplasm System from 1898-2008. More information on more recent introductions can be found in GRIN-Global. Click here to view these historical records
-                                    </p>
-                                    <ul class="usa-collection__meta" aria-label="Topics">
-                                        <li class="usa-collection__meta-item usa-tag usa-tag--new"><a class="tag-link-external" href="https://www.ars.usda.gov/northeast-area/beltsville-md-barc/beltsville-agricultural-research-center/national-germplasm-resources-laboratory/docs/plant-inventory-books/" target="_blank" rel="noreferrer">View Records</a></li>
-                                    </ul>
                                 </div>
-                            </li>
-                            <li class="usa-collection__item">
-                                <div class="usa-collection__body">
-                                    <h4 class="usa-collection__heading">
+                                <div class="usa-card__body">
+                                    <p>
+                                        The Plant Inventory Books contain information on plant material introduced into the U.S. National Plant Germplasm System from 1898-2008. 
+                                        More recent information can be found in the <a href="https://npgsweb.ars-grin.gov/gringlobal/search" target="_blank" rel="noreferrer">GRIN-Global ↗</a> database.
+                                    </p>
+                                </div>
+                                <div class="usa-card__footer">
+                                </div>
+                            </div>
+                        </li>
+                        <li class="usa-card tablet-lg:grid-col-3 grid-col-3 maxw-sm">
+                            <div class="usa-card__container">
+                                <div class="usa-card__header">
+                                    <h4 class="usa-card__heading">
+                                        <a href="@Url.Action("pvp","Pages")">
+                                            Plant Variety Protection (PVP)
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div class="usa-card__body">
+                                    <p>
+                                        This dataset allows users to identify accessions that are currently covered by Plant Variety Protection certificates, 
+                                        and to determine when they will become available for requests via GRIN-Global. The certificates are issued by the <a href="https://www.ams.usda.gov/services/plant-variety-protection" target="_blank" rel="noreferrer">
+                                            Plant Variety Protection Office (PVPO) ↗
+                                        </a> of the <a href="https://www.ams.usda.gov/" target="_blank" rel="noreferrer">USDA Agricultural Marketing Service ↗</a>.
+                                    </p>
+                                </div>
+                                <div class="usa-card__footer">
+                                </div>
+                            </div>
+                        </li>
+                        <li class="usa-card tablet-lg:grid-col-3 grid-col-3 maxw-sm">
+                            <div class="usa-card__container">
+                                <div class="usa-card__header">
+                                    <h4 class="usa-card__heading">
+                                        <a href="https://biocollections.ars.usda.gov/" target="_blank" rel="noreferrer">
+                                            ARS Biocollections Portal ↗
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div class="usa-card__body">
+                                    <p>
+                                        The Biocollections Portal is a collaborative effort between several biological collections across the USDA Agricultural 
+                                        Research Service to provide centralized management and virtual access to these mission-critical resources. 
+                                        @* Search records from the U.S. National Arboretum Herbarium (NA), U.S. National Seed Herbarium (BARC), 
+                                        U.S. National Fungus Collections (BPI), and Entomopathogenic Fungal Cultures Collection. *@
+                                    </p>
+                                </div>
+                                <div class="usa-card__footer">
+                                </div>
+                            </div>
+                        </li>
+                        <li class="usa-card tablet-lg:grid-col-3 grid-col-3 maxw-sm">
+                            <div class="usa-card__container">
+                                <div class="usa-card__header">
+                                    <h4 class="usa-card__heading">
+                                        <a href="@Url.Action("rhizobium", "Pages")">
                                         Rhizobium
+                                        </a>
                                     </h4>
-                                    <p class="usa-collection__description">
-                                        Technical information about rhizobia, their preservation, and relevant cultural and symbiotic characteristics.
-                                    </p>
-                                    <ul class="usa-collection__meta" aria-label="More information">
-                                        @*<li class="usa-collection__meta-item">
-                                                <time datetime="2020-09-30T12:00:00+01:00">Last Updated: 4/1/2023</time>
-                                            </li>*@
-                                    </ul>
-                                    <ul class="usa-collection__meta" aria-label="Topics">
-                                        <li class="usa-collection__meta-item usa-tag usa-tag--new"><a href="@Url.Action("Index","Rhizobium")">OVERVIEW</a></li>
-                                        <li class="usa-collection__meta-item usa-tag usa-tag--new"><a href="https://www.ars.usda.gov/research/project/?accnNo=434917&fy=2022" target="_blank">USDA PROJECT PAGE</a></li>
-                                    </ul>
                                 </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="tablet:grid-col-6">
-                        <ul class="usa-collection">
-                            <li class="usa-collection__item">
-                                <div class="usa-collection__body">
-                                    <h4 class="usa-collection__heading">
-                                        Plant Variety Protection (PVP)
-                                    </h4>
-                                    <p class="usa-collection__description">
-                                        Plant Variety Protection Certificates are issued by the Plant Variety Protection Office (PVPO) of the USDA Agricultural Marketing Service. To learn more about PVPO and the certificates they issue, visit ams.usda.gov/services/plant-variety-protection. Click here to browse recent applications with the PVPO
+                                <div class="usa-card__body">
+                                    <p>
+                                        This dataset contains technical information about rhizobia, their preservation, and relevant cultural and symbiotic characteristics.
                                     </p>
-                                    <ul class="usa-collection__meta" aria-label="More information">
-
-                                        @*<li class="usa-collection__meta-item">
-                                                <time datetime="2020-09-30T12:00:00+01:00">Last updated: October 17, 2024</time>
-                                            </li>*@
-                                    </ul>
-                                    <ul class="usa-collection__meta" aria-label="Topics">
-                                        <li class="usa-collection__meta-item usa-tag usa-tag--new"><a href="@Url.Action("Index","PVP")">OVERVIEW</a></li>
-                                        <li class="usa-collection__meta-item usa-tag usa-tag--new"><a href="@Url.Action("Search","PVP")">SEARCH</a></li>
-                                    </ul>
                                 </div>
-                            </li>
-                            <li class="usa-collection__item">
-                                <div class="usa-collection__body">
-                                    <h4 class="usa-collection__heading">
-                                        ARS Biocollections Portal
-                                    </h4>
-                                    <p class="usa-collection__description">
-                                        The Biocollections Portal is a collaborative effort between several biological collections across the USDA Agricultural Research Service to provide centralized management and virtual access to these mission-critical resources. Search records from the U.S. National Arboretum Herbarium (NA), U.S. National Seed Herbarium (BARC), U.S. National Fungus Collections (BPI), and Entomopathogenic Fungal Cultures Collection.
-                                    </p>
-                                    <ul class="usa-collection__meta" aria-label="Topics">
-                                        <li class="usa-collection__meta-item usa-tag usa-tag--new"><a class="tag-link-external" href="https://biocollections.ars.usda.gov/" target="_blank" rel="noreferrer">View Portal</a></li>
-                                    </ul>
+                                <div class="usa-card__footer">
                                 </div>
-                            </li>
-                        </ul>
-                    </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </main>
         </div>

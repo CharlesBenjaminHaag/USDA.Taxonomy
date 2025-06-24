@@ -39,6 +39,8 @@ public partial class gringlobalContext : DbContext
 
     public virtual DbSet<AccessionIpr> AccessionIprs { get; set; }
 
+    public virtual DbSet<AccessionIprOverview> AccessionIprOverviews { get; set; }
+
     public virtual DbSet<AccessionLookup> AccessionLookups { get; set; }
 
     public virtual DbSet<AccessionLookupAvailability> AccessionLookupAvailabilities { get; set; }
@@ -1084,6 +1086,10 @@ public partial class gringlobalContext : DbContext
         {
             entity.ToTable("accession_ipr");
 
+            entity.HasIndex(e => e.ExpectedDate, "ndx_expected_date");
+
+            entity.HasIndex(e => e.ExpiredDate, "ndx_expired_date");
+
             entity.HasIndex(e => e.AccessionId, "ndx_fk_ar_a");
 
             entity.HasIndex(e => e.CooperatorId, "ndx_fk_ar_c");
@@ -1098,11 +1104,16 @@ public partial class gringlobalContext : DbContext
 
             entity.HasIndex(e => e.IprNumber, "ndx_ipr_number");
 
+            entity.HasIndex(e => e.IssuedDate, "ndx_issued_date");
+
             entity.HasIndex(e => new { e.AccessionId, e.TypeCode, e.IprNumber }, "ndx_uniq_ipr").IsUnique();
 
             entity.Property(e => e.AccessionIprId).HasColumnName("accession_ipr_id");
             entity.Property(e => e.AcceptedDate).HasColumnName("accepted_date");
             entity.Property(e => e.AccessionId).HasColumnName("accession_id");
+            entity.Property(e => e.ApplicationStatus)
+                .HasMaxLength(3)
+                .HasColumnName("application_status");
             entity.Property(e => e.CooperatorId).HasColumnName("cooperator_id");
             entity.Property(e => e.CreatedBy).HasColumnName("created_by");
             entity.Property(e => e.CreatedDate).HasColumnName("created_date");
@@ -1149,6 +1160,49 @@ public partial class gringlobalContext : DbContext
                 .HasForeignKey(d => d.OwnedBy)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_ar_owned");
+        });
+
+        modelBuilder.Entity<AccessionIprOverview>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("accession_ipr_overview");
+
+            entity.Property(e => e.AcceptedDate).HasColumnName("accepted_date");
+            entity.Property(e => e.AccessionId).HasColumnName("accession_id");
+            entity.Property(e => e.AccessionIprId).HasColumnName("accession_ipr_id");
+            entity.Property(e => e.ApplicationStatus)
+                .HasMaxLength(3)
+                .HasColumnName("application_status");
+            entity.Property(e => e.ApplicationStatusDescription)
+                .IsRequired()
+                .HasMaxLength(500)
+                .HasColumnName("application_status_description");
+            entity.Property(e => e.CooperatorId).HasColumnName("cooperator_id");
+            entity.Property(e => e.ExpectedDate).HasColumnName("expected_date");
+            entity.Property(e => e.ExpirationStatus)
+                .HasMaxLength(16)
+                .IsUnicode(false)
+                .HasColumnName("expiration_status");
+            entity.Property(e => e.ExpiredDate).HasColumnName("expired_date");
+            entity.Property(e => e.IprCropName)
+                .HasMaxLength(100)
+                .HasColumnName("ipr_crop_name");
+            entity.Property(e => e.IprFullName)
+                .HasMaxLength(2000)
+                .HasColumnName("ipr_full_name");
+            entity.Property(e => e.IprNumber)
+                .HasMaxLength(50)
+                .HasColumnName("ipr_number");
+            entity.Property(e => e.IssuedDate).HasColumnName("issued_date");
+            entity.Property(e => e.Lookup)
+                .HasMaxLength(132)
+                .HasColumnName("lookup");
+            entity.Property(e => e.Note).HasColumnName("note");
+            entity.Property(e => e.TypeCode)
+                .IsRequired()
+                .HasMaxLength(20)
+                .HasColumnName("type_code");
         });
 
         modelBuilder.Entity<AccessionLookup>(entity =>
@@ -1201,7 +1255,7 @@ public partial class gringlobalContext : DbContext
                 .HasColumnName("accession_identifier");
             entity.Property(e => e.AvailabilityStatus)
                 .IsRequired()
-                .HasMaxLength(11)
+                .HasMaxLength(13)
                 .IsUnicode(false)
                 .HasColumnName("availability_status");
             entity.Property(e => e.Doi)
@@ -1245,8 +1299,7 @@ public partial class gringlobalContext : DbContext
                 .HasColumnName("source_elevation");
             entity.Property(e => e.SourceHabitat).HasColumnName("source_habitat");
             entity.Property(e => e.SourceType)
-                .IsRequired()
-                .HasMaxLength(20)
+                .HasMaxLength(500)
                 .HasColumnName("source_type");
             entity.Property(e => e.TaxonomySpeciesId).HasColumnName("taxonomy_species_id");
             entity.Property(e => e.TaxonomySpeciesName)
