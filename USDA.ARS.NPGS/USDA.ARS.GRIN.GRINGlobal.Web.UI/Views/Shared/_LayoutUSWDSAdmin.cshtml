@@ -30,7 +30,10 @@
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="https://designsystem.digital.gov/assets/img/favicons/favicon-114.png">
         <!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://designsystem.digital.gov/assets/img/favicons/favicon-144.png">
-        <link rel="stylesheet" href="https://designsystem.digital.gov/assets/css/styles.css">
+
+@*         <link rel="stylesheet" href="https://designsystem.digital.gov/assets/css/styles.css"> *@        
+
+            <link rel="stylesheet" href="~/css/uswds-gringlobal.css">
  
         <!-- USWDS INIT
         ================================================== -->
@@ -52,10 +55,10 @@
 
           .usa-logo .site-logo__text::before {
             height: 1.5rem;
-            width: 1.5rem;
+            width: 0rem;
             content: "";
-            background-image: url('https://www.ars.usda.gov/images/redesign/USDA-Logo.png') !important; 
-            background-image:none !important;
+            /* background-image: url('https://www.ars.usda.gov/images/redesign/USDA-Logo.png') !important; */
+            background-image: none !important;
             background-repeat: no-repeat;
             background-size: 100% auto;
             display: inline-block;
@@ -64,7 +67,7 @@
             position: relative;
             top: -1px;
             vertical-align: middle;
-          }
+        }
 
             .site-header
         {
@@ -74,29 +77,26 @@
         </style>
 
 </head>
-<body class="page-uswds-the-united-states-web-design-system layout-landing page-home">
-    <a class="usa-skipnav" href="#main-content">Skip to main content</a>
-<section
-  class="usa-banner site-banner"
-  aria-label="Official website of the United States government,,,,,,"
->
-  <div class="usa-accordion">
-    <header class="usa-banner__header">
-      <div class="usa-banner__inner">
-        <div class="grid-col-auto">
-          <img
-            aria-hidden="true"
-            class="usa-banner__header-flag"
-            src="https://designsystem.digital.gov/assets/img/us_flag_small.png"
-            alt=""
-          />
-        </div>
-        <div class="grid-col-fill tablet:grid-col-auto" aria-hidden="true">
-          <p class="usa-banner__header-text">
-            An official website of the United States government
-          </p>
-          <p class="usa-banner__header-action">Here’s how you know</p>
-        </div>
+    <body class="page-uswds-the-united-states-web-design-system layout-landing page-home">
+        <a class="usa-skipnav" href="#main-content">Skip to main content</a>
+        <section class="usa-banner site-banner" aria-label="Official website of the United States government,,,,,,">       
+            <div class="usa-accordion">
+                <header class="usa-banner__header">
+                    <div class="usa-banner__inner">
+                    <div class="grid-col-auto">
+                      <img
+                        aria-hidden="true"
+                        class="usa-banner__header-flag"
+                        src="https://designsystem.digital.gov/assets/img/us_flag_small.png"
+                        alt=""
+                      />
+                    </div>
+                    <div class="grid-col-fill tablet:grid-col-auto" aria-hidden="true">
+                    <p class="usa-banner__header-text">
+                        An official website of the United States government
+                    </p>
+                    <p class="usa-banner__header-action">Here’s how you know</p>
+                </div>
         <button
           type="button"
           class="usa-accordion__button usa-banner__button"
@@ -106,28 +106,25 @@
           <span class="usa-banner__button-text">Here’s how you know</span>
         </button>
       </div>
-    </header>
-    <div
-      class="usa-banner__content usa-accordion__content"
-      id="gov-banner"
-    >
-      <div class="grid-row grid-gap-lg">
-        <div class="usa-banner__guidance tablet:grid-col-6">
-          <img
-            class="usa-banner__icon usa-media-block__img"
-            src="https://designsystem.digital.gov/assets/img/icon-dot-gov.svg"
-            role="img"
-            alt=""
-            aria-hidden="true"
-          />
-          <div class="usa-media-block__body">
-            <p>
-              <strong>Official websites use .gov</strong><br />A
-              <strong>.gov</strong> website belongs to an official government
-              organization in the United States.
-            </p>
-          </div>
-        </div>
+                </header>
+                <div class="usa-banner__content usa-accordion__content" id="gov-banner">
+                <div class="grid-row grid-gap-lg">
+                    <div class="usa-banner__guidance tablet:grid-col-6">
+                        <img
+                        class="usa-banner__icon usa-media-block__img"
+                        src="https://designsystem.digital.gov/assets/img/icon-dot-gov.svg"
+                        role="img"
+                        alt=""
+                        aria-hidden="true"
+                        />
+                        <div class="usa-media-block__body">
+                        <p>
+                            <strong>Official websites use .gov</strong><br />A
+                            <strong>.gov</strong> website belongs to an official government
+                        organization in the United States.
+                    </p>
+                    </div>
+                </div>
         <div class="usa-banner__guidance tablet:grid-col-6">
           <img
             class="usa-banner__icon usa-media-block__img"
@@ -188,167 +185,78 @@
       <img src="https://designsystem.digital.gov/assets/img/usa-icons/close.svg" role="img" alt="Close">
     </button>
     <!-- Mobile nav -->
-    <ul class="usa-nav__primary usa-nav__primary--mobile usa-accordion">
-                <li class="usa-nav__primary-item">
-                    <img src="https://npgsweb.ars-grin.gov/gringlobal/images/GGlogo-color-sm.gif;" />
-      </li>
-  <li class="usa-nav__primary-item">
-  
-  
-    
-
-<button type="button" class="usa-accordion__button usa-nav__link" aria-controls="nav-how-to-use-uswds"
-                            aria-expanded="false">
-  <span>
-    How to use USWDS
-  </span>
-</button>
-<ul id="nav-how-to-use-uswds" class="usa-nav__submenu">
-  
-  
-  
-
-  
-  <li class="usa-nav__submenu-item">
-    
-
-<a href="/how-to-use-uswds/">
-  <span>
-    How to use USWDS
-  </span>
-</a>
-
-
-    
-  </li>
-
-  
-
-  
-  <li class="usa-nav__submenu-item">
-    
-
-<a href="/documentation/getting-started-for-developers/">
-  <span>
-    Getting started for developers
-  </span>
-</a>
-
-
-    
-  </li>
-
-  
-
-  
-  <li class="usa-nav__submenu-item">
-    
-
-<a href="/documentation/getting-started-for-designers/">
-  <span>
-    Getting started for designers
-  </span>
-</a>
-
-
-    
-  </li>
-
-  
-
-  
-  <li class="usa-nav__submenu-item">
-    
-
-<a href="/documentation/developers/">
-  <span>
-    Documentation
-  </span>
-</a>
-
-
-    
-  </li>
-
-  
-
-  
-  <li class="usa-nav__submenu-item">
-    
-
-<a href="/documentation/settings/">
-  <span>
-    Settings
-  </span>
-</a>
-
-
-    
-  </li>
-
-  
-
-  
-  <li class="usa-nav__submenu-item">
-    
-
-<a href="/maturity-model/">
-  <span>
-    USWDS maturity model
-  </span>
-</a>
-
-
-    
-  </li>
-
-  
-
-  
-  <li class="usa-nav__submenu-item">
-    
-
-<a href="/documentation/accessibility/">
-  <span>
-    Accessibility
-  </span>
-</a>
-
-
-    
-  </li>
-
-  
-
-  
-  <li class="usa-nav__submenu-item">
-    
-
-<a href="/performance/">
-  <span>
-    Performance guidelines
-  </span>
-</a>
-
-
-    
-  </li>
-
-  
-
-  
-  <li class="usa-nav__submenu-item">
-    
-
-<a href="/documentation/code-guidelines/">
-  <span>
-    Code guidelines
-  </span>
-</a>
-
-
-    
-  </li>
+  @*   <ul class="usa-nav__primary usa-nav__primary--mobile usa-accordion">
+        <li class="usa-nav__primary-item">
+            <button type="button" 
+                    class="usa-accordion__button usa-nav__link" 
+                    aria-controls="nav-how-to-use-uswds"
+                    aria-expanded="false">
+                <span>How to use USWDS</span>
+            </button>
+            <ul id="nav-how-to-use-uswds" class="usa-nav__submenu">
+                <li class="usa-nav__submenu-item">
+                    <a href="/how-to-use-uswds/">
+                      <span>
+                        How to use USWDS
+                      </span>
+                    </a>
+                </li>
+                <li class="usa-nav__submenu-item">
+                    <a href="/documentation/getting-started-for-developers/">
+                    <span>
+                        Getting started for developers
+                    </span>
+                    </a>
+                </li>
+                <li class="usa-nav__submenu-item">
+                    <a href="/documentation/getting-started-for-designers/">
+                      <span>
+                        Getting started for designers
+                      </span>
+                    </a>
+                </li>
+                <li class="usa-nav__submenu-item">
+                    <a href="/documentation/developers/">
+                      <span>
+                        Documentation
+                      </span>
+                    </a>
+                </li>
+                <li class="usa-nav__submenu-item">
+                    <a href="/documentation/settings/">
+                      <span>
+                        Settings
+                      </span>
+                    </a>
+                </li>
+                <li class="usa-nav__submenu-item">
+                    <a href="/maturity-model/">
+                      <span>
+                        USWDS maturity model
+                      </span>
+                    </a>
+                </li>
+                <li class="usa-nav__submenu-item">
+                    <a href="/documentation/accessibility/">
+                      <span>
+                        Accessibility
+                      </span>
+                    </a>
+                </li>
+                <li class="usa-nav__submenu-item">
+                     <a href="/performance/">
+                      <span>
+                        Performance guidelines
+                      </span>
+                    </a>
+                </li>
+                <li class="usa-nav__submenu-item">
+                    <a href="/documentation/code-guidelines/">
+                      <span>
+                        Code guidelines
+                      </span>
+                    </a>
+                </li>
 
   
 
@@ -2130,16 +2038,14 @@
   </li>
 
 
-    </ul>
+    </ul> *@
     <!-- /Mobile nav -->
     <!-- Desktop nav -->
     <ul class="usa-nav__primary usa-nav__primary--desktop">
       
   
 
-                <li class="usa-nav__submenu-item">
-                    <img src="https://www.ars.usda.gov/images/redesign/USDA-Logo.png" style="margin-top:3px;" />
-                </li>
+                
   <li class="usa-nav__submenu-item">
     
 
@@ -2399,109 +2305,18 @@
  *@
   
   <section class="usa-section usa-graphic-list grid-container">
-     @RenderBody()
+        @RenderBody()   
       <div class="">
       <div class="grid-row grid-gap">
         
-        <div
-          class="desktop:grid-col-3 tablet:grid-col-6 usa-media-block margin-bottom-3 desktop:margin-bottom-0"
-        >
-          <img
-            class="usa-media-block__img"
-            src="https://npgstest.ars-grin.gov/NPGS/img/home/ui-component.svg"
-            alt=""
-            width="72"
-            height="72"
-          />
-          <div class="usa-media-block__body">
-            
-            <h2>Components</h2>
-             <p>Browse all USWDS components, and get UX, accessibility, and implementation guidance.</p>
-
-            <p>
-              <a href="/components/"
-                >Browse components</a
-              >
-            </p>
-          </div>
-        </div>
-        
-        <div
-          class="desktop:grid-col-3 tablet:grid-col-6 usa-media-block margin-bottom-3 desktop:margin-bottom-0"
-        >
-          <img
-            class="usa-media-block__img"
-            src="https://npgstest.ars-grin.gov/NPGS/img/home/page-templates.svg"
-            alt=""
-            width="72"
-            height="72"
-          />
-          <div class="usa-media-block__body">
-            
-            <h2>Patterns</h2>
-             <p>Use our guidance to craft effective and inclusive user experiences.</p>
-
-            <p>
-              <a href="/patterns/"
-                >Explore pattern guidance</a
-              >
-            </p>
-          </div>
-        </div>
-        
-        <div
-          class="desktop:grid-col-3 tablet:grid-col-6 usa-media-block margin-bottom-3 desktop:margin-bottom-0"
-        >
-          <img
-            class="usa-media-block__img"
-            src="https://npgstest.ars-grin.gov/NPGS/img/home/design-tokens.svg"
-            alt=""
-            width="72"
-            height="72"
-          />
-          <div class="usa-media-block__body">
-            
-            <h2>Design tokens</h2>
-             <p>Learn how to get started using design tokens, the building blocks of USWDS component design.</p>
-
-            <p>
-              <a href="/design-tokens/"
-                >View design tokens</a
-              >
-            </p>
-          </div>
-        </div>
-        
-        <div
-          class="desktop:grid-col-3 tablet:grid-col-6 usa-media-block margin-bottom-3 desktop:margin-bottom-0"
-        >
-          <img
-            class="usa-media-block__img"
-            src="https://npgstest.ars-grin.gov/NPGS/img/home/utilities.svg"
-            alt=""
-            width="72"
-            height="72"
-          />
-          <div class="usa-media-block__body">
-            
-            <h2>Utilities</h2>
-             <p>Adapt your designs and deliver prototypes quickly and consistently without touching a line of CSS.</p>
-
-            <p>
-              <a href="/utilities/"
-                >Build with utilities</a
-              >
-            </p>
-          </div>
-        </div>
-        
+        <img src="https://www.ars-grin.gov/assets/img/NPGS_Hardiness_Map.png" />
       </div>
     </div>
   </section>
   
   <section class="usa-section bg-base-lightest showcase">
   <div class="grid-container">
-    <h2 class="font-lang-xl margin-y-0 line-height-serif-2">Sites built with USWDS</h2>
+    <h2 class="font-lang-xl margin-y-0 line-height-serif-2">Recently Added Accessions</h2>
     <div class="grid-row grid-gap tablet:margin-top-3">
       <div class="tablet:grid-col">
         <img src="https://npgstest.ars-grin.gov/NPGS/img/webp/home/showcase/nih.webp" alt="" width="960" height="540" />

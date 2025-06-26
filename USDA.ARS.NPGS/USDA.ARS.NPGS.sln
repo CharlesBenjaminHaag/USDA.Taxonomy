@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USDA.ARS.GRINGlobal.Domain"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USDA.ARS.GRINGlobal.API.Web", "USDA.ARS.GRINGlobal.API.Web\USDA.ARS.GRINGlobal.API.Web.csproj", "{1BF56C44-8D18-4320-81AD-DF3FE3B39674}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USDA.ARS.GRINGlobal.Web.UI", "USDA.ARS.GRIN.GRINGlobal.Web.UI\USDA.ARS.GRINGlobal.Web.UI.csproj", "{A4643957-C9F2-4B86-9A3A-187B6B900635}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{1BF56C44-8D18-4320-81AD-DF3FE3B39674}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BF56C44-8D18-4320-81AD-DF3FE3B39674}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BF56C44-8D18-4320-81AD-DF3FE3B39674}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4643957-C9F2-4B86-9A3A-187B6B900635}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4643957-C9F2-4B86-9A3A-187B6B900635}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4643957-C9F2-4B86-9A3A-187B6B900635}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4643957-C9F2-4B86-9A3A-187B6B900635}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
