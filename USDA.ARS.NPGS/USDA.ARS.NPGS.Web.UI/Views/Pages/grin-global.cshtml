@@ -291,19 +291,14 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        init();
 
-    function hideErrorSection() {
-        $('#error-alert').hide();
-    }
+        // Hide error Notification if user interacts with page
+        $('input, textarea, select').on('input change', hideErrorSection);
+        $('form').on('click', hideErrorSection);
 
-    $('input, textarea, select').on('input change', hideErrorSection);
-
-    $('form').on('click', hideErrorSection);
-
-    $("#error-alert").hide();
-
-    // Configure search-results datatable(s).
-    const table = $('#search-results-table').DataTable({
+        // Configure search-results datatable(s).
+        const table = $('#search-results-table').DataTable({
         data: [],
         deferLoading: 0,
         columns: [
@@ -353,10 +348,15 @@
         ]
     });
 
+    function init() {
+        hideErrorSection();
+        getGenebanks();
+        getCountries();
+    }
 
-    // Populate select lists
-    getGenebanks();
-    getCountries();
+    function hideErrorSection() {
+        $('#error-alert').hide();
+    }
 
     function getGenebanks() {
         $.ajax({
@@ -415,15 +415,7 @@
             }
         });
     }
-
-    function getImprovementLevels() {
-
-    }
-
-    function getAvailabilityStatuses() {
-
-    }
-
+    
     // Function to collect form input values into a plain object
     function collectFormData($form) {
         const data = {};

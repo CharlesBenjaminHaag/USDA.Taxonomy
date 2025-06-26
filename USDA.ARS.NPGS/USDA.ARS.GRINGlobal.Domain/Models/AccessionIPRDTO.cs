@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +12,8 @@ namespace USDA.ARS.GRINGlobal.Domain.Models
         public int? accession_ipr_id { get; set; }
 
         public int? accession_id { get; set; }
+
+        public string? accession_identifier { get; set; }
 
         public string? type_code { get; set; }
 
@@ -33,9 +36,8 @@ namespace USDA.ARS.GRINGlobal.Domain.Models
         public DateTime? accepted_Date { get; set; }
 
         public DateTime? expected_date { get; set; }
-                
-        public AccessionDTO Accession { get; set; }
 
-        //public virtual ICollection<Citation> Citations { get; set; } = new List<Citation>();
+        public string certificate_url =>
+        "https://apps.ams.usda.gov/CMS//AdobeImages/" + (ipr_number?.Replace("PVP ", "").PadLeft(9, '0') ?? "000000000") + ".pdf";
     }
 }

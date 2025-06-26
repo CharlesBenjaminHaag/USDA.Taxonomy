@@ -1,4 +1,189 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutUSWDSInterior.cshtml";
 }
-<head>PVP HERE</head>
+<div class="usa-section">
+    <div class="grid-container">
+        <div class="grid-row grid-gap">
+            <div class="usa-layout-docs__sidenav desktop:grid-col-2">
+                @Html.Partial("~/Views/Shared/Partials/_SideNav.cshtml")
+            </div>
+            <main class="usa-layout-docs__main desktop:grid-col-10 usa-prose usa-layout-docs" id="main-content">
+                <p>
+                    The <a href="https://www.ams.usda.gov/services/plant-variety-protection" target="_blank" rel="noreferrer">Plant Variety Protection Office (PVPO) ↗</a> of the USDA Agricultural Marketing Service provides
+                    intellectual property protection to breeders of new varieties of sexually reproduced, tuber propagated, 
+                    and asexually reproduced plant varieties. In accordance with the <a href="https://uscode.house.gov/browse/prelim@title7/chapter57/subchapter1&edition=prelim" target="_blank" rel="noreferrer">Plant Variety Protection Act (PVPA) ↗</a>,
+                    it examines new varieties, and grants <a href="https://www.ams.usda.gov/services/plant-variety-protection/issued-certificates" target="_blank" rel="noreferrer">certificates ↗ </a> that protect varieties for 20 years (25 years
+                    for woody vines and trees).
+                </p>
+                <p>
+                    Use the convenient tool below to browse PVP applications whose certificates are due to expire this year. You may also perform an advanced search to cover a wider time frame. 
+                    These tools supplement the <a href="https://apps.ams.usda.gov/CMS/" target="_blank" rel="noreferrer">Certificate Management System ↗</a> operated by the PVPO, the most authoritative and updated source for information on PVP certificates.
+                </p>
+
+                <!-- Browse PVP applications -->
+                <div id="error-alert" class="usa-alert usa-alert--error" role="alert">
+                    <div class="usa-alert__body">
+                        <h4 class="usa-alert__heading">Error</h4>
+                        <p id="error-alert-text" class="usa-alert__text">
+                            An application error has occurred.
+                        </p>
+                    </div>
+                </div>
+                <hr />
+                <section>
+                   @*  <ul class="usa-button-group usa-button-group--segmented" role="tablist">
+                        <li class="usa-button-group__item">
+                            <button type="button" class="usa-button" role="tab" aria-controls="panel-recently-expired" aria-selected="true">Recently Expired</button>
+                        </li>
+                        <li class="usa-button-group__item">
+                            <button type="button" class="usa-button usa-button--outline" role="tab" aria-controls="panel-expiring-in-6-months" aria-selected="false">Expiring in the Next 6 Months</button>
+                        </li>
+                         <li class="usa-button-group__item">
+                            <button type="button" class="usa-button usa-button--outline" role="tab" aria-controls="panel-satellite" aria-selected="false">Satellite</button>
+                        </li> 
+                    </ul> *@
+
+                    <div id="panel-recently-expired" role="tabpanel" aria-labelledby="tab-map">
+                        <table id="pvp-application-search-results-table" class="usa-table">
+                            <thead>
+                                <tr>
+                                    <th>Accession</th>
+                                    <th>IPR Number</th>
+                                    <th>Application Status</th>
+                                    <th>Certificate Issued</th>
+                                    <th>Certificate Expired</th>
+                                    <th>Expected Date</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div id="panel-expiring-in-6-months" role="tabpanel" aria-labelledby="tab-hybrid" hidden>
+                        <p>
+                            <h3>TODO REC EXP 6 MOS</h3>
+                        </p>
+
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+    init();
+    
+    function init() {
+        hideErrorSection();
+    }
+
+    function hideErrorSection() {
+        $('#error-alert').hide();
+    }
+    
+    getData();
+
+    // Configure search-results datatable(s).
+    const table = $('#pvp-application-search-results-table').DataTable({
+        data: [],
+        deferLoading: 0,
+        columns: [
+            {
+                data: 'accession_identifier',
+                render: function (data, type, row) {
+                    if (type === 'display') {
+                        return `<a href="https://npgsweb.ars-grin.gov/gringlobal/accessiondetail?id=${row.accession_id}" target="_blank">${data}</a>`;
+                    }
+                    return data; // For other types (e.g. filter, sort), return raw text
+                }
+            },
+            { data: 'ipr_number' },
+            { data: 'status_description' },
+
+            {
+              data: 'certificate_issued_date',
+              render: function (data, type, row) {
+                if (!data) return '';
+                
+                const date = new Date(data);
+
+                // Sort using raw ISO format
+                if (type === 'sort' || type === 'type') {
+                  return date.toISOString(); // keeps sort accurate
+                }
+
+                // Display as MM/DD/YYYY (or any preferred format)
+                return `${(date.getMonth() + 1).toString().padStart(2, '0')}/` +
+                       `${date.getDate().toString().padStart(2, '0')}/` +
+                       `${date.getFullYear()}`;
+              }
+            },
+            {
+              data: 'certificate_expired_date',
+              render: function (data, type, row) {
+                if (!data) return '';
+
+                const date = new Date(data);
+
+                // Sort using raw ISO format
+                if (type === 'sort' || type === 'type') {
+                  return date.toISOString(); // keeps sort accurate
+                }
+
+                // Display as MM/DD/YYYY (or any preferred format)
+                return `${(date.getMonth() + 1).toString().padStart(2, '0')}/` +
+                       `${date.getDate().toString().padStart(2, '0')}/` +
+                       `${date.getFullYear()}`;
+              }
+            },
+            {
+              data: 'expected_date',
+              render: function (data, type, row) {
+                if (!data) return '';
+
+                const date = new Date(data);
+
+                // Sort using raw ISO format
+                if (type === 'sort' || type === 'type') {
+                  return date.toISOString(); // keeps sort accurate
+                }
+
+                // Display as MM/DD/YYYY (or any preferred format)
+                return `${(date.getMonth() + 1).toString().padStart(2, '0')}/` +
+                       `${date.getDate().toString().padStart(2, '0')}/` +
+                       `${date.getFullYear()}`;
+              }
+            },
+        ]
+    });
+
+    function getData() {
+        $('#overlay').show();
+        $('#search-status').text('');
+
+        $.ajax({
+            url: 'https://npgstest.ars-grin.gov/NPGS/api/v1/pvp/search', // Replace with your actual API endpoint
+            method: 'GET',       // Or 'POST' if needed
+            data: [],
+            dataType: 'json',
+            success: function (response) {
+            table.clear().rows.add(response).draw();
+
+            if (response && response.length > 0) {
+                    $('#row-count-heading').text(`${response.length} record(s) found.`);
+            } else {
+                    $('#row-count-heading').text('🚫 No records found.');
+            }
+
+            },
+            error: function (xhr, status, error) {
+                $('#error-alert-text').html('❌ An error occurred while searching: ' + status + error);
+                $('#error-alert').show();
+                $('#overlay').hide();
+            },
+            complete: function () {
+                $('#overlay').hide();
+            }
+        });
+    }
+    });
+</script>

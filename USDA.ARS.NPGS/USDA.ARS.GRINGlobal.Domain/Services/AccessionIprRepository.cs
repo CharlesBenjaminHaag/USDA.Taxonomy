@@ -15,7 +15,7 @@ namespace USDA.ARS.GRINGlobal.Domain.Services
        
         public async Task<IEnumerable<AccessionIprDTO>> GetAccessionIprsByCriteriaAsync(AccessionIprCriteriaDTO criteria)
         {
-            var query = _context.AccessionIprOverviews.AsQueryable();
+             var query = _context.AccessionIprOverviews.AsQueryable();
 
             if (criteria.certificate_expired_date > DateTime.MinValue)
             {
@@ -42,6 +42,7 @@ namespace USDA.ARS.GRINGlobal.Domain.Services
                 {
                     accession_ipr_id = c.AccessionIprId,
                     accession_id = c.AccessionId,
+                    accession_identifier = c.Lookup,
                     status_code = c.ApplicationStatus,
                     status_description = c.ApplicationStatusDescription,
                     type_code = c.TypeCode,
