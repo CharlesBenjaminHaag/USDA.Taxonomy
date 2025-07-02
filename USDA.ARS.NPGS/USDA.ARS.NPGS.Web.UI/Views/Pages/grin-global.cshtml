@@ -45,7 +45,9 @@
         padding-bottom: 0.7rem;
     }
 
-
+    #error-alert {
+        margin-bottom: .5rem;
+    }
     
 </style>
 
@@ -57,8 +59,16 @@
             </div>
             <main class="usa-layout-docs__main desktop:grid-col-10 usa-prose usa-layout-docs" id="main-content">
                 
-                
            <section>
+
+                    <div id="error-alert" class="usa-alert usa-alert--error" role="alert">
+                        <div class="usa-alert__body">
+                            <h4 class="usa-alert__heading">An Application Error Has Occurred</h4>
+                            <p id="error-alert-text" class="usa-alert__text">
+                                A server-side error has occurred, and been logged. We apologize for the inconvenience.
+                            </p>
+                        </div>
+                    </div>
 
                     <ul class="usa-button-group usa-button-group--segmented" role="tablist">
                         <li class="usa-button-group__item">
@@ -67,9 +77,6 @@
                         <li class="usa-button-group__item">
                             <button type="button" class="usa-button usa-button--outline" role="tab" aria-controls="panel-hybrid" aria-selected="false">Taxonomy</button>
                         </li>
-                       @*  <li class="usa-button-group__item">
-                            <button type="button" class="usa-button usa-button--outline" role="tab" aria-controls="panel-satellite" aria-selected="false">Satellite</button>
-                        </li> *@
                     </ul>
 
                     <div id="panel-map" role="tabpanel" aria-labelledby="tab-map">
@@ -83,15 +90,6 @@
                                 Visit the GRIN-Global public website
                             </a> to start searching accessions, or use the convenient tool below.
                         </p>
-
-                        <div id="error-alert" class="usa-alert usa-alert--error" role="alert">
-                            <div class="usa-alert__body">
-                                <h4 class="usa-alert__heading">Error</h4>
-                                <p id="error-alert-text" class="usa-alert__text">
-                                    An application error has occurred.
-                                </p>
-                            </div>
-                        </div>
                         <section>
                             <div class="usa-accordion usa-accordion--bordered usa-accordion--multiselectable" data-allow-multiple>
                                 <h4 class="usa-accordion__heading">
@@ -151,7 +149,7 @@
                                                             Year Germplasm Received
                                                         </label>
                                                         <select class="usa-select" id="received_year" name="received_year">
-                                                            <option value="0">Any year</option>
+                                                            @* <option value="0">Any year</option> *@
                                                             <option value="2025">2025</option>
                                                             <option value="2024">2024</option>
                                                             <option value="2023">2023</option>
@@ -279,9 +277,6 @@
 
                             </div>
                         </div> *@
-                    </div>
-                    <div id="panel-satellite" role="tabpanel" aria-labelledby="tab-satellite" hidden>
-                        <p>This is the Satellite view content.</p>
                     </div>
                </section> 
             </main>
@@ -426,9 +421,8 @@
 
             if (key) {
                 data[key] = $input.val();
-
                 //debug
-                    console.log(`DEBUG Collected data: ${key} = ${data[key]}`);
+                //console.log(`DEBUG Collected data: ${key} = ${data[key]}`);
 
             }
         });
@@ -466,9 +460,10 @@
 
             },
             error: function (xhr, status, error) {
-                $('#error-alert-text').html('❌ An error occurred while searching: ' + status + error);
+                // $('#error-alert-text').html('❌ An error occurred while searching: ' + status + error);
                 $('#error-alert').show();
                 $('#overlay').hide();
+                resetFormAndTable();
             },
             complete: function () {
                 $('#overlay').hide();

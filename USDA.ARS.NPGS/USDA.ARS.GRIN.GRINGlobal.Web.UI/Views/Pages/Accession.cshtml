@@ -1,97 +1,91 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
-    Layout = "~/Views/Shared/_LayoutUSWDSAdminInterior.cshtml";
+    Layout = "_LayoutUSWDSAdminInterior";
 }
-<ul class="usa-card-group">
-    <li class="usa-card tablet-lg:grid-col-3 grid-col-3 maxw-sm">
-        <div class="usa-card__container">
-            <div class="usa-card__header">
-                <h4 class="usa-card__heading">
-                     Accessions 
-                </h4>
-            </div>
-            <div class="usa-card__body">
-                <p style="font-size:35pt;">
-                     
-                </p>
-            </div>
-            <div class="usa-card__footer">
-                <button class="usa-button">Browse</button>
-                @*                                     <ul class="usa-button-group usa-button-group--segmented">
-                                        <li class="usa-button-group__item" style="margin:2px;">
-                                            <button type="button" class="usa-button usa-button--unstyled" style="margin:2px;">TEST</button>
-                                        </li>
-                                        <li class="usa-button-group__item" style="margin:2px;">
-                                            <button type="button" class="usa-button usa-button--unstyled" style="margin:2px;">Hybrid</button>
-                                        </li>
-                                        <li class="usa-button-group__item" style="margin:2px;">
-                                            <button type="button" class="usa-button usa-button--unstyled">
-                                                Satellite
-                                            </button>
-                                        </li>
-                                    </ul>
- *@                                </div>
-        </div>
-    </li>
-    <li class="usa-card tablet-lg:grid-col-3 grid-col-3 maxw-sm">
-        <div class="usa-card__container">
-            <div class="usa-card__header">
-                <h4 class="usa-card__heading">
-                    <a href="https://www.ars.usda.gov/northeast-area/beltsville-md-barc/beltsville-agricultural-research-center/national-germplasm-resources-laboratory/docs/plant-inventory-books/" target="_blank" rel="noreferrer">
-                        Crop Wild Relatives
-                    </a>
-                </h4>
-            </div>
-            <div class="usa-card__body">
-                 
-                <p style="font-size:35pt;">
-                     
-                </p>
-                
-            </div>
-            <div class="usa-card__footer">
-                <button class="usa-button">Browse</button>
+
+<!-- Google Charts Loader -->
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+    }
+
+    #treemap {
+        width: 100%;
+        height: 600px;
+    }
+</style>
+
+<div class="grid-container">
+    <div class="grid-row">
+        <div class="grid-col-6">
+            <div class="usa-card">
+                <div class="usa-card__container">
+                    <div class="usa-card__header">
+                        <h3 class="usa-card__heading">By Repository</h3>
+                    </div>
+                    <div class="usa-card__body">
+                        <div id="treemap" style="width: 100%; height: 600px;"></div>
+                    </div>
+                </div>
             </div>
         </div>
-    </li>
-    <li class="usa-card tablet-lg:grid-col-3 grid-col-3 maxw-sm">
-        <div class="usa-card__container">
-            <div class="usa-card__header">
-                <h4 class="usa-card__heading">
-                    <a href="@Url.Action("pvp","Pages")">
-                        Taxonomy
-                    </a>
-                </h4>
-            </div>
-            <div class="usa-card__body">
-                
-                <p style="font-size:35pt;">
-                     
-                </p>
-                
-            </div>
-            <div class="usa-card__footer">
-                <button class="usa-button">Browse</button>
+        <div class="grid-col-6">
+            <div class="usa-card">
+                <div class="usa-card__container">
+                    <div class="usa-card__header">
+                        <h3 class="usa-card__heading">By Location</h3>
+                    </div>
+                    <div class="usa-card__body">
+                        <div id="treemap" style="width: 100%; height: 600px;"></div>
+                    </div>
+                </div>
             </div>
         </div>
-    </li>
-    <li class="usa-card tablet-lg:grid-col-3 grid-col-3 maxw-sm">
-        <div class="usa-card__container">
-            <div class="usa-card__header">
-                <h4 class="usa-card__heading">
-                      
-                        Sites
-                     
-                </h4>
-            </div>
-            <div class="usa-card__body">
-                <p>
-                    45
-                </p>                 
-            </div>
-            <div class="usa-card__footer">
-            </div>
-        </div>
-    </li>
+    </div>
+
     
-</ul>
+</div>
+
+<script>
+    // Load the Google Charts library
+    google.charts.load('current', { packages: ['treemap'] });
+
+    // After it's loaded, fetch data and draw chart
+    google.charts.setOnLoadCallback(drawTreemap);
+
+    function drawTreemap() {
+        fetch('https://npgstest.ars-grin.gov/NPGS/api/v1/accession/report?criteria=2100')
+            .then(response => response.json())
+            .then(data => {
+                // Google requires a specific format: [ ['ID', 'Parent', 'Value'] ]
+                const treeData = [
+                    ['Label', 'Parent', 'Value']
+                ];
+
+                treeData.push(['Root', null, 0]); // root node
+
+                data.forEach(item => {
+                    const label = item.title_field;
+                    const value = parseInt(item.total_field.replace(/,/g, ''));
+                    treeData.push([label, 'Root', value]);
+                });
+
+                const dataTable = google.visualization.arrayToDataTable(treeData);
+
+                const chart = new google.visualization.TreeMap(document.getElementById('treemap'));
+
+                chart.draw(dataTable, {
+                    minColor: '#e0f2f1',
+                    midColor: '#80cbc4',
+                    maxColor: '#00695c',
+                    headerHeight: 20,
+                    fontColor: 'black',
+                    showScale: true
+                });
+            })
+            .catch(err => console.error('Google Chart error:', err));
+    }
+</script>
