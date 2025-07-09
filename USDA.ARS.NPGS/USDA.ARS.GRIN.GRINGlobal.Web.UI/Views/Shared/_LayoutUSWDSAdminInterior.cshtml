@@ -78,123 +78,15 @@
   </head>
     <body class="page-components layout-styleguide ">
         <a class="usa-skipnav" href="#main-content">Skip to main content</a>
-        <section
-      class="usa-banner site-banner"
-      aria-label="Official website of the United States government,,,,,,"
-    >
-      <div class="usa-accordion">
-        <header class="usa-banner__header">
-          <div class="usa-banner__inner">
-            <div class="grid-col-auto">
-              <img
-                aria-hidden="true"
-                class="usa-banner__header-flag"
-                src="https://designsystem.digital.gov/assets/img/us_flag_small.png"
-                alt=""
-              />
-            </div>
-            <div class="grid-col-fill tablet:grid-col-auto" aria-hidden="true">
-              <p class="usa-banner__header-text">
-                An official website of the United States government
-              </p>
-              <p class="usa-banner__header-action">Here’s how you know</p>
-            </div>
-            <button
-              type="button"
-              class="usa-accordion__button usa-banner__button"
-              aria-expanded="false"
-              aria-controls="gov-banner"
-            >
-              <span class="usa-banner__button-text">Here’s how you know</span>
-            </button>
-          </div>
-        </header>
-        <div
-          class="usa-banner__content usa-accordion__content"
-          id="gov-banner"
-        >
-          <div class="grid-row grid-gap-lg">
-            <div class="usa-banner__guidance tablet:grid-col-6">
-              <img
-                class="usa-banner__icon usa-media-block__img"
-                src="https://designsystem.digital.gov/assets/img/icon-dot-gov.svg"
-                role="img"
-                alt=""
-                aria-hidden="true"
-              />
-              <div class="usa-media-block__body">
-                <p>
-                  <strong>Official websites use .gov</strong><br />A
-                  <strong>.gov</strong> website belongs to an official government
-                  organization in the United States.
-                </p>
-              </div>
-            </div>
-            <div class="usa-banner__guidance tablet:grid-col-6">
-              <img
-                class="usa-banner__icon usa-media-block__img"
-                src="https://designsystem.digital.gov/assets/img/icon-https.svg"
-                role="img"
-                alt=""
-                aria-hidden="true"
-              />
-              <div class="usa-media-block__body">
-                <p>
-                  <strong>Secure .gov websites use HTTPS</strong><br />A
-                  <strong>lock</strong> (
-                  <span class="icon-lock"
-                    ><svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="52"
-                      height="64"
-                      viewBox="0 0 52 64"
-                      class="usa-banner__lock-image"
-                      role="img"
-                      aria-labelledby="banner-lock-description"
-                      focusable="false"
-                    >
-                      <title id="banner-lock-title">Lock</title>
-                      <desc id="banner-lock-description">Locked padlock icon</desc>
-                      <path
-                        fill="#000000"
-                        fill-rule="evenodd"
-                        d="M26 0c10.493 0 19 8.507 19 19v9h3a4 4 0 0 1 4 4v28a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V32a4 4 0 0 1 4-4h3v-9C7 8.507 15.507 0 26 0zm0 8c-5.979 0-10.843 4.77-10.996 10.712L15 19v9h22v-9c0-6.075-4.925-11-11-11z"
-                      />
-                    </svg> </span
-                  >) or <strong>https://</strong> means you’ve safely connected to
-                  the .gov website. Share sensitive information only on official,
-                  secure websites.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-        
-        <!-- ******************************************** BEGIN HEADER ***********************************************************-->        
-        <header class="usa-header usa-header--extended site-header site-header--dark" role="banner">
-          <div class="usa-navbar site-header__navbar">
-            <div class="usa-logo site-logo" id="logo" style="margin-left:0px;">
-              <em class="usa-logo__text site-logo__text">
-                <a href="/" title="GRIN-Global Home">
-                  <span aria-hidden="true" class="site-title--short">GG</span>
-                  <span class="site-title--long">GRIN-Global</span>
-                </a>
-              </em>
-            </div>
-            <button type="button" class="usa-menu-btn">Menu</button>
-          </div>
-        </header>
-        <!-- ********************************************* END HEADER ************************************************************-->        
-        
+        @Html.Partial("~/Views/Shared/Partials/_USWDSBanner.cshtml")
+        @Html.Partial("~/Views/Shared/Partials/_USWDSHeader.cshtml")
         <nav aria-label="Primary navigation" class="usa-nav site-nav sticky">
             <div class="usa-nav__inner site-nav__inner">
             <button type="button" class="usa-nav__close">
               <img src="https://designsystem.digital.gov/assets/img/usa-icons/close.svg" role="img" alt="Close">
             </button>
-    <!-- Mobile nav -->
-    <ul class="usa-nav__primary usa-nav__primary--mobile usa-accordion">
+            <!-- Mobile nav -->
+        <ul class="usa-nav__primary usa-nav__primary--mobile usa-accordion">
       
   <li class="usa-nav__primary-item">
   
@@ -2351,8 +2243,14 @@
 
 
     </ul>
+
+
+    <!-- END MOBILENAV-->
+
+
+
     <!-- /Desktop nav -->
-    <div class="usa-nav__secondary">
+    @* <div class="usa-nav__secondary">
       <form id="search_form-mobile" class="site-search usa-search usa-search--small"
   action="https://search.usa.gov/search" accept-charset="UTF-8" method="get">
   <input name="utf8" type="hidden" value="&#x2713;" />
@@ -2414,13 +2312,17 @@
   </a>
 </div>
 
-    </div>
+    </div> *@
   </div>
 </nav>
 <div class="usa-overlay"></div>
 
 
 <div class="default-container">
+    
+    <!-- BEGIN MOVE TO ACC PAGE -->
+  
+    <!-- BEGIN ACC SIDENAV -->
     <aside class="sidenav" id="page-side-navigation" aria-label="Section navigation">
     
     <div class="usa-accordion" aria-multiselectable="true">
@@ -3323,25 +3225,20 @@
     </ul>
     
   </aside>
-    <main id="main-content" class="main-content">
+    <!-- END ACC SIDENAV -->
+
+
+  <main id="main-content" class="main-content">
       <div class="styleguide-content usa-prose site-prose">
         <header>
           <h1 id="components" class="site-page-title">Accessions</h1>
         </header>
-        <p class="site-text-intro">USWDS components are simple and consistent solutions to common user-interface needs.</p>
-        @RenderBody()
-
-
-
-        <!-- Add wcag compliance status tag -->
-        <!-- Add compliance tag -->
-
-
-
-
-
-
-
+@*         <p class="site-text-intro">USWDS components are simple and consistent solutions to common user-interface needs.</p>
+ *@        
+ 
+ <h3>DEBUG: INTERIOR NAV TEMPLATE</h3>
+ 
+ @RenderBody()
 
 
         
@@ -3997,6 +3894,8 @@ function filter(e){
       </div>
     </main>
   
+   <!-- END MOVE TO ACC PAGE -->
+
 </div>
 
 
